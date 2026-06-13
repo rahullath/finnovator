@@ -144,6 +144,34 @@ class PortfolioView(BaseModel):
     wem_tilt: list[dict]
 
 
+class DriverComparison(BaseModel):
+    driver: str
+    topic: str                        # "Environment" | "Social" | "Governance"
+    company_score: Optional[float]    # None = not in company's material top-8
+    peer_median: Optional[float]      # None = no FTSE100 peers have this driver
+    ftse100_median: Optional[float]
+    peer_n: int                       # count of FTSE100 peers with this driver
+    ftse100_n: int
+    divergence_from_peer: float       # company - peer_median (positive = company leads)
+    divergence_from_ftse: float
+    uniqueness: str                   # "company_leading"|"sector_norm"|"company_lagging"|"company_only"|"peer_only"|"absent"
+    spread: float                     # std-dev across [company, peer, ftse100] — three-body instability per driver
+    why: str                          # template explanation of why they diverge
+
+
+class MaterialityComparison(BaseModel):
+    ticker: str
+    company_name: str
+    industry: str                     # our classification
+    ftse_industry: str                # mapped FTSE100 industry used for peer group
+    peer_count: int
+    top_8: List[DriverComparison]     # company's 8 highest-weighted drivers
+    all_26: List[DriverComparison]    # all 26 SASB drivers
+    three_body_instability: float     # mean spread across top_8 drivers
+    unique_to_company: List[str]      # driver names material only for this company
+    unique_to_peers: List[str]        # driver names material for peers but not company
+
+
 class DriverForecast(BaseModel):
     factor: str
     materiality_score: float

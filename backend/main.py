@@ -6,8 +6,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from scoring.engine import get_company_score, get_portfolio_view, get_all_tickers, get_forecast
-from scoring.models import WeightConfig, CompanyScore, PortfolioView, ForecastResult
+from scoring.engine import get_company_score, get_portfolio_view, get_all_tickers, get_forecast, get_materiality_comparison
+from scoring.models import WeightConfig, CompanyScore, PortfolioView, ForecastResult, MaterialityComparison
 from ingestion.fmp import FMPIngestor
 from ingestion.climate_trace import ClimateTraceIngestor
 from ingestion.violation_tracker import ViolationTrackerIngestor
@@ -94,6 +94,14 @@ async def forecast_company(ticker: str) -> ForecastResult:
     result = get_forecast(ticker.upper())
     if not result:
         raise HTTPException(status_code=404, detail=f"Company '{ticker}' not found")
+    return result
+
+
+@app.get("/api/materiality-comparison/{ticker}", response_model=MaterialityComparison)
+async def materiality_comparison(ticker: str) -> MaterialityComparison:
+    result = get_materiality_comparison(ticker.upper())
+    if not result:
+        raise HTTPException(status_code=404, detail=f"No materiality data for '{ticker}'")
     return result
 
 

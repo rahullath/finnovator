@@ -131,6 +131,34 @@ export interface PortfolioView {
   wem_tilt: { ticker: string; name: string; weight: number }[]
 }
 
+export interface DriverComparison {
+  driver: string
+  topic: string                  // "Environment" | "Social" | "Governance"
+  company_score: number | null   // null = not in company's material top-8
+  peer_median: number | null
+  ftse100_median: number | null
+  peer_n: number
+  ftse100_n: number
+  divergence_from_peer: number   // positive = company weighs this more than peers
+  divergence_from_ftse: number
+  uniqueness: string             // "company_leading"|"sector_norm"|"company_lagging"|"company_only"|"peer_only"|"absent"
+  spread: number                 // three-body instability per driver
+  why: string
+}
+
+export interface MaterialityComparison {
+  ticker: string
+  company_name: string
+  industry: string
+  ftse_industry: string
+  peer_count: number
+  top_8: DriverComparison[]
+  all_26: DriverComparison[]
+  three_body_instability: number
+  unique_to_company: string[]
+  unique_to_peers: string[]
+}
+
 export type Role = "pm" | "sustainability" | "regulator"
 export type TabId = "signal" | "impact" | "action" | "outlook"
 

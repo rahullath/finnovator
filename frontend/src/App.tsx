@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react"
-import type { CompanyScore, PortfolioView, ForecastResult, Role, TabId, WeightConfig } from "./types"
-import { fetchScore, fetchScoreWithWeights, fetchPortfolio, fetchCompanies, fetchForecast } from "./api"
+import type { CompanyScore, PortfolioView, ForecastResult, MaterialityComparison, Role, TabId, WeightConfig } from "./types"
+import { fetchScore, fetchScoreWithWeights, fetchPortfolio, fetchCompanies, fetchForecast, fetchMaterialityComparison } from "./api"
 
 import { ScoreDial } from "./components/ScoreDial"
 import { QuadrantBadge } from "./components/QuadrantBadge"
@@ -36,6 +36,7 @@ export default function App() {
   const [score, setScore] = useState<CompanyScore | null>(null)
   const [portfolio, setPortfolio] = useState<PortfolioView | null>(null)
   const [forecast, setForecast] = useState<ForecastResult | null>(null)
+  const [materialityComparison, setMaterialityComparison] = useState<MaterialityComparison | null>(null)
   const [loading, setLoading] = useState(false)
   const [weightLoading, setWeightLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -52,14 +53,17 @@ export default function App() {
     setLoading(true)
     setError(null)
     setForecast(null)
+    setMaterialityComparison(null)
     Promise.all([
       fetchScore(selectedTicker),
       fetchForecast(selectedTicker),
+      fetchMaterialityComparison(selectedTicker),
     ])
-      .then(([s, fc]) => {
+      .then(([s, fc, mc]) => {
         setScore(s)
         setWeights(s.integrity.weights)
         setForecast(fc)
+        setMaterialityComparison(mc)
       })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false))
@@ -240,7 +244,7 @@ export default function App() {
             {/* Tab content */}
             {tab === "outlook" && (
               forecast
-                ? <ForecastView score={score} forecast={forecast} />
+                ? <ForecastView score={score} forecast={forecast} materialityComparison={materialityComparison} />
                 : <div className="py-12 text-center text-gray-500 text-sm">Loading outlook…</div>
             )}
 

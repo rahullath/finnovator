@@ -1,9 +1,11 @@
 import { useState } from "react"
-import type { CompanyScore, ForecastResult, DriverForecast } from "../types"
+import type { CompanyScore, ForecastResult, DriverForecast, MaterialityComparison } from "../types"
+import { MaterialityComparisonView } from "./MaterialityComparison"
 
 interface Props {
   score: CompanyScore
   forecast: ForecastResult
+  materialityComparison: MaterialityComparison | null
 }
 
 function ord(n: number): string {
@@ -254,7 +256,7 @@ function WisdomOfCrowd({ fc }: { fc: ForecastResult }) {
   )
 }
 
-export function ForecastView({ score, forecast }: Props) {
+export function ForecastView({ score, forecast, materialityComparison }: Props) {
   return (
     <div className="space-y-6">
       {/* 3 Body Problem */}
@@ -310,6 +312,13 @@ export function ForecastView({ score, forecast }: Props) {
       <div className="card p-5">
         <WisdomOfCrowd fc={forecast} />
       </div>
+
+      {/* Driver materiality comparison — three-body analysis per driver */}
+      {materialityComparison && (
+        <div className="card p-5">
+          <MaterialityComparisonView comparison={materialityComparison} />
+        </div>
+      )}
     </div>
   )
 }

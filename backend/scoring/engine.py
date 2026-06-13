@@ -12,6 +12,7 @@ from .models import (
     IntegrityBreakdown, ImpactBreakdown, QuadrantInfo,
     MaterialFactor, CompanyScore, PortfolioEntry, PortfolioView,
 )
+from .materiality_comparison import get_materiality_comparison as _get_mat_comparison
 from .divergence import calculate_divergence_score
 from .verification import calculate_verification_score
 from .controversy import calculate_controversy_score
@@ -350,6 +351,10 @@ def get_portfolio_view() -> PortfolioView:
         integrity_impact_tilt=integrity_impact_tilt,
         wem_tilt=wem_tilt,
     )
+
+
+def get_materiality_comparison(ticker: str):
+    return _get_mat_comparison(ticker)
 
 
 def get_forecast(ticker: str):

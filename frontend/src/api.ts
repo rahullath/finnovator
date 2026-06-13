@@ -1,4 +1,4 @@
-import type { CompanyScore, PortfolioView, WeightConfig, ForecastResult } from "./types"
+import type { CompanyScore, PortfolioView, WeightConfig, ForecastResult, MaterialityComparison } from "./types"
 export type { CompanyScore }
 
 // In dev: Vite proxy forwards /api/* → localhost:8000 (FastAPI)
@@ -63,6 +63,17 @@ export async function fetchForecast(ticker: string): Promise<ForecastResult> {
   }
   const r = await fetch(`/api/forecast/${ticker}`)
   if (!r.ok) throw new Error(`No forecast for ${ticker}`)
+  return r.json()
+}
+
+export async function fetchMaterialityComparison(ticker: string): Promise<MaterialityComparison> {
+  if (PROD) {
+    const r = await fetch(`/data/materiality-comparison/${ticker}.json`)
+    if (!r.ok) throw new Error(`No materiality comparison for ${ticker}`)
+    return r.json()
+  }
+  const r = await fetch(`/api/materiality-comparison/${ticker}`)
+  if (!r.ok) throw new Error(`No materiality comparison for ${ticker}`)
   return r.json()
 }
 
