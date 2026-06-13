@@ -44,7 +44,9 @@ The app is a single-page React app with a dark theme (`bg-surface` = near-black 
 | ImpactKPIs | `ImpactKPIs.tsx` | Horizontal bar vs sector | Works; "improving/flat/worsening" trend label isn't visually prominent |
 | QuadrantPlot | `QuadrantPlot.tsx` | Scatter plot, colour-coded | Dots overlap; labels clip at edges; no hover tooltip with name+scores |
 | PortfolioTilt | `PortfolioTilt.tsx` | 3-column horizontal bar | All charts use same x-axis domain (0–30%) — ORSTED's dominance in WEM tilt is under-represented |
-| ActionPanel | `ActionPanel.tsx` | Three role views, text list | No visual severity; no CTA buttons; PM view is especially dense |
+| ActionPanel — PM view | `ActionPanel.tsx` | **Real Maxwell Data material factors** (ranked circles, materiality %) | Source attribution is small; factors have no link to which KPIs are weak/strong |
+| ActionPanel — SO view | `ActionPanel.tsx` | **Materiality bars + disclosure integrity** | Bars are CSS widths with no axis — not a real chart; no absolute scale reference |
+| ActionPanel — Regulator | `ActionPanel.tsx` | Fines, CEO ratio, contradicted claims | No change; still text-only, good information density |
 | WeightSliders | `WeightSliders.tsx` | Three range inputs | Collapsible section — clean, works |
 
 ---
@@ -66,6 +68,8 @@ or card-style:
 │ WEM: 34  🔴     │  │ WEM: 80  🟢     │
 └─────────────────┘  └─────────────────┘
 ```
+
+**Note:** Company names and sectors are available from `GET /api/score/{ticker}` — no extra API call needed.
 
 ### HIGH: Hero section on mobile
 **Current:** Dials overflow on <800px screens.  
@@ -99,6 +103,19 @@ Placebo Risk  ──────────────████  0.78
 - Add hover tooltip showing: name, integrity score, impact score, WEM, placebo index
 - Quadrant labels could be larger and use coloured backgrounds
 
+### HIGH: Action Panel — link material factors to actual KPI scores
+**Current:** PM view shows top 3 Maxwell Data material factors (e.g. "Physical Impacts of Climate Change — 76%") but doesn't connect them to how the company actually performs on that factor.  
+**Opportunity:** Cross-reference material factors with Impact KPIs and WEM sub-scores. For each material factor, show a one-line verdict: "GHG Emissions — material at 58%, but company scores 22/100 on this KPI (worsening trend)." This is the most powerful story the data can tell and it's currently half-connected.
+
+```
+┌─────────────────────────────────────────────────┐
+│ 1  GHG Emissions              materiality 58%   │
+│    Company KPI score: 22/100  ↘ worsening       │
+│ 2  Physical Climate Change    materiality 76%   │
+│    Company KPI score: —  (no data)              │
+└─────────────────────────────────────────────────┘
+```
+
 ### MEDIUM: Portfolio Tilt — show reallocation delta
 **Current:** Three separate bar charts. You can't easily see how much a company's weight changes between tilts.  
 **Opportunity:** A delta column (Naive ESG weight → WEM weight, +/−%) alongside each row would immediately communicate "XOM loses 8 percentage points under WEM tilt." This is the core capital misallocation argument visualised in a single number.
@@ -122,6 +139,10 @@ WEM Score  ███████████████████████
 - PM: "Capital allocation & risk lens"
 - Sustainability Officer: "Disclosure quality & improvement lens"
 - Regulator: "Enforcement & compliance lens"
+
+### MEDIUM: Action Panel SO view — upgrade materiality bars to a real chart
+**Current:** Materiality bars are `<div>` elements with `width: ${score * 60}px` — not a proper chart, no axis, no consistent scale across companies.  
+**Opportunity:** Replace with a small `BarChart` (Recharts, already installed) showing all 5 factors on a 0–1 axis with a labelled threshold line at 0.5 ("material threshold"). Source line stays: "Maxwell Data FTSE100, March 2025."
 
 ### LOW: Dark theme colour system
 **Current:** Uses a handful of Tailwind utilities + custom `card`/`surface`/`border` tokens.  
@@ -188,15 +209,31 @@ Recharts is fine for the demo. If you want to replace charts with something more
 
 ## 8. What to prioritise in the time you have
 
-If you have **30 minutes:** Fix the company selector to show full names. This is a one-line change in `App.tsx`.
+If you have **30 minutes:** Fix the company selector to show full names. This is a one-line change in `App.tsx` — map ticker to `{ticker} – {score.name}` in the button label.
 
 If you have **2 hours:**
 1. Fix mobile hero (flex-col on small screens)
-2. Make the Placebo Index a proper visual bar
+2. Make the Placebo Index a proper visual bar with the Tariq Fancy quote
 3. Add hover tooltips to the quadrant plot
+4. Upgrade SO view materiality bars to a real Recharts `BarChart` (install already there)
 
 If you have **half a day:**
 1. All of the above
-2. Rebuild controversy list as an actual timeline
-3. Add WEM "budget bar" to WEM breakdown
-4. Fix portfolio tilt delta column
+2. Rebuild controversy list as an actual timeline with date axis
+3. Add WEM "budget bar" to WEM breakdown (stacked: 100 baseline minus penalty blocks)
+4. Add portfolio tilt delta column (Naive ESG → WEM weight, ±%)
+5. Cross-reference material factors with KPI scores in PM view (see section 3)
+
+---
+
+## 9. Data layer changes (June 2025 session)
+
+These changes affect what data is available to components — relevant if you're adding new UI.
+
+| Change | What's available now |
+|---|---|
+| `materiality.csv` added | `score.material_factors[]` — array of `{factor, materiality_score, rank, source}` per company, top 5 by score |
+| Source | Maxwell Data FTSE100 Financial Materiality Survey, March 2025 — real SASB-style scores |
+| Coverage | BP, SHEL, ULVR: exact FTSE100 values. XOM, TTE: oil & gas sector average. ORSTED: utility average. NESN: food/beverage average. AMZN: retail/tech average. |
+| Gemini SDK | Migrated to `google-genai` 2.8.0 (`from google import genai`). Model chain: `gemini-2.0-flash` → `gemini-1.5-flash` → `gemini-2.0-flash-lite`. Claim extraction and controversy fetching work when quota allows. |
+| `requirements.txt` | Cleaned: removed `anthropic`, `yfinance`; added `google-genai`, `finnhub-python`, `openpyxl` |
