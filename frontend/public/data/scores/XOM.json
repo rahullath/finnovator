@@ -1,0 +1,187 @@
+{
+  "ticker": "XOM",
+  "name": "ExxonMobil Corporation",
+  "sector": "energy",
+  "country": "US",
+  "ratings": [
+    {
+      "source": "FMP",
+      "environmental": 32.0,
+      "social": 35.0,
+      "governance": 42.0,
+      "total": 36.3,
+      "year": 2024
+    },
+    {
+      "source": "OSI",
+      "environmental": 35.0,
+      "social": 30.0,
+      "governance": 38.0,
+      "total": 34.3,
+      "year": 2024
+    }
+  ],
+  "claims": [
+    {
+      "claim_text": "Working to reduce operated methane intensity across all assets",
+      "category": "environmental",
+      "verifiable_metric": "methane_intensity_improvement",
+      "stated_value": "unspecified",
+      "verification_status": "unverifiable",
+      "verification_note": "No specific targets or baselines provided — progress is unquantifiable; no third-party verification",
+      "source_filing": "Annual Report 2023"
+    },
+    {
+      "claim_text": "Investing in lower-emission technology research and development",
+      "category": "environmental",
+      "verifiable_metric": "low_emission_rd",
+      "stated_value": "unspecified",
+      "verification_status": "unverifiable",
+      "verification_note": "R&D spend on low-emission technology not separately disclosed from conventional R&D",
+      "source_filing": "Annual Report 2023"
+    }
+  ],
+  "controversies": [
+    {
+      "headline": "ExxonMobil files lawsuit against California over mandatory climate disclosure rules",
+      "incident_date": "2024-05-03",
+      "esg_category": "governance",
+      "severity": "medium",
+      "source_outlet": "Reuters"
+    }
+  ],
+  "integrity": {
+    "divergence_score": 96.0,
+    "verification_score": 50.0,
+    "controversy_score": 93.6,
+    "integrity_score": 77.0,
+    "weights": {
+      "divergence": 0.35,
+      "verification": 0.4,
+      "controversy": 0.25
+    }
+  },
+  "impact": {
+    "impact_score": 14.2,
+    "kpis": [
+      {
+        "kpi_name": "emissions_intensity",
+        "kpi_label": "Scope 1+2 Intensity",
+        "kpi_value": 210.0,
+        "kpi_unit": "tCO2e/$m revenue",
+        "kpi_score": 18.0,
+        "sector_median": 120.0,
+        "sector_median_score": 50.0,
+        "trend": "worsening",
+        "materiality_weight": 0.35
+      },
+      {
+        "kpi_name": "low_carbon_capex_pct",
+        "kpi_label": "Low-Carbon Capex Share",
+        "kpi_value": 5.0,
+        "kpi_unit": "%",
+        "kpi_score": 8.0,
+        "sector_median": 35.0,
+        "sector_median_score": 50.0,
+        "trend": "flat",
+        "materiality_weight": 0.3
+      },
+      {
+        "kpi_name": "renewable_energy_pct",
+        "kpi_label": "Renewable Energy Share",
+        "kpi_value": 2.0,
+        "kpi_unit": "%",
+        "kpi_score": 4.0,
+        "sector_median": 15.0,
+        "sector_median_score": 50.0,
+        "trend": "flat",
+        "materiality_weight": 0.2
+      },
+      {
+        "kpi_name": "major_incidents",
+        "kpi_label": "Major Environmental Incidents",
+        "kpi_value": 4.0,
+        "kpi_unit": "count",
+        "kpi_score": 38.0,
+        "sector_median": 2.0,
+        "sector_median_score": 50.0,
+        "trend": "worsening",
+        "materiality_weight": 0.1
+      },
+      {
+        "kpi_name": "methane_reduction",
+        "kpi_label": "Methane Intensity Reduction",
+        "kpi_value": 12.0,
+        "kpi_unit": "%",
+        "kpi_score": 18.0,
+        "sector_median": 40.0,
+        "sector_median_score": 50.0,
+        "trend": "flat",
+        "materiality_weight": 0.05
+      }
+    ]
+  },
+  "wem": {
+    "wem_score": 4.6,
+    "d_carbon": 40.0,
+    "d_labor": 28.61,
+    "d_theft": 26.76,
+    "emissions_intensity": 281.407
+  },
+  "wem_inputs": {
+    "ticker": "XOM",
+    "year": 2023,
+    "revenue_usd": 398000000000.0,
+    "emissions_tco2e": 112000000.0,
+    "labor_fines_usd_5y": 48000000.0,
+    "other_fines_usd_5y": 425000000.0,
+    "ceo_pay_ratio": 209.0
+  },
+  "quadrant": {
+    "quadrant": "engagement_priority",
+    "label": "Engagement Priority",
+    "action": "engage",
+    "action_label": "Credible story but limited real-world progress — engage on specific KPIs",
+    "placebo_risk": false,
+    "color": "blue",
+    "recommendations": [
+      "ESG rating is credible but impact KPIs lag the narrative — press for concrete targets",
+      "Require time-bound, science-based milestones before increasing allocation",
+      "Sector-wide regulation is more effective than portfolio exclusion alone here"
+    ]
+  },
+  "esg_score_avg": 35.3,
+  "placebo_index": 0.799,
+  "material_factors": [
+    {
+      "factor": "Physical Impacts of Climate Change",
+      "materiality_score": 0.759,
+      "rank": 1,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Ecological Impacts",
+      "materiality_score": 0.645,
+      "rank": 2,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Energy Management",
+      "materiality_score": 0.587,
+      "rank": 3,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Product Design & Lifecycle Management",
+      "materiality_score": 0.582,
+      "rank": 4,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "GHG Emissions",
+      "materiality_score": 0.5815,
+      "rank": 5,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    }
+  ]
+}

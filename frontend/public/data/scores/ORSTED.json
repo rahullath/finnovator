@@ -1,0 +1,205 @@
+{
+  "ticker": "ORSTED",
+  "name": "Ørsted A/S",
+  "sector": "energy",
+  "country": "Denmark",
+  "ratings": [
+    {
+      "source": "FMP",
+      "environmental": 85.0,
+      "social": 80.0,
+      "governance": 78.0,
+      "total": 81.0,
+      "year": 2024
+    },
+    {
+      "source": "OSI",
+      "environmental": 82.0,
+      "social": 76.0,
+      "governance": 74.0,
+      "total": 77.3,
+      "year": 2024
+    }
+  ],
+  "claims": [
+    {
+      "claim_text": "Reduced carbon intensity of energy generation by 87% since 2006",
+      "category": "environmental",
+      "verifiable_metric": "carbon_intensity_reduction",
+      "stated_value": "87%",
+      "verification_status": "verified",
+      "verification_note": "Annual reports and EY third-party audit confirm 87% reduction — consistent across all reporting periods",
+      "source_filing": "Annual Report 2023"
+    },
+    {
+      "claim_text": "87% of heat and power output from renewable energy sources in 2023",
+      "category": "environmental",
+      "verifiable_metric": "renewable_share",
+      "stated_value": "87%",
+      "verification_status": "verified",
+      "verification_note": "Independently audited; fully consistent with asset portfolio composition (offshore wind / bioenergy)",
+      "source_filing": "Sustainability Report 2023"
+    },
+    {
+      "claim_text": "Science-based targets validated by SBTi for net zero by 2040",
+      "category": "environmental",
+      "verifiable_metric": "sbti_net_zero",
+      "stated_value": "2040",
+      "verification_status": "verified",
+      "verification_note": "SBTi approval on public registry — consistent with 1.5°C pathway; strongest validation tier",
+      "source_filing": "SBTi Registry 2023"
+    },
+    {
+      "claim_text": "Zero biodiversity net loss from all new energy projects",
+      "category": "environmental",
+      "verifiable_metric": "biodiversity_net_loss",
+      "stated_value": "zero net loss",
+      "verification_status": "unverifiable",
+      "verification_note": "Methodology for biodiversity net gain accounting is not independently verified; no third-party auditor named",
+      "source_filing": "Sustainability Report 2023"
+    }
+  ],
+  "controversies": [
+    {
+      "headline": "NGO criticism of Ørsted offshore wind cable route biodiversity impact assessments",
+      "incident_date": "2023-08-15",
+      "esg_category": "environmental",
+      "severity": "low",
+      "source_outlet": "Guardian"
+    }
+  ],
+  "integrity": {
+    "divergence_score": 92.6,
+    "verification_score": 87.5,
+    "controversy_score": 97.9,
+    "integrity_score": 91.9,
+    "weights": {
+      "divergence": 0.35,
+      "verification": 0.4,
+      "controversy": 0.25
+    }
+  },
+  "impact": {
+    "impact_score": 96.5,
+    "kpis": [
+      {
+        "kpi_name": "emissions_intensity",
+        "kpi_label": "Scope 1+2 Intensity",
+        "kpi_value": 22.0,
+        "kpi_unit": "tCO2e/$m revenue",
+        "kpi_score": 95.0,
+        "sector_median": 120.0,
+        "sector_median_score": 50.0,
+        "trend": "improving",
+        "materiality_weight": 0.35
+      },
+      {
+        "kpi_name": "low_carbon_capex_pct",
+        "kpi_label": "Low-Carbon Capex Share",
+        "kpi_value": 89.0,
+        "kpi_unit": "%",
+        "kpi_score": 98.0,
+        "sector_median": 35.0,
+        "sector_median_score": 50.0,
+        "trend": "improving",
+        "materiality_weight": 0.3
+      },
+      {
+        "kpi_name": "renewable_energy_pct",
+        "kpi_label": "Renewable Energy Share",
+        "kpi_value": 87.0,
+        "kpi_unit": "%",
+        "kpi_score": 97.0,
+        "sector_median": 15.0,
+        "sector_median_score": 50.0,
+        "trend": "improving",
+        "materiality_weight": 0.2
+      },
+      {
+        "kpi_name": "major_incidents",
+        "kpi_label": "Major Environmental Incidents",
+        "kpi_value": 0.0,
+        "kpi_unit": "count",
+        "kpi_score": 100.0,
+        "sector_median": 2.0,
+        "sector_median_score": 50.0,
+        "trend": "improving",
+        "materiality_weight": 0.1
+      },
+      {
+        "kpi_name": "methane_reduction",
+        "kpi_label": "Methane Intensity Reduction",
+        "kpi_value": 82.0,
+        "kpi_unit": "%",
+        "kpi_score": 88.0,
+        "sector_median": 40.0,
+        "sector_median_score": 50.0,
+        "trend": "improving",
+        "materiality_weight": 0.05
+      }
+    ]
+  },
+  "wem": {
+    "wem_score": 79.7,
+    "d_carbon": 15.0,
+    "d_labor": 0.0,
+    "d_theft": 5.31,
+    "emissions_intensity": 47.0588
+  },
+  "wem_inputs": {
+    "ticker": "ORSTED",
+    "year": 2023,
+    "revenue_usd": 10200000000.0,
+    "emissions_tco2e": 480000.0,
+    "labor_fines_usd_5y": 900000.0,
+    "other_fines_usd_5y": 1500000.0,
+    "ceo_pay_ratio": 44.0
+  },
+  "quadrant": {
+    "quadrant": "preferred_leader",
+    "label": "Preferred Sustainability Leader",
+    "action": "increase_weight",
+    "action_label": "Consider increasing portfolio weight",
+    "placebo_risk": false,
+    "color": "green",
+    "recommendations": [
+      "ESG signal is reliable — weight the company's reported metrics with confidence",
+      "Monitor for continued performance against sector-specific KPIs",
+      "Engage constructively on remaining data gaps to maintain signal quality"
+    ]
+  },
+  "esg_score_avg": 79.2,
+  "placebo_index": 0.537,
+  "material_factors": [
+    {
+      "factor": "Business Model Resilience",
+      "materiality_score": 0.7225,
+      "rank": 1,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Product Design & Lifecycle Management",
+      "materiality_score": 0.721,
+      "rank": 2,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Competitive Behavior",
+      "materiality_score": 0.714,
+      "rank": 3,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Ecological Impacts",
+      "materiality_score": 0.657,
+      "rank": 4,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Physical Impacts of Climate Change",
+      "materiality_score": 0.6145,
+      "rank": 5,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    }
+  ]
+}

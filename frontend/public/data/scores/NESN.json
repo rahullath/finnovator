@@ -1,0 +1,234 @@
+{
+  "ticker": "NESN",
+  "name": "Nestlé S.A.",
+  "sector": "consumer",
+  "country": "Switzerland",
+  "ratings": [
+    {
+      "source": "FMP",
+      "environmental": 69.0,
+      "social": 58.0,
+      "governance": 62.0,
+      "total": 63.0,
+      "year": 2024
+    },
+    {
+      "source": "OSI",
+      "environmental": 42.0,
+      "social": 35.0,
+      "governance": 55.0,
+      "total": 44.0,
+      "year": 2024
+    }
+  ],
+  "claims": [
+    {
+      "claim_text": "On track to achieve net zero across full value chain by 2050",
+      "category": "environmental",
+      "verifiable_metric": "net_zero_pathway",
+      "stated_value": "2050",
+      "verification_status": "contradicted",
+      "verification_note": "CDP gives C rating; own disclosures show Scope 3 emissions increased 2021–2023; inconsistent with net zero trajectory",
+      "source_filing": "CDP Disclosure 2023"
+    },
+    {
+      "claim_text": "Achieved 20% absolute GHG emissions reduction target by 2025",
+      "category": "environmental",
+      "verifiable_metric": "abs_ghg_reduction",
+      "stated_value": "20% by 2025",
+      "verification_status": "contradicted",
+      "verification_note": "Own 2023 disclosures show absolute Scope 1+2 emissions higher than 2018 baseline — target missed and quietly restated",
+      "source_filing": "Annual Report 2023"
+    },
+    {
+      "claim_text": "100% of cocoa sustainably sourced through Rainforest Alliance certification",
+      "category": "social",
+      "verifiable_metric": "sustainable_sourcing",
+      "stated_value": "100%",
+      "verification_status": "unverifiable",
+      "verification_note": "Rainforest Alliance methodology is contested — does not verify child labour absence; supply chain mapping incomplete",
+      "source_filing": "Sustainability Report 2023"
+    },
+    {
+      "claim_text": "Halved use of virgin plastics per tonne of product since 2018",
+      "category": "environmental",
+      "verifiable_metric": "virgin_plastic_reduction",
+      "stated_value": "50% intensity",
+      "verification_status": "contradicted",
+      "verification_note": "Absolute virgin plastic use increased from 1.5Mt to 1.7Mt (2018–2023); intensity metric obscures absolute growth",
+      "source_filing": "Packaging Report 2023"
+    }
+  ],
+  "controversies": [
+    {
+      "headline": "European Commission opens formal investigation into Nestlé greenwashing claims",
+      "incident_date": "2024-03-14",
+      "esg_category": "environmental",
+      "severity": "high",
+      "source_outlet": "Reuters"
+    },
+    {
+      "headline": "Child labour in Nestlé cocoa supply chain — updated investigative report published",
+      "incident_date": "2023-11-21",
+      "esg_category": "social",
+      "severity": "high",
+      "source_outlet": "Washington Post"
+    },
+    {
+      "headline": "Class action lawsuit filed over Nestlé plastic pollution greenwashing claims",
+      "incident_date": "2024-09-05",
+      "esg_category": "environmental",
+      "severity": "high",
+      "source_outlet": "Bloomberg"
+    },
+    {
+      "headline": "UN Special Rapporteur resubmits water privatisation concerns to Swiss government",
+      "incident_date": "2024-07-30",
+      "esg_category": "social",
+      "severity": "medium",
+      "source_outlet": "UN News"
+    },
+    {
+      "headline": "Swiss Competition Commission greenwashing enforcement action against Nestlé advertising",
+      "incident_date": "2025-01-09",
+      "esg_category": "environmental",
+      "severity": "high",
+      "source_outlet": "NZZ"
+    }
+  ],
+  "integrity": {
+    "divergence_score": 62.0,
+    "verification_score": 12.5,
+    "controversy_score": 40.2,
+    "integrity_score": 36.8,
+    "weights": {
+      "divergence": 0.35,
+      "verification": 0.4,
+      "controversy": 0.25
+    }
+  },
+  "impact": {
+    "impact_score": 37.5,
+    "kpis": [
+      {
+        "kpi_name": "emissions_intensity",
+        "kpi_label": "Scope 1+2 Intensity",
+        "kpi_value": 68.0,
+        "kpi_unit": "tCO2e/$m revenue",
+        "kpi_score": 55.0,
+        "sector_median": 60.0,
+        "sector_median_score": 50.0,
+        "trend": "worsening",
+        "materiality_weight": 0.3
+      },
+      {
+        "kpi_name": "supply_chain_score",
+        "kpi_label": "Supply Chain Sustainability Score",
+        "kpi_value": 32.0,
+        "kpi_unit": "/100",
+        "kpi_score": 30.0,
+        "sector_median": 55.0,
+        "sector_median_score": 50.0,
+        "trend": "worsening",
+        "materiality_weight": 0.25
+      },
+      {
+        "kpi_name": "plastic_reduction",
+        "kpi_label": "Virgin Plastic Reduction",
+        "kpi_value": -12.0,
+        "kpi_unit": "%",
+        "kpi_score": 15.0,
+        "sector_median": 20.0,
+        "sector_median_score": 50.0,
+        "trend": "worsening",
+        "materiality_weight": 0.2
+      },
+      {
+        "kpi_name": "labor_standards",
+        "kpi_label": "Labour Standards Score",
+        "kpi_value": 42.0,
+        "kpi_unit": "/100",
+        "kpi_score": 35.0,
+        "sector_median": 60.0,
+        "sector_median_score": 50.0,
+        "trend": "worsening",
+        "materiality_weight": 0.15
+      },
+      {
+        "kpi_name": "water_intensity",
+        "kpi_label": "Water Use Intensity",
+        "kpi_value": 58.0,
+        "kpi_unit": "/100",
+        "kpi_score": 52.0,
+        "sector_median": 65.0,
+        "sector_median_score": 50.0,
+        "trend": "worsening",
+        "materiality_weight": 0.1
+      }
+    ]
+  },
+  "wem": {
+    "wem_score": 38.7,
+    "d_carbon": 20.0,
+    "d_labor": 22.37,
+    "d_theft": 18.92,
+    "emissions_intensity": 50.8475
+  },
+  "wem_inputs": {
+    "ticker": "NESN",
+    "year": 2023,
+    "revenue_usd": 94400000000.0,
+    "emissions_tco2e": 4800000.0,
+    "labor_fines_usd_5y": 22000000.0,
+    "other_fines_usd_5y": 55000000.0,
+    "ceo_pay_ratio": 153.0
+  },
+  "quadrant": {
+    "quadrant": "greenwashing_risk",
+    "label": "Greenwashing Risk / Laggard",
+    "action": "exclude",
+    "action_label": "Candidate for exclusion or significant risk premium",
+    "placebo_risk": true,
+    "color": "red",
+    "recommendations": [
+      "High ESG branding with low measurable impact — textbook 'dangerous placebo' pattern (Tariq Fancy)",
+      "Apply significant risk premium: regulation, litigation, and reputational exposure are material",
+      "Exclusion or minimal weight recommended until claims can be independently verified",
+      "Portfolio-level policy engagement more impactful than marginal tilt adjustments"
+    ]
+  },
+  "esg_score_avg": 53.5,
+  "placebo_index": 0.847,
+  "material_factors": [
+    {
+      "factor": "Business Model Resilience",
+      "materiality_score": 0.788,
+      "rank": 1,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Competitive Behavior",
+      "materiality_score": 0.718,
+      "rank": 2,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Supply Chain Management",
+      "materiality_score": 0.696,
+      "rank": 3,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Systemic Risk Management",
+      "materiality_score": 0.6475,
+      "rank": 4,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Water & Hazardous Materials",
+      "materiality_score": 0.64,
+      "rank": 5,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    }
+  ]
+}

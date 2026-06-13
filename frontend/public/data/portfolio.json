@@ -1,0 +1,226 @@
+{
+  "companies": [
+    {
+      "ticker": "BP",
+      "name": "BP plc",
+      "sector": "energy",
+      "integrity_score": 56.5,
+      "impact_score": 32.1,
+      "wem_score": 34.2,
+      "placebo_index": 0.784,
+      "quadrant": "engagement_priority",
+      "quadrant_color": "blue",
+      "esg_score_avg": 48.1
+    },
+    {
+      "ticker": "SHEL",
+      "name": "Shell plc",
+      "sector": "energy",
+      "integrity_score": 58.9,
+      "impact_score": 34.4,
+      "wem_score": 30.6,
+      "placebo_index": 0.788,
+      "quadrant": "engagement_priority",
+      "quadrant_color": "blue",
+      "esg_score_avg": 46.9
+    },
+    {
+      "ticker": "ORSTED",
+      "name": "Ørsted A/S",
+      "sector": "energy",
+      "integrity_score": 91.9,
+      "impact_score": 96.5,
+      "wem_score": 79.7,
+      "placebo_index": 0.537,
+      "quadrant": "preferred_leader",
+      "quadrant_color": "green",
+      "esg_score_avg": 79.2
+    },
+    {
+      "ticker": "XOM",
+      "name": "ExxonMobil Corporation",
+      "sector": "energy",
+      "integrity_score": 77.0,
+      "impact_score": 14.2,
+      "wem_score": 4.6,
+      "placebo_index": 0.799,
+      "quadrant": "engagement_priority",
+      "quadrant_color": "blue",
+      "esg_score_avg": 35.3
+    },
+    {
+      "ticker": "TTE",
+      "name": "TotalEnergies SE",
+      "sector": "energy",
+      "integrity_score": 81.5,
+      "impact_score": 45.3,
+      "wem_score": 39.8,
+      "placebo_index": 0.717,
+      "quadrant": "engagement_priority",
+      "quadrant_color": "blue",
+      "esg_score_avg": 58.5
+    },
+    {
+      "ticker": "ULVR",
+      "name": "Unilever plc",
+      "sector": "consumer",
+      "integrity_score": 83.5,
+      "impact_score": 64.7,
+      "wem_score": 52.2,
+      "placebo_index": 0.683,
+      "quadrant": "preferred_leader",
+      "quadrant_color": "green",
+      "esg_score_avg": 66.8
+    },
+    {
+      "ticker": "NESN",
+      "name": "Nestlé S.A.",
+      "sector": "consumer",
+      "integrity_score": 36.8,
+      "impact_score": 37.5,
+      "wem_score": 38.7,
+      "placebo_index": 0.847,
+      "quadrant": "greenwashing_risk",
+      "quadrant_color": "red",
+      "esg_score_avg": 53.5
+    },
+    {
+      "ticker": "AMZN",
+      "name": "Amazon.com Inc",
+      "sector": "technology",
+      "integrity_score": 56.4,
+      "impact_score": 48.0,
+      "wem_score": 34.9,
+      "placebo_index": 0.758,
+      "quadrant": "engagement_priority",
+      "quadrant_color": "blue",
+      "esg_score_avg": 43.9
+    }
+  ],
+  "naive_esg_tilt": [
+    {
+      "ticker": "ORSTED",
+      "name": "Ørsted A/S",
+      "weight": 18.3
+    },
+    {
+      "ticker": "ULVR",
+      "name": "Unilever plc",
+      "weight": 15.5
+    },
+    {
+      "ticker": "TTE",
+      "name": "TotalEnergies SE",
+      "weight": 13.5
+    },
+    {
+      "ticker": "NESN",
+      "name": "Nestlé S.A.",
+      "weight": 12.4
+    },
+    {
+      "ticker": "BP",
+      "name": "BP plc",
+      "weight": 11.1
+    },
+    {
+      "ticker": "SHEL",
+      "name": "Shell plc",
+      "weight": 10.9
+    },
+    {
+      "ticker": "AMZN",
+      "name": "Amazon.com Inc",
+      "weight": 10.2
+    },
+    {
+      "ticker": "XOM",
+      "name": "ExxonMobil Corporation",
+      "weight": 8.2
+    }
+  ],
+  "integrity_impact_tilt": [
+    {
+      "ticker": "ORSTED",
+      "name": "Ørsted A/S",
+      "weight": 32.9
+    },
+    {
+      "ticker": "ULVR",
+      "name": "Unilever plc",
+      "weight": 20.0
+    },
+    {
+      "ticker": "TTE",
+      "name": "TotalEnergies SE",
+      "weight": 13.7
+    },
+    {
+      "ticker": "AMZN",
+      "name": "Amazon.com Inc",
+      "weight": 10.0
+    },
+    {
+      "ticker": "SHEL",
+      "name": "Shell plc",
+      "weight": 7.5
+    },
+    {
+      "ticker": "BP",
+      "name": "BP plc",
+      "weight": 6.7
+    },
+    {
+      "ticker": "NESN",
+      "name": "Nestlé S.A.",
+      "weight": 5.1
+    },
+    {
+      "ticker": "XOM",
+      "name": "ExxonMobil Corporation",
+      "weight": 4.1
+    }
+  ],
+  "wem_tilt": [
+    {
+      "ticker": "ORSTED",
+      "name": "Ørsted A/S",
+      "weight": 25.3
+    },
+    {
+      "ticker": "ULVR",
+      "name": "Unilever plc",
+      "weight": 16.6
+    },
+    {
+      "ticker": "TTE",
+      "name": "TotalEnergies SE",
+      "weight": 12.6
+    },
+    {
+      "ticker": "NESN",
+      "name": "Nestlé S.A.",
+      "weight": 12.3
+    },
+    {
+      "ticker": "AMZN",
+      "name": "Amazon.com Inc",
+      "weight": 11.1
+    },
+    {
+      "ticker": "BP",
+      "name": "BP plc",
+      "weight": 10.9
+    },
+    {
+      "ticker": "SHEL",
+      "name": "Shell plc",
+      "weight": 9.7
+    },
+    {
+      "ticker": "XOM",
+      "name": "ExxonMobil Corporation",
+      "weight": 1.5
+    }
+  ]
+}

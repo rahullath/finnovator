@@ -1,0 +1,194 @@
+{
+  "ticker": "TTE",
+  "name": "TotalEnergies SE",
+  "sector": "energy",
+  "country": "France",
+  "ratings": [
+    {
+      "source": "FMP",
+      "environmental": 61.0,
+      "social": 58.0,
+      "governance": 65.0,
+      "total": 61.3,
+      "year": 2024
+    },
+    {
+      "source": "OSI",
+      "environmental": 55.0,
+      "social": 52.0,
+      "governance": 60.0,
+      "total": 55.7,
+      "year": 2024
+    }
+  ],
+  "claims": [
+    {
+      "claim_text": "Reduced methane emissions by 50% by 2025 versus 2020 baseline",
+      "category": "environmental",
+      "verifiable_metric": "methane_reduction",
+      "stated_value": "50% by 2025",
+      "verification_status": "verified",
+      "verification_note": "Third-party monitoring data shows 48% reduction by 2023 — on track; broadly consistent with claim",
+      "source_filing": "CDP Disclosure 2023"
+    },
+    {
+      "claim_text": "Carbon neutrality of worldwide operations by 2050",
+      "category": "environmental",
+      "verifiable_metric": "operational_carbon_neutral",
+      "stated_value": "2050",
+      "verification_status": "unverifiable",
+      "verification_note": "Relies heavily on carbon offsets; forest carbon projects in portfolio have faced scrutiny from Verra",
+      "source_filing": "Annual Report 2023"
+    }
+  ],
+  "controversies": [
+    {
+      "headline": "TotalEnergies sued in French court over Uganda EACOP pipeline environmental impact",
+      "incident_date": "2024-04-22",
+      "esg_category": "environmental",
+      "severity": "high",
+      "source_outlet": "Le Monde"
+    },
+    {
+      "headline": "Climate Action 100+ engagement: TotalEnergies fails net-zero alignment assessment",
+      "incident_date": "2023-10-18",
+      "esg_category": "environmental",
+      "severity": "medium",
+      "source_outlet": "CA100+"
+    }
+  ],
+  "integrity": {
+    "divergence_score": 88.8,
+    "verification_score": 75.0,
+    "controversy_score": 81.7,
+    "integrity_score": 81.5,
+    "weights": {
+      "divergence": 0.35,
+      "verification": 0.4,
+      "controversy": 0.25
+    }
+  },
+  "impact": {
+    "impact_score": 45.3,
+    "kpis": [
+      {
+        "kpi_name": "emissions_intensity",
+        "kpi_label": "Scope 1+2 Intensity",
+        "kpi_value": 155.0,
+        "kpi_unit": "tCO2e/$m revenue",
+        "kpi_score": 42.0,
+        "sector_median": 120.0,
+        "sector_median_score": 50.0,
+        "trend": "improving",
+        "materiality_weight": 0.35
+      },
+      {
+        "kpi_name": "low_carbon_capex_pct",
+        "kpi_label": "Low-Carbon Capex Share",
+        "kpi_value": 32.0,
+        "kpi_unit": "%",
+        "kpi_score": 44.0,
+        "sector_median": 35.0,
+        "sector_median_score": 50.0,
+        "trend": "improving",
+        "materiality_weight": 0.3
+      },
+      {
+        "kpi_name": "renewable_energy_pct",
+        "kpi_label": "Renewable Energy Share",
+        "kpi_value": 18.0,
+        "kpi_unit": "%",
+        "kpi_score": 35.0,
+        "sector_median": 15.0,
+        "sector_median_score": 50.0,
+        "trend": "improving",
+        "materiality_weight": 0.2
+      },
+      {
+        "kpi_name": "major_incidents",
+        "kpi_label": "Major Environmental Incidents",
+        "kpi_value": 2.0,
+        "kpi_unit": "count",
+        "kpi_score": 65.0,
+        "sector_median": 2.0,
+        "sector_median_score": 50.0,
+        "trend": "flat",
+        "materiality_weight": 0.1
+      },
+      {
+        "kpi_name": "methane_reduction",
+        "kpi_label": "Methane Intensity Reduction",
+        "kpi_value": 50.0,
+        "kpi_unit": "%",
+        "kpi_score": 78.0,
+        "sector_median": 40.0,
+        "sector_median_score": 50.0,
+        "trend": "improving",
+        "materiality_weight": 0.05
+      }
+    ]
+  },
+  "wem": {
+    "wem_score": 39.8,
+    "d_carbon": 30.0,
+    "d_labor": 9.65,
+    "d_theft": 20.57,
+    "emissions_intensity": 224.7706
+  },
+  "wem_inputs": {
+    "ticker": "TTE",
+    "year": 2023,
+    "revenue_usd": 218000000000.0,
+    "emissions_tco2e": 49000000.0,
+    "labor_fines_usd_5y": 18000000.0,
+    "other_fines_usd_5y": 95000000.0,
+    "ceo_pay_ratio": 81.0
+  },
+  "quadrant": {
+    "quadrant": "engagement_priority",
+    "label": "Engagement Priority",
+    "action": "engage",
+    "action_label": "Credible story but limited real-world progress — engage on specific KPIs",
+    "placebo_risk": false,
+    "color": "blue",
+    "recommendations": [
+      "ESG rating is credible but impact KPIs lag the narrative — press for concrete targets",
+      "Require time-bound, science-based milestones before increasing allocation",
+      "Sector-wide regulation is more effective than portfolio exclusion alone here"
+    ]
+  },
+  "esg_score_avg": 58.5,
+  "placebo_index": 0.717,
+  "material_factors": [
+    {
+      "factor": "Physical Impacts of Climate Change",
+      "materiality_score": 0.7362,
+      "rank": 1,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Ecological Impacts",
+      "materiality_score": 0.6257,
+      "rank": 2,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Energy Management",
+      "materiality_score": 0.5694,
+      "rank": 3,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Product Design & Lifecycle Management",
+      "materiality_score": 0.5645,
+      "rank": 4,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "GHG Emissions",
+      "materiality_score": 0.5641,
+      "rank": 5,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    }
+  ]
+}

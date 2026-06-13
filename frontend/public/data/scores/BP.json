@@ -1,0 +1,242 @@
+{
+  "ticker": "BP",
+  "name": "BP plc",
+  "sector": "energy",
+  "country": "UK",
+  "ratings": [
+    {
+      "source": "FMP",
+      "environmental": 55.0,
+      "social": 62.0,
+      "governance": 58.0,
+      "total": 58.3,
+      "year": 2024
+    },
+    {
+      "source": "OSI",
+      "environmental": 28.0,
+      "social": 41.0,
+      "governance": 45.0,
+      "total": 38.0,
+      "year": 2024
+    }
+  ],
+  "claims": [
+    {
+      "claim_text": "Reduced scope-1 and scope-2 greenhouse gas emissions by 20% since 2019",
+      "category": "environmental",
+      "verifiable_metric": "scope12_emissions_reduction",
+      "stated_value": "20%",
+      "verification_status": "unverifiable",
+      "verification_note": "Baseline year changed in 2021 restatement — before/after comparison is not possible without restated prior data",
+      "source_filing": "Annual Report 2023"
+    },
+    {
+      "claim_text": "Invested $5bn in low-carbon energy in 2023",
+      "category": "environmental",
+      "verifiable_metric": "low_carbon_capex",
+      "stated_value": "$5bn",
+      "verification_status": "contradicted",
+      "verification_note": "Total capex was $16.3bn — internal breakdowns show 74% directed to oil and gas extraction and production",
+      "source_filing": "Annual Report 2023"
+    },
+    {
+      "claim_text": "Zero routine flaring commitment by 2030",
+      "category": "environmental",
+      "verifiable_metric": "routine_flaring",
+      "stated_value": "0 by 2030",
+      "verification_status": "unverifiable",
+      "verification_note": "No interim milestones disclosed; current flaring volumes not consistently reported year-on-year",
+      "source_filing": "Sustainability Report 2023"
+    },
+    {
+      "claim_text": "50% reduction in methane intensity by 2023 versus 2016 baseline",
+      "category": "environmental",
+      "verifiable_metric": "methane_intensity_reduction",
+      "stated_value": "50%",
+      "verification_status": "verified",
+      "verification_note": "CDP data and independent third-party verification confirm approximately 47% reduction as of 2023 — within rounding of claim",
+      "source_filing": "CDP Disclosure 2023"
+    },
+    {
+      "claim_text": "Net zero across operations and production by 2050 or sooner",
+      "category": "environmental",
+      "verifiable_metric": "net_zero_target",
+      "stated_value": "2050",
+      "verification_status": "unverifiable",
+      "verification_note": "No enforceable interim milestones; executive remuneration not linked to 2050 target; subject of FCA inquiry",
+      "source_filing": "Annual Report 2023"
+    }
+  ],
+  "controversies": [
+    {
+      "headline": "SEC greenwashing inquiry into BP low-carbon investment claims",
+      "incident_date": "2023-04-11",
+      "esg_category": "environmental",
+      "severity": "high",
+      "source_outlet": "Wall Street Journal"
+    },
+    {
+      "headline": "BP Texas City environmental compliance violations — EPA fine $18m",
+      "incident_date": "2023-09-04",
+      "esg_category": "environmental",
+      "severity": "high",
+      "source_outlet": "EPA"
+    },
+    {
+      "headline": "FCA opens investigation into BP ESG-linked fund marketing materials",
+      "incident_date": "2024-06-15",
+      "esg_category": "governance",
+      "severity": "high",
+      "source_outlet": "Financial Times"
+    },
+    {
+      "headline": "Gulf of Mexico legacy liability reassessment triggers $2.1bn write-down",
+      "incident_date": "2024-01-18",
+      "esg_category": "environmental",
+      "severity": "medium",
+      "source_outlet": "Bloomberg"
+    },
+    {
+      "headline": "Climate Accountability Project files complaint over net-zero target credibility",
+      "incident_date": "2024-11-02",
+      "esg_category": "environmental",
+      "severity": "medium",
+      "source_outlet": "Reuters"
+    }
+  ],
+  "integrity": {
+    "divergence_score": 59.4,
+    "verification_score": 50.0,
+    "controversy_score": 62.9,
+    "integrity_score": 56.5,
+    "weights": {
+      "divergence": 0.35,
+      "verification": 0.4,
+      "controversy": 0.25
+    }
+  },
+  "impact": {
+    "impact_score": 32.1,
+    "kpis": [
+      {
+        "kpi_name": "emissions_intensity",
+        "kpi_label": "Scope 1+2 Intensity",
+        "kpi_value": 185.0,
+        "kpi_unit": "tCO2e/$m revenue",
+        "kpi_score": 28.0,
+        "sector_median": 120.0,
+        "sector_median_score": 50.0,
+        "trend": "flat",
+        "materiality_weight": 0.35
+      },
+      {
+        "kpi_name": "low_carbon_capex_pct",
+        "kpi_label": "Low-Carbon Capex Share",
+        "kpi_value": 26.0,
+        "kpi_unit": "%",
+        "kpi_score": 35.0,
+        "sector_median": 35.0,
+        "sector_median_score": 50.0,
+        "trend": "improving",
+        "materiality_weight": 0.3
+      },
+      {
+        "kpi_name": "renewable_energy_pct",
+        "kpi_label": "Renewable Energy Share",
+        "kpi_value": 8.0,
+        "kpi_unit": "%",
+        "kpi_score": 20.0,
+        "sector_median": 15.0,
+        "sector_median_score": 50.0,
+        "trend": "improving",
+        "materiality_weight": 0.2
+      },
+      {
+        "kpi_name": "major_incidents",
+        "kpi_label": "Major Environmental Incidents",
+        "kpi_value": 3.0,
+        "kpi_unit": "count",
+        "kpi_score": 42.0,
+        "sector_median": 2.0,
+        "sector_median_score": 50.0,
+        "trend": "worsening",
+        "materiality_weight": 0.1
+      },
+      {
+        "kpi_name": "methane_reduction",
+        "kpi_label": "Methane Intensity Reduction",
+        "kpi_value": 47.0,
+        "kpi_unit": "%",
+        "kpi_score": 72.0,
+        "sector_median": 40.0,
+        "sector_median_score": 50.0,
+        "trend": "improving",
+        "materiality_weight": 0.05
+      }
+    ]
+  },
+  "wem": {
+    "wem_score": 34.2,
+    "d_carbon": 25.0,
+    "d_labor": 15.22,
+    "d_theft": 25.6,
+    "emissions_intensity": 184.8341
+  },
+  "wem_inputs": {
+    "ticker": "BP",
+    "year": 2023,
+    "revenue_usd": 211000000000.0,
+    "emissions_tco2e": 39000000.0,
+    "labor_fines_usd_5y": 52000000.0,
+    "other_fines_usd_5y": 310000000.0,
+    "ceo_pay_ratio": 107.0
+  },
+  "quadrant": {
+    "quadrant": "engagement_priority",
+    "label": "Engagement Priority",
+    "action": "engage",
+    "action_label": "Credible story but limited real-world progress — engage on specific KPIs",
+    "placebo_risk": false,
+    "color": "blue",
+    "recommendations": [
+      "ESG rating is credible but impact KPIs lag the narrative — press for concrete targets",
+      "Require time-bound, science-based milestones before increasing allocation",
+      "Sector-wide regulation is more effective than portfolio exclusion alone here"
+    ]
+  },
+  "esg_score_avg": 48.1,
+  "placebo_index": 0.784,
+  "material_factors": [
+    {
+      "factor": "Physical Impacts of Climate Change",
+      "materiality_score": 0.759,
+      "rank": 1,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Systemic Risk Management",
+      "materiality_score": 0.6,
+      "rank": 2,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Product Quality & Safety",
+      "materiality_score": 0.59,
+      "rank": 3,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "GHG Emissions",
+      "materiality_score": 0.581,
+      "rank": 4,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Human Rights & Community Relations",
+      "materiality_score": 0.558,
+      "rank": 5,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    }
+  ]
+}
