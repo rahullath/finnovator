@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react"
-import type { CompanyScore, PortfolioView, Role, TabId, WeightConfig } from "./types"
-import { fetchScore, fetchScoreWithWeights, fetchPortfolio, fetchCompanies } from "./api"
+import type { CompanyScore, PortfolioView, ForecastResult, Role, TabId, WeightConfig } from "./types"
+import { fetchScore, fetchScoreWithWeights, fetchPortfolio, fetchCompanies, fetchForecast } from "./api"
 
 import { ScoreDial } from "./components/ScoreDial"
 import { QuadrantBadge } from "./components/QuadrantBadge"
@@ -13,6 +13,7 @@ import { QuadrantPlot } from "./components/QuadrantPlot"
 import { PortfolioTilt } from "./components/PortfolioTilt"
 import { ActionPanel } from "./components/ActionPanel"
 import { WEMBreakdown } from "./components/WEMBreakdown"
+import { ForecastView } from "./components/ForecastView"
 
 const ROLE_OPTIONS: { id: Role; label: string }[] = [
   { id: "pm", label: "Portfolio Manager" },
@@ -21,6 +22,7 @@ const ROLE_OPTIONS: { id: Role; label: string }[] = [
 ]
 
 const TAB_OPTIONS: { id: TabId; label: string }[] = [
+  { id: "outlook", label: "Outlook" },
   { id: "signal", label: "Signal Breakdown" },
   { id: "impact", label: "Impact & Capital" },
   { id: "action", label: "Action Panel" },
@@ -33,11 +35,12 @@ export default function App() {
   const [selectedTicker, setSelectedTicker] = useState("BP")
   const [score, setScore] = useState<CompanyScore | null>(null)
   const [portfolio, setPortfolio] = useState<PortfolioView | null>(null)
+  const [forecast, setForecast] = useState<ForecastResult | null>(null)
   const [loading, setLoading] = useState(false)
   const [weightLoading, setWeightLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [role, setRole] = useState<Role>("pm")
-  const [tab, setTab] = useState<TabId>("signal")
+  const [tab, setTab] = useState<TabId>("outlook")
   const [weights, setWeights] = useState<WeightConfig>({ divergence: 0.35, verification: 0.40, controversy: 0.25 })
 
   useEffect(() => {
@@ -48,10 +51,15 @@ export default function App() {
   useEffect(() => {
     setLoading(true)
     setError(null)
-    fetchScore(selectedTicker)
-      .then((s) => {
+    setForecast(null)
+    Promise.all([
+      fetchScore(selectedTicker),
+      fetchForecast(selectedTicker),
+    ])
+      .then(([s, fc]) => {
         setScore(s)
         setWeights(s.integrity.weights)
+        setForecast(fc)
       })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false))
@@ -230,6 +238,12 @@ export default function App() {
             </div>
 
             {/* Tab content */}
+            {tab === "outlook" && (
+              forecast
+                ? <ForecastView score={score} forecast={forecast} />
+                : <div className="py-12 text-center text-gray-500 text-sm">Loading outlook…</div>
+            )}
+
             {tab === "signal" && (
               <div className="space-y-6">
                 <WeightSliders weights={weights} onChange={handleWeightChange} loading={weightLoading} />

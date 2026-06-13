@@ -1,0 +1,90 @@
+{
+  "ticker": "XOM",
+  "peer_sector": "energy",
+  "peer_count": 5,
+  "peer_rank_now": 5,
+  "peer_rank_3m": 5,
+  "peer_rank_12m": 5,
+  "ftse100_percentile_now": 2,
+  "ftse100_percentile_3m": 2,
+  "ftse100_percentile_12m": 2,
+  "driver_forecasts": [
+    {
+      "factor": "Physical Impacts of Climate Change",
+      "materiality_score": 0.759,
+      "direction_3m": "lagging",
+      "direction_12m": "lagging",
+      "confidence": "high",
+      "note": "lagging — 210tCO2e/$m revenue vs sector median 120tCO2e/$m revenue (above)"
+    },
+    {
+      "factor": "Ecological Impacts",
+      "materiality_score": 0.645,
+      "direction_3m": "lagging",
+      "direction_12m": "lagging",
+      "confidence": "high",
+      "note": "lagging — 4count vs sector median 2count (above)"
+    },
+    {
+      "factor": "Energy Management",
+      "materiality_score": 0.587,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "medium",
+      "note": "stable — 5% vs sector median 35% (below)"
+    },
+    {
+      "factor": "Product Design & Lifecycle Management",
+      "materiality_score": 0.582,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "medium",
+      "note": "stable — 5% vs sector median 35% (below)"
+    },
+    {
+      "factor": "GHG Emissions",
+      "materiality_score": 0.5815,
+      "direction_3m": "lagging",
+      "direction_12m": "lagging",
+      "confidence": "high",
+      "note": "lagging — 210tCO2e/$m revenue vs sector median 120tCO2e/$m revenue (above)"
+    },
+    {
+      "factor": "Systemic Risk Management",
+      "materiality_score": 0.578,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "low",
+      "note": "Materiality 58% — no direct metric in dataset"
+    },
+    {
+      "factor": "Product Quality & Safety",
+      "materiality_score": 0.5665,
+      "direction_3m": "lagging",
+      "direction_12m": "lagging",
+      "confidence": "high",
+      "note": "lagging — 4count vs sector median 2count (above)"
+    },
+    {
+      "factor": "Human Rights & Community Relations",
+      "materiality_score": 0.558,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "low",
+      "note": "Materiality 56% — no direct metric in dataset"
+    }
+  ],
+  "three_body": {
+    "body1_esg": 35.3,
+    "body2_peer_normalized": 0.0,
+    "body3_ftse_percentile": 2.0,
+    "instability_score": 19.8,
+    "instability_verdict": "moderate",
+    "instability_note": "Moderate conflict between the three signals (35-pt spread). ESG score reads better than sector peer rank implies. The FTSE 100's overweight in energy and mining inflates relative ESG rankings.",
+    "resolution": "Our resolution: Integrity 77/100 × WEM 5/100 → 'Engagement Priority'. Jangani, Date & Tucker (SSRN 5618192, 2026) show driver rankings shift across regime windows (COVID → COP26 → energy crisis). We anchor to verifiable harm metrics (emissions, pay ratios, enforcement records) that are regime-stable — not ESG labels that oscillate with market narrative."
+  },
+  "summary_investor": "ExxonMobil Corporation is projected to hold steady in its energy peer ranking (5→5 of 5) over 3 months. FTSE 100 position: 2nd→2nd percentile. WEM 5/100 — material ESG risk — recommend underweight or significant risk premium. Placebo Index 0.80 — ESG narrative overstates real performance.",
+  "summary_corporate": "12-month sector ranking forecast: hold steady (5→5 of 5). FTSE 100: 2nd→2nd percentile. Highest-leverage action: Physical Impacts of Climate Change (76% materiality) — this single driver has the greatest impact on FTSE 100 ranking improvement. ESG scores overstate performance by 31 pts — close this gap by improving Physical Impacts of Climate Change disclosure quality.",
+  "summary_auditor": "Of 2 ESG claims analysed, 0 (0%) are independently verifiable. No directly contradicted claims — disclosure quality above sector average. ESG provider spread: 2 pts — within normal range. Priority: third-party audit of Physical Impacts of Climate Change measurement methodology.",
+  "crowd_consensus": "Aggregated signal across investor, corporate, and audit lenses: Lagging — underweight; high harm + ESG overstatement confirmed. Driver rankings are temporally unstable across market regimes (Jangani et al., SSRN 5618192). The 3-body instability — ESG score, peer rank, FTSE position pulling in different directions — is resolved by WEM (5/100) × Integrity (77/100): regime-stable signals grounded in verifiable harm, not rater methodology."
+}

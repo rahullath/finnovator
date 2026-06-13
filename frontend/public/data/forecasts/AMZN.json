@@ -1,0 +1,90 @@
+{
+  "ticker": "AMZN",
+  "peer_sector": "energy",
+  "peer_count": 8,
+  "peer_rank_now": 5,
+  "peer_rank_3m": 5,
+  "peer_rank_12m": 5,
+  "ftse100_percentile_now": 23,
+  "ftse100_percentile_3m": 24,
+  "ftse100_percentile_12m": 24,
+  "driver_forecasts": [
+    {
+      "factor": "Business Model Resilience",
+      "materiality_score": 0.767,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "low",
+      "note": "High materiality (77%) — tracked via controversy signal (no direct KPI)"
+    },
+    {
+      "factor": "Business Ethics",
+      "materiality_score": 0.669,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "low",
+      "note": "High materiality (67%) — tracked via controversy signal (no direct KPI)"
+    },
+    {
+      "factor": "Materials Sourcing & Efficiency",
+      "materiality_score": 0.659,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "low",
+      "note": "High materiality (66%) — tracked via controversy signal (no direct KPI)"
+    },
+    {
+      "factor": "Supply Chain Management",
+      "materiality_score": 0.652,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "medium",
+      "note": "stable — 48/100 vs sector median 55/100 (below)"
+    },
+    {
+      "factor": "Critical Incidence Risk Management",
+      "materiality_score": 0.618,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "low",
+      "note": "Materiality 62% — no direct metric in dataset"
+    },
+    {
+      "factor": "Water & Hazardous Materials",
+      "materiality_score": 0.584,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "low",
+      "note": "Materiality 58% — no direct metric in dataset"
+    },
+    {
+      "factor": "Product Quality & Safety",
+      "materiality_score": 0.582,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "low",
+      "note": "Materiality 58% — no direct metric in dataset"
+    },
+    {
+      "factor": "Human Rights & Community Relations",
+      "materiality_score": 0.547,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "medium",
+      "note": "stable — 38/100 vs sector median 55/100 (below)"
+    }
+  ],
+  "three_body": {
+    "body1_esg": 43.9,
+    "body2_peer_normalized": 42.9,
+    "body3_ftse_percentile": 23.0,
+    "instability_score": 11.8,
+    "instability_verdict": "low",
+    "instability_note": "Low instability — ESG score, sector position, and FTSE 100 rank tell a broadly consistent story (21-pt spread).",
+    "resolution": "Our resolution: Integrity 56/100 × WEM 35/100 → 'Engagement Priority'. Jangani, Date & Tucker (SSRN 5618192, 2026) show driver rankings shift across regime windows (COVID → COP26 → energy crisis). We anchor to verifiable harm metrics (emissions, pay ratios, enforcement records) that are regime-stable — not ESG labels that oscillate with market narrative."
+  },
+  "summary_investor": "Amazon.com Inc is projected to hold steady in its energy peer ranking (5→5 of 8) over 3 months. FTSE 100 position: 23rd→24th percentile. WEM 35/100 — material ESG risk — recommend underweight or significant risk premium. Placebo Index 0.76 — ESG narrative overstates real performance.",
+  "summary_corporate": "12-month sector ranking forecast: hold steady (5→5 of 8). FTSE 100: 23rd→24th percentile. Highest-leverage action: Business Model Resilience (77% materiality) — this single driver has the greatest impact on FTSE 100 ranking improvement.",
+  "summary_auditor": "Of 2 ESG claims analysed, 0 (0%) are independently verifiable. 1 claim(s) directly contradicted by external data — moderate restatement risk. ESG provider spread: 12 pts — significant methodological disagreement reflected in Integrity Score. Priority: third-party audit of Business Model Resilience measurement methodology.",
+  "crowd_consensus": "Aggregated signal across investor, corporate, and audit lenses: Lagging — underweight; high harm + ESG overstatement confirmed. Driver rankings are temporally unstable across market regimes (Jangani et al., SSRN 5618192). The 3-body instability — ESG score, peer rank, FTSE position pulling in different directions — is resolved by WEM (35/100) × Integrity (56/100): regime-stable signals grounded in verifiable harm, not rater methodology."
+}

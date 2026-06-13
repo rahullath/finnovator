@@ -132,4 +132,41 @@ export interface PortfolioView {
 }
 
 export type Role = "pm" | "sustainability" | "regulator"
-export type TabId = "signal" | "impact" | "action"
+export type TabId = "signal" | "impact" | "action" | "outlook"
+
+export interface DriverForecast {
+  factor: string
+  materiality_score: number
+  direction_3m: "leading" | "stable" | "lagging"
+  direction_12m: "leading" | "stable" | "lagging"
+  confidence: "high" | "medium" | "low"
+  note: string
+}
+
+export interface ThreeBodyAnalysis {
+  body1_esg: number
+  body2_peer_normalized: number
+  body3_ftse_percentile: number
+  instability_score: number
+  instability_verdict: "severe" | "moderate" | "low"
+  instability_note: string
+  resolution: string
+}
+
+export interface ForecastResult {
+  ticker: string
+  peer_sector: string
+  peer_count: number
+  peer_rank_now: number
+  peer_rank_3m: number
+  peer_rank_12m: number
+  ftse100_percentile_now: number
+  ftse100_percentile_3m: number
+  ftse100_percentile_12m: number
+  driver_forecasts: DriverForecast[]
+  three_body: ThreeBodyAnalysis
+  summary_investor: string
+  summary_corporate: string
+  summary_auditor: string
+  crowd_consensus: string
+}

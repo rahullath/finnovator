@@ -237,6 +237,24 @@
       "materiality_score": 0.558,
       "rank": 5,
       "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Supply Chain Management",
+      "materiality_score": 0.518,
+      "rank": 6,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Business Ethics",
+      "materiality_score": 0.515,
+      "rank": 7,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Management of the Legal & Regulatory Environment",
+      "materiality_score": 0.428,
+      "rank": 8,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
     }
   ]
 }

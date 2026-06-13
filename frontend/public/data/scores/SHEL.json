@@ -189,6 +189,24 @@
       "materiality_score": 0.556,
       "rank": 5,
       "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Supply Chain Management",
+      "materiality_score": 0.544,
+      "rank": 6,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Product Quality & Safety",
+      "materiality_score": 0.543,
+      "rank": 7,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Labor Practices",
+      "materiality_score": 0.511,
+      "rank": 8,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
     }
   ]
 }

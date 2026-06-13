@@ -189,6 +189,24 @@
       "materiality_score": 0.618,
       "rank": 5,
       "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Water & Hazardous Materials",
+      "materiality_score": 0.584,
+      "rank": 6,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Product Quality & Safety",
+      "materiality_score": 0.582,
+      "rank": 7,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Human Rights & Community Relations",
+      "materiality_score": 0.547,
+      "rank": 8,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
     }
   ]
 }

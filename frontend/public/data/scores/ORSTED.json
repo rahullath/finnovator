@@ -200,6 +200,24 @@
       "materiality_score": 0.6145,
       "rank": 5,
       "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Energy Management",
+      "materiality_score": 0.6095,
+      "rank": 6,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "GHG Emissions",
+      "materiality_score": 0.591,
+      "rank": 7,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Materials Sourcing & Efficiency",
+      "materiality_score": 0.577,
+      "rank": 8,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
     }
   ]
 }

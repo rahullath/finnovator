@@ -189,6 +189,24 @@
       "materiality_score": 0.535,
       "rank": 5,
       "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "GHG Emissions",
+      "materiality_score": 0.522,
+      "rank": 6,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Critical Incidence Risk Management",
+      "materiality_score": 0.51,
+      "rank": 7,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Customer Welfare",
+      "materiality_score": 0.447,
+      "rank": 8,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
     }
   ]
 }

@@ -189,6 +189,24 @@
       "materiality_score": 0.5641,
       "rank": 5,
       "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Systemic Risk Management",
+      "materiality_score": 0.5607,
+      "rank": 6,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Product Quality & Safety",
+      "materiality_score": 0.5495,
+      "rank": 7,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+    },
+    {
+      "factor": "Human Rights & Community Relations",
+      "materiality_score": 0.5413,
+      "rank": 8,
+      "source": "Maxwell Data FTSE100 Materiality Survey (March 2025)"
     }
   ]
 }

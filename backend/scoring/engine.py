@@ -17,6 +17,7 @@ from .verification import calculate_verification_score
 from .controversy import calculate_controversy_score
 from .impact import calculate_impact_score, get_material_factors
 from .wem import calculate_wem_score
+from .forecast import generate_forecast
 
 DATA_DIR = Path(__file__).parent.parent / "data"
 
@@ -111,7 +112,7 @@ def _load_materiality() -> pd.DataFrame:
     return pd.read_csv(path)
 
 
-def _get_material_factors(ticker: str, top_n: int = 5) -> list[MaterialFactor]:
+def _get_material_factors(ticker: str, top_n: int = 8) -> list[MaterialFactor]:
     df = _load_materiality()
     subset = df[df["ticker"] == ticker].nlargest(top_n, "materiality_score").reset_index(drop=True)
     return [
@@ -349,3 +350,13 @@ def get_portfolio_view() -> PortfolioView:
         integrity_impact_tilt=integrity_impact_tilt,
         wem_tilt=wem_tilt,
     )
+
+
+def get_forecast(ticker: str):
+    """Compute forward-looking forecast for a company using full portfolio as peer universe."""
+    from .models import ForecastResult
+    score = get_company_score(ticker)
+    if not score:
+        return None
+    portfolio = get_portfolio_view()
+    return generate_forecast(score, portfolio.companies)

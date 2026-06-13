@@ -1,4 +1,4 @@
-import type { CompanyScore, PortfolioView, WeightConfig } from "./types"
+import type { CompanyScore, PortfolioView, WeightConfig, ForecastResult } from "./types"
 export type { CompanyScore }
 
 // In dev: Vite proxy forwards /api/* → localhost:8000 (FastAPI)
@@ -52,6 +52,17 @@ export async function fetchPortfolio(): Promise<PortfolioView> {
   }
   const r = await fetch("/api/portfolio")
   if (!r.ok) throw new Error("Failed to fetch portfolio")
+  return r.json()
+}
+
+export async function fetchForecast(ticker: string): Promise<ForecastResult> {
+  if (PROD) {
+    const r = await fetch(`/data/forecasts/${ticker}.json`)
+    if (!r.ok) throw new Error(`No forecast for ${ticker}`)
+    return r.json()
+  }
+  const r = await fetch(`/api/forecast/${ticker}`)
+  if (!r.ok) throw new Error(`No forecast for ${ticker}`)
   return r.json()
 }
 

@@ -22,7 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-from scoring.engine import get_all_tickers, get_company_score, get_portfolio_view
+from scoring.engine import get_all_tickers, get_company_score, get_portfolio_view, get_forecast
 
 OUT = Path(__file__).parent.parent / "frontend" / "public" / "data"
 OUT.mkdir(parents=True, exist_ok=True)
@@ -47,4 +47,13 @@ for ticker in tickers:
 pv = get_portfolio_view()
 (OUT / "portfolio.json").write_text(pv.model_dump_json(indent=2))
 print("wrote portfolio.json")
+
+# per-company forecast files
+(OUT / "forecasts").mkdir(exist_ok=True)
+for ticker in tickers:
+    fc = get_forecast(ticker)
+    if fc:
+        (OUT / "forecasts" / f"{ticker}.json").write_text(fc.model_dump_json(indent=2))
+        print(f"  wrote forecasts/{ticker}.json")
+
 print("Done.")

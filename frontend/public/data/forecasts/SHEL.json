@@ -1,0 +1,90 @@
+{
+  "ticker": "SHEL",
+  "peer_sector": "energy",
+  "peer_count": 5,
+  "peer_rank_now": 4,
+  "peer_rank_3m": 4,
+  "peer_rank_12m": 4,
+  "ftse100_percentile_now": 17,
+  "ftse100_percentile_3m": 18,
+  "ftse100_percentile_12m": 19,
+  "driver_forecasts": [
+    {
+      "factor": "Ecological Impacts",
+      "materiality_score": 0.645,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "medium",
+      "note": "stable — 2count vs sector median 2count (below)"
+    },
+    {
+      "factor": "Energy Management",
+      "materiality_score": 0.587,
+      "direction_3m": "stable",
+      "direction_12m": "leading",
+      "confidence": "medium",
+      "note": "stable — 23% vs sector median 35% (below)"
+    },
+    {
+      "factor": "GHG Emissions",
+      "materiality_score": 0.582,
+      "direction_3m": "stable",
+      "direction_12m": "leading",
+      "confidence": "medium",
+      "note": "stable — 175tCO2e/$m revenue vs sector median 120tCO2e/$m revenue (above)"
+    },
+    {
+      "factor": "Product Design & Lifecycle Management",
+      "materiality_score": 0.582,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "medium",
+      "note": "stable — 23% vs sector median 35% (below)"
+    },
+    {
+      "factor": "Systemic Risk Management",
+      "materiality_score": 0.556,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "low",
+      "note": "Materiality 56% — no direct metric in dataset"
+    },
+    {
+      "factor": "Supply Chain Management",
+      "materiality_score": 0.544,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "low",
+      "note": "Materiality 54% — no direct metric in dataset"
+    },
+    {
+      "factor": "Product Quality & Safety",
+      "materiality_score": 0.543,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "medium",
+      "note": "stable — 2count vs sector median 2count (below)"
+    },
+    {
+      "factor": "Labor Practices",
+      "materiality_score": 0.511,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "low",
+      "note": "Materiality 51% — no direct metric in dataset"
+    }
+  ],
+  "three_body": {
+    "body1_esg": 46.9,
+    "body2_peer_normalized": 25.0,
+    "body3_ftse_percentile": 17.0,
+    "instability_score": 15.5,
+    "instability_verdict": "moderate",
+    "instability_note": "Moderate conflict between the three signals (30-pt spread). ESG score reads better than FTSE 100 position implies. The FTSE 100's overweight in energy and mining inflates relative ESG rankings.",
+    "resolution": "Our resolution: Integrity 59/100 × WEM 31/100 → 'Engagement Priority'. Jangani, Date & Tucker (SSRN 5618192, 2026) show driver rankings shift across regime windows (COVID → COP26 → energy crisis). We anchor to verifiable harm metrics (emissions, pay ratios, enforcement records) that are regime-stable — not ESG labels that oscillate with market narrative."
+  },
+  "summary_investor": "Shell plc is projected to hold steady in its energy peer ranking (4→4 of 5) over 3 months. FTSE 100 position: 17th→18th percentile. WEM 31/100 — material ESG risk — recommend underweight or significant risk premium. Placebo Index 0.79 — ESG narrative overstates real performance.",
+  "summary_corporate": "12-month sector ranking forecast: hold steady (4→4 of 5). FTSE 100: 17th→19th percentile. Highest-leverage action: Ecological Impacts (64% materiality) — this single driver has the greatest impact on FTSE 100 ranking improvement. ESG scores overstate performance by 16 pts — close this gap by improving Ecological Impacts disclosure quality.",
+  "summary_auditor": "Of 2 ESG claims analysed, 0 (0%) are independently verifiable. 1 claim(s) directly contradicted by external data — moderate restatement risk. ESG provider spread: 10 pts — within normal range. Priority: third-party audit of Ecological Impacts measurement methodology.",
+  "crowd_consensus": "Aggregated signal across investor, corporate, and audit lenses: Lagging — underweight; high harm + ESG overstatement confirmed. Driver rankings are temporally unstable across market regimes (Jangani et al., SSRN 5618192). The 3-body instability — ESG score, peer rank, FTSE position pulling in different directions — is resolved by WEM (31/100) × Integrity (59/100): regime-stable signals grounded in verifiable harm, not rater methodology."
+}

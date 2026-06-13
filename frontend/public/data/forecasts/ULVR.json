@@ -1,0 +1,90 @@
+{
+  "ticker": "ULVR",
+  "peer_sector": "consumer",
+  "peer_count": 2,
+  "peer_rank_now": 1,
+  "peer_rank_3m": 1,
+  "peer_rank_12m": 1,
+  "ftse100_percentile_now": 54,
+  "ftse100_percentile_3m": 56,
+  "ftse100_percentile_12m": 58,
+  "driver_forecasts": [
+    {
+      "factor": "Physical Impacts of Climate Change",
+      "materiality_score": 0.741,
+      "direction_3m": "leading",
+      "direction_12m": "leading",
+      "confidence": "high",
+      "note": "leading — 45tCO2e/$m revenue vs sector median 60tCO2e/$m revenue (below)"
+    },
+    {
+      "factor": "Business Model Resilience",
+      "materiality_score": 0.678,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "low",
+      "note": "High materiality (68%) — tracked via controversy signal (no direct KPI)"
+    },
+    {
+      "factor": "Human Rights & Community Relations",
+      "materiality_score": 0.566,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "medium",
+      "note": "stable — 68/100 vs sector median 60/100 (above)"
+    },
+    {
+      "factor": "Management of the Legal & Regulatory Environment",
+      "materiality_score": 0.556,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "low",
+      "note": "Materiality 56% — no direct metric in dataset"
+    },
+    {
+      "factor": "Water & Hazardous Materials",
+      "materiality_score": 0.535,
+      "direction_3m": "leading",
+      "direction_12m": "leading",
+      "confidence": "high",
+      "note": "leading — 82/100 vs sector median 65/100 (above)"
+    },
+    {
+      "factor": "GHG Emissions",
+      "materiality_score": 0.522,
+      "direction_3m": "leading",
+      "direction_12m": "leading",
+      "confidence": "high",
+      "note": "leading — 45tCO2e/$m revenue vs sector median 60tCO2e/$m revenue (below)"
+    },
+    {
+      "factor": "Critical Incidence Risk Management",
+      "materiality_score": 0.51,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "low",
+      "note": "Materiality 51% — no direct metric in dataset"
+    },
+    {
+      "factor": "Customer Welfare",
+      "materiality_score": 0.447,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "low",
+      "note": "Materiality 45% — no direct metric in dataset"
+    }
+  ],
+  "three_body": {
+    "body1_esg": 66.8,
+    "body2_peer_normalized": 100.0,
+    "body3_ftse_percentile": 54.0,
+    "instability_score": 23.7,
+    "instability_verdict": "moderate",
+    "instability_note": "Moderate conflict between the three signals (46-pt spread). sector peer rank reads better than FTSE 100 position implies. The FTSE 100's overweight in energy and mining inflates relative ESG rankings.",
+    "resolution": "Our resolution: Integrity 84/100 × WEM 52/100 → 'Preferred Sustainability Leader'. Jangani, Date & Tucker (SSRN 5618192, 2026) show driver rankings shift across regime windows (COVID → COP26 → energy crisis). We anchor to verifiable harm metrics (emissions, pay ratios, enforcement records) that are regime-stable — not ESG labels that oscillate with market narrative."
+  },
+  "summary_investor": "Unilever plc is projected to hold steady in its consumer peer ranking (1→1 of 2) over 3 months. FTSE 100 position: 54th→56th percentile. WEM 52/100 — moderate harm exposure — hold, engage on material drivers. Placebo Index 0.68 — ESG narrative overstates real performance.",
+  "summary_corporate": "12-month sector ranking forecast: hold steady (1→1 of 2). FTSE 100: 54th→58th percentile. Highest-leverage action: Physical Impacts of Climate Change (74% materiality) — this single driver has the greatest impact on FTSE 100 ranking improvement.",
+  "summary_auditor": "Of 2 ESG claims analysed, 1 (50%) are independently verifiable. No directly contradicted claims — disclosure quality above sector average. ESG provider spread: 6 pts — within normal range. Priority: third-party audit of Physical Impacts of Climate Change measurement methodology.",
+  "crowd_consensus": "Aggregated signal across investor, corporate, and audit lenses: Stable — hold; monitor material driver trajectory. Driver rankings are temporally unstable across market regimes (Jangani et al., SSRN 5618192). The 3-body instability — ESG score, peer rank, FTSE position pulling in different directions — is resolved by WEM (52/100) × Integrity (84/100): regime-stable signals grounded in verifiable harm, not rater methodology."
+}

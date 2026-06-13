@@ -1,0 +1,90 @@
+{
+  "ticker": "ORSTED",
+  "peer_sector": "energy",
+  "peer_count": 5,
+  "peer_rank_now": 1,
+  "peer_rank_3m": 1,
+  "peer_rank_12m": 1,
+  "ftse100_percentile_now": 93,
+  "ftse100_percentile_3m": 96,
+  "ftse100_percentile_12m": 98,
+  "driver_forecasts": [
+    {
+      "factor": "Business Model Resilience",
+      "materiality_score": 0.7225,
+      "direction_3m": "leading",
+      "direction_12m": "leading",
+      "confidence": "high",
+      "note": "leading — 89% vs sector median 35% (above)"
+    },
+    {
+      "factor": "Product Design & Lifecycle Management",
+      "materiality_score": 0.721,
+      "direction_3m": "leading",
+      "direction_12m": "leading",
+      "confidence": "high",
+      "note": "leading — 89% vs sector median 35% (above)"
+    },
+    {
+      "factor": "Competitive Behavior",
+      "materiality_score": 0.714,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "low",
+      "note": "High materiality (71%) — tracked via controversy signal (no direct KPI)"
+    },
+    {
+      "factor": "Ecological Impacts",
+      "materiality_score": 0.657,
+      "direction_3m": "leading",
+      "direction_12m": "leading",
+      "confidence": "high",
+      "note": "leading — 0count vs sector median 2count (below)"
+    },
+    {
+      "factor": "Physical Impacts of Climate Change",
+      "materiality_score": 0.6145,
+      "direction_3m": "leading",
+      "direction_12m": "leading",
+      "confidence": "high",
+      "note": "leading — 22tCO2e/$m revenue vs sector median 120tCO2e/$m revenue (below)"
+    },
+    {
+      "factor": "Energy Management",
+      "materiality_score": 0.6095,
+      "direction_3m": "leading",
+      "direction_12m": "leading",
+      "confidence": "high",
+      "note": "leading — 89% vs sector median 35% (above)"
+    },
+    {
+      "factor": "GHG Emissions",
+      "materiality_score": 0.591,
+      "direction_3m": "leading",
+      "direction_12m": "leading",
+      "confidence": "high",
+      "note": "leading — 22tCO2e/$m revenue vs sector median 120tCO2e/$m revenue (below)"
+    },
+    {
+      "factor": "Materials Sourcing & Efficiency",
+      "materiality_score": 0.577,
+      "direction_3m": "stable",
+      "direction_12m": "stable",
+      "confidence": "low",
+      "note": "Materiality 58% — no direct metric in dataset"
+    }
+  ],
+  "three_body": {
+    "body1_esg": 79.2,
+    "body2_peer_normalized": 100.0,
+    "body3_ftse_percentile": 93.0,
+    "instability_score": 10.6,
+    "instability_verdict": "low",
+    "instability_note": "Low instability — ESG score, sector position, and FTSE 100 rank tell a broadly consistent story (21-pt spread).",
+    "resolution": "Our resolution: Integrity 92/100 × WEM 80/100 → 'Preferred Sustainability Leader'. Jangani, Date & Tucker (SSRN 5618192, 2026) show driver rankings shift across regime windows (COVID → COP26 → energy crisis). We anchor to verifiable harm metrics (emissions, pay ratios, enforcement records) that are regime-stable — not ESG labels that oscillate with market narrative."
+  },
+  "summary_investor": "Ørsted A/S is projected to hold steady in its energy peer ranking (1→1 of 5) over 3 months. FTSE 100 position: 93rd→96th percentile. WEM 80/100 — credible sustainability — candidate for overweight in ESG mandates. Placebo Index 0.54 — ESG narrative overstates real performance.",
+  "summary_corporate": "12-month sector ranking forecast: hold steady (1→1 of 5). FTSE 100: 93rd→98th percentile. Highest-leverage action: Business Model Resilience (72% materiality) — this single driver has the greatest impact on FTSE 100 ranking improvement.",
+  "summary_auditor": "Of 4 ESG claims analysed, 3 (75%) are independently verifiable. No directly contradicted claims — disclosure quality above sector average. ESG provider spread: 4 pts — within normal range. Priority: third-party audit of Business Model Resilience measurement methodology.",
+  "crowd_consensus": "Aggregated signal across investor, corporate, and audit lenses: Leading — overweight candidate; low harm, credible signal. Driver rankings are temporally unstable across market regimes (Jangani et al., SSRN 5618192). The 3-body instability — ESG score, peer rank, FTSE position pulling in different directions — is resolved by WEM (80/100) × Integrity (92/100): regime-stable signals grounded in verifiable harm, not rater methodology."
+}

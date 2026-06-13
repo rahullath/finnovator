@@ -6,8 +6,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from scoring.engine import get_company_score, get_portfolio_view, get_all_tickers
-from scoring.models import WeightConfig, CompanyScore, PortfolioView
+from scoring.engine import get_company_score, get_portfolio_view, get_all_tickers, get_forecast
+from scoring.models import WeightConfig, CompanyScore, PortfolioView, ForecastResult
 from ingestion.fmp import FMPIngestor
 from ingestion.climate_trace import ClimateTraceIngestor
 from ingestion.violation_tracker import ViolationTrackerIngestor
@@ -87,6 +87,14 @@ async def refresh_company(ticker: str) -> dict:
     if not score:
         raise HTTPException(status_code=404, detail=f"Company '{ticker}' not found after refresh")
     return {"ticker": t, "ingestion": results, "scores": score.model_dump()}
+
+
+@app.get("/api/forecast/{ticker}", response_model=ForecastResult)
+async def forecast_company(ticker: str) -> ForecastResult:
+    result = get_forecast(ticker.upper())
+    if not result:
+        raise HTTPException(status_code=404, detail=f"Company '{ticker}' not found")
+    return result
 
 
 @app.get("/api/health")

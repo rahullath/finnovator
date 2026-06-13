@@ -142,3 +142,40 @@ class PortfolioView(BaseModel):
     naive_esg_tilt: list[dict]
     integrity_impact_tilt: list[dict]
     wem_tilt: list[dict]
+
+
+class DriverForecast(BaseModel):
+    factor: str
+    materiality_score: float
+    direction_3m: str   # "improving" | "flat" | "worsening"
+    direction_12m: str
+    confidence: str     # "high" | "medium" | "low"
+    note: str
+
+
+class ThreeBodyAnalysis(BaseModel):
+    body1_esg: float               # company's avg ESG score (0–100)
+    body2_peer_normalized: float   # peer rank as score: 100=1st, 0=last
+    body3_ftse_percentile: float   # estimated FTSE 100 percentile (0–100)
+    instability_score: float       # std-dev of the three signals
+    instability_verdict: str       # "severe" | "moderate" | "low"
+    instability_note: str
+    resolution: str
+
+
+class ForecastResult(BaseModel):
+    ticker: str
+    peer_sector: str
+    peer_count: int
+    peer_rank_now: int
+    peer_rank_3m: int
+    peer_rank_12m: int
+    ftse100_percentile_now: int
+    ftse100_percentile_3m: int
+    ftse100_percentile_12m: int
+    driver_forecasts: list[DriverForecast]
+    three_body: ThreeBodyAnalysis
+    summary_investor: str
+    summary_corporate: str
+    summary_auditor: str
+    crowd_consensus: str
