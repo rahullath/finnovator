@@ -1,0 +1,106 @@
+ticker,sector,factor,materiality_score
+BP,Oil & gas producers,GHG Emissions,0.581
+BP,Oil & gas producers,Human Rights & Community Relations,0.558
+BP,Oil & gas producers,Product Quality & Safety,0.59
+BP,Oil & gas producers,Business Ethics,0.515
+BP,Oil & gas producers,Management of the Legal & Regulatory Environment,0.428
+BP,Oil & gas producers,Physical Impacts of Climate Change,0.759
+BP,Oil & gas producers,Supply Chain Management,0.518
+BP,Oil & gas producers,Systemic Risk Management,0.6
+SHEL,Oil & gas producers,Ecological Impacts,0.645
+SHEL,Oil & gas producers,Energy Management,0.587
+SHEL,Oil & gas producers,GHG Emissions,0.582
+SHEL,Oil & gas producers,Labor Practices,0.511
+SHEL,Oil & gas producers,Product Quality & Safety,0.543
+SHEL,Oil & gas producers,Product Design & Lifecycle Management,0.582
+SHEL,Oil & gas producers,Supply Chain Management,0.544
+SHEL,Oil & gas producers,Systemic Risk Management,0.556
+XOM,Oil & gas producers,Ecological Impacts,0.645
+XOM,Oil & gas producers,Energy Management,0.587
+XOM,Oil & gas producers,GHG Emissions,0.5815
+XOM,Oil & gas producers,Human Rights & Community Relations,0.558
+XOM,Oil & gas producers,Labor Practices,0.511
+XOM,Oil & gas producers,Product Quality & Safety,0.5665
+XOM,Oil & gas producers,Business Ethics,0.515
+XOM,Oil & gas producers,Management of the Legal & Regulatory Environment,0.428
+XOM,Oil & gas producers,Product Design & Lifecycle Management,0.582
+XOM,Oil & gas producers,Physical Impacts of Climate Change,0.759
+XOM,Oil & gas producers,Supply Chain Management,0.531
+XOM,Oil & gas producers,Systemic Risk Management,0.578
+TTE,Oil & gas producers,Ecological Impacts,0.6257
+TTE,Oil & gas producers,Energy Management,0.5694
+TTE,Oil & gas producers,GHG Emissions,0.5641
+TTE,Oil & gas producers,Human Rights & Community Relations,0.5413
+TTE,Oil & gas producers,Labor Practices,0.4957
+TTE,Oil & gas producers,Product Quality & Safety,0.5495
+TTE,Oil & gas producers,Business Ethics,0.4995
+TTE,Oil & gas producers,Management of the Legal & Regulatory Environment,0.4152
+TTE,Oil & gas producers,Product Design & Lifecycle Management,0.5645
+TTE,Oil & gas producers,Physical Impacts of Climate Change,0.7362
+TTE,Oil & gas producers,Supply Chain Management,0.5151
+TTE,Oil & gas producers,Systemic Risk Management,0.5607
+ORSTED,Renewable energy,Air Quality,0.4907
+ORSTED,Renewable energy,Ecological Impacts,0.657
+ORSTED,Renewable energy,Energy Management,0.6095
+ORSTED,Renewable energy,GHG Emissions,0.591
+ORSTED,Renewable energy,Waste & Wastewater Management,0.542
+ORSTED,Renewable energy,Customer Privacy,0.5597
+ORSTED,Renewable energy,Human Rights & Community Relations,0.499
+ORSTED,Renewable energy,Product Quality & Safety,0.5093
+ORSTED,Renewable energy,Business Ethics,0.5368
+ORSTED,Renewable energy,Business Model Resilience,0.7225
+ORSTED,Renewable energy,Competitive Behavior,0.714
+ORSTED,Renewable energy,Critical Incidence Risk Management,0.528
+ORSTED,Renewable energy,Management of the Legal & Regulatory Environment,0.501
+ORSTED,Renewable energy,Materials Sourcing & Efficiency,0.577
+ORSTED,Renewable energy,Product Design & Lifecycle Management,0.721
+ORSTED,Renewable energy,Physical Impacts of Climate Change,0.6145
+ORSTED,Renewable energy,Supply Chain Management,0.559
+ORSTED,Renewable energy,Systemic Risk Management,0.4757
+ULVR,Personal goods,GHG Emissions,0.522
+ULVR,Personal goods,Water & Hazardous Materials,0.535
+ULVR,Personal goods,Customer Welfare,0.447
+ULVR,Personal goods,Human Rights & Community Relations,0.566
+ULVR,Personal goods,Business Model Resilience,0.678
+ULVR,Personal goods,Critical Incidence Risk Management,0.51
+ULVR,Personal goods,Management of the Legal & Regulatory Environment,0.556
+ULVR,Personal goods,Physical Impacts of Climate Change,0.741
+NESN,Food & beverages,Air Quality,0.4167
+NESN,Food & beverages,Ecological Impacts,0.474
+NESN,Food & beverages,Energy Management,0.4645
+NESN,Food & beverages,GHG Emissions,0.496
+NESN,Food & beverages,Water & Hazardous Materials,0.64
+NESN,Food & beverages,Waste & Wastewater Management,0.4933
+NESN,Food & beverages,Access & Affordability,0.608
+NESN,Food & beverages,Customer Privacy,0.537
+NESN,Food & beverages,Customer Welfare,0.495
+NESN,Food & beverages,Data Security,0.505
+NESN,Food & beverages,Employee Engagement,0.505
+NESN,Food & beverages,Human Rights & Community Relations,0.4597
+NESN,Food & beverages,Labor Practices,0.593
+NESN,Food & beverages,Product Quality & Safety,0.514
+NESN,Food & beverages,Business Ethics,0.529
+NESN,Food & beverages,Business Model Resilience,0.788
+NESN,Food & beverages,Competitive Behavior,0.718
+NESN,Food & beverages,Critical Incidence Risk Management,0.389
+NESN,Food & beverages,Management of the Legal & Regulatory Environment,0.517
+NESN,Food & beverages,Product Design & Lifecycle Management,0.6187
+NESN,Food & beverages,Physical Impacts of Climate Change,0.534
+NESN,Food & beverages,Supply Chain Management,0.696
+NESN,Food & beverages,Systemic Risk Management,0.6475
+AMZN,E-commerce & technology,Air Quality,0.505
+AMZN,E-commerce & technology,Ecological Impacts,0.513
+AMZN,E-commerce & technology,Energy Management,0.4495
+AMZN,E-commerce & technology,Water & Hazardous Materials,0.584
+AMZN,E-commerce & technology,Waste & Wastewater Management,0.43
+AMZN,E-commerce & technology,Access & Affordability,0.4845
+AMZN,E-commerce & technology,Customer Welfare,0.5415
+AMZN,E-commerce & technology,Human Rights & Community Relations,0.547
+AMZN,E-commerce & technology,Labor Practices,0.508
+AMZN,E-commerce & technology,Product Quality & Safety,0.582
+AMZN,E-commerce & technology,Business Ethics,0.669
+AMZN,E-commerce & technology,Business Model Resilience,0.767
+AMZN,E-commerce & technology,Critical Incidence Risk Management,0.618
+AMZN,E-commerce & technology,Materials Sourcing & Efficiency,0.659
+AMZN,E-commerce & technology,Supply Chain Management,0.652
+AMZN,E-commerce & technology,Systemic Risk Management,0.4265

@@ -2,19 +2,21 @@
 Main orchestration: loads data from CSVs and computes all scores.
 All scoring logic is explicit and formula-driven — no black boxes.
 """
-import os
+import math
 import pandas as pd
 from pathlib import Path
 
 from .models import (
     WeightConfig, ESGRating, Claim, Controversy, ImpactKPI,
+    WEMInputs, WEMBreakdown,
     IntegrityBreakdown, ImpactBreakdown, QuadrantInfo,
-    CompanyScore, PortfolioEntry, PortfolioView,
+    MaterialFactor, CompanyScore, PortfolioEntry, PortfolioView,
 )
 from .divergence import calculate_divergence_score
 from .verification import calculate_verification_score
 from .controversy import calculate_controversy_score
 from .impact import calculate_impact_score, get_material_factors
+from .wem import calculate_wem_score
 
 DATA_DIR = Path(__file__).parent.parent / "data"
 
@@ -96,6 +98,55 @@ def _load_controversies() -> pd.DataFrame:
 
 def _load_kpis() -> pd.DataFrame:
     return pd.read_csv(DATA_DIR / "impact_kpis.csv")
+
+
+def _load_wem_inputs() -> pd.DataFrame:
+    return pd.read_csv(DATA_DIR / "wem_inputs.csv")
+
+
+def _load_materiality() -> pd.DataFrame:
+    path = DATA_DIR / "materiality.csv"
+    if not path.exists():
+        return pd.DataFrame(columns=["ticker", "factor", "materiality_score"])
+    return pd.read_csv(path)
+
+
+def _get_material_factors(ticker: str, top_n: int = 5) -> list[MaterialFactor]:
+    df = _load_materiality()
+    subset = df[df["ticker"] == ticker].nlargest(top_n, "materiality_score").reset_index(drop=True)
+    return [
+        MaterialFactor(
+            factor=row["factor"],
+            materiality_score=round(float(row["materiality_score"]), 4),
+            rank=i + 1,
+        )
+        for i, row in subset.iterrows()
+    ]
+
+
+def _all_wem_inputs() -> list[WEMInputs]:
+    df = _load_wem_inputs()
+    return [
+        WEMInputs(
+            ticker=row["ticker"],
+            year=int(row["year"]),
+            revenue_usd=float(row["revenue_usd"]),
+            emissions_tco2e=float(row["emissions_tco2e"]),
+            labor_fines_usd_5y=float(row["labor_fines_usd_5y"]),
+            other_fines_usd_5y=float(row["other_fines_usd_5y"]),
+            ceo_pay_ratio=float(row["ceo_pay_ratio"]),
+        )
+        for _, row in df.iterrows()
+    ]
+
+
+def _placebo_index(esg_avg: float, wem_score: float, integrity_score: float) -> float:
+    """
+    High when ESG looks good but WEM and Integrity are low.
+    Operationalises Tariq Fancy's 'dangerous placebo' idea.
+    """
+    raw = 0.6 * (esg_avg - wem_score) + 0.4 * (100 - integrity_score)
+    return round(1 / (1 + math.exp(-raw / 20)), 3)
 
 
 def get_all_tickers() -> list[str]:
@@ -181,11 +232,37 @@ def get_company_score(ticker: str, weights: WeightConfig | None = None) -> Compa
 
     impact_score = calculate_impact_score(kpis, company["sector"])
 
+    # WEM score
+    all_wem = _all_wem_inputs()
+    wem_df = _load_wem_inputs()
+    wem_row = wem_df[wem_df["ticker"] == ticker]
+    if not wem_row.empty:
+        row = wem_row.iloc[0]
+        wem_inputs_obj = WEMInputs(
+            ticker=ticker,
+            year=int(row["year"]),
+            revenue_usd=float(row["revenue_usd"]),
+            emissions_tco2e=float(row["emissions_tco2e"]),
+            labor_fines_usd_5y=float(row["labor_fines_usd_5y"]),
+            other_fines_usd_5y=float(row["other_fines_usd_5y"]),
+            ceo_pay_ratio=float(row["ceo_pay_ratio"]),
+        )
+    else:
+        wem_inputs_obj = WEMInputs(
+            ticker=ticker, year=2023,
+            revenue_usd=1.0, emissions_tco2e=0.0,
+            labor_fines_usd_5y=0.0, other_fines_usd_5y=0.0, ceo_pay_ratio=50.0,
+        )
+
+    wem_result = calculate_wem_score(wem_inputs_obj, all_wem)
+    wem_breakdown = WEMBreakdown(**wem_result)
+
+    avg_esg = round(sum(r.total for r in ratings) / len(ratings), 1) if ratings else 50.0
+    placebo_idx = _placebo_index(avg_esg, wem_breakdown.wem_score, integrity_score)
+
     integrity_tier = "high" if integrity_score >= 50 else "low"
     impact_tier = "high" if impact_score >= 50 else "low"
     rule = QUADRANT_RULES[(integrity_tier, impact_tier)]
-
-    material_factors = get_material_factors(company["sector"])
 
     quadrant = QuadrantInfo(
         quadrant=rule["quadrant"],
@@ -196,6 +273,8 @@ def get_company_score(ticker: str, weights: WeightConfig | None = None) -> Compa
         color=rule["color"],
         recommendations=QUADRANT_RECOMMENDATIONS[rule["quadrant"]],
     )
+
+    material_factors = _get_material_factors(ticker)
 
     return CompanyScore(
         ticker=ticker,
@@ -216,50 +295,57 @@ def get_company_score(ticker: str, weights: WeightConfig | None = None) -> Compa
             impact_score=impact_score,
             kpis=kpis,
         ),
+        wem=wem_breakdown,
+        wem_inputs=wem_inputs_obj,
         quadrant=quadrant,
+        esg_score_avg=avg_esg,
+        placebo_index=placebo_idx,
+        material_factors=material_factors,
     )
 
 
 def get_portfolio_view() -> PortfolioView:
     tickers = get_all_tickers()
     entries: list[PortfolioEntry] = []
-    ratings_df = _load_ratings()
 
     for ticker in tickers:
         score = get_company_score(ticker)
         if not score:
             continue
-
-        ticker_ratings = ratings_df[ratings_df["ticker"] == ticker]
-        avg_esg = ticker_ratings["total"].mean() if not ticker_ratings.empty else 50.0
-
         entries.append(PortfolioEntry(
             ticker=ticker,
             name=score.name,
             sector=score.sector,
             integrity_score=score.integrity.integrity_score,
             impact_score=score.impact.impact_score,
+            wem_score=score.wem.wem_score,
+            placebo_index=score.placebo_index,
             quadrant=score.quadrant.quadrant,
             quadrant_color=score.quadrant.color,
-            esg_score_avg=round(avg_esg, 1),
+            esg_score_avg=score.esg_score_avg,
         ))
 
-    total_esg = sum(e.esg_score_avg for e in entries)
-    total_ii = sum(e.integrity_score * e.impact_score / 100 for e in entries)
+    total_esg = sum(e.esg_score_avg for e in entries) or 1.0
+    total_ii = sum(e.integrity_score * e.impact_score / 100 for e in entries) or 1.0
+    total_wem = sum(e.wem_score for e in entries) or 1.0
 
-    naive_tilt = [
-        {"ticker": e.ticker, "name": e.name, "weight": round(e.esg_score_avg / total_esg * 100, 1)}
-        for e in entries
-    ]
-
+    naive_tilt = sorted(
+        [{"ticker": e.ticker, "name": e.name, "weight": round(e.esg_score_avg / total_esg * 100, 1)} for e in entries],
+        key=lambda x: -x["weight"],
+    )
     ii_scores = [e.integrity_score * e.impact_score / 100 for e in entries]
-    integrity_impact_tilt = [
-        {"ticker": e.ticker, "name": e.name, "weight": round(s / total_ii * 100, 1)}
-        for e, s in zip(entries, ii_scores)
-    ]
+    integrity_impact_tilt = sorted(
+        [{"ticker": e.ticker, "name": e.name, "weight": round(s / total_ii * 100, 1)} for e, s in zip(entries, ii_scores)],
+        key=lambda x: -x["weight"],
+    )
+    wem_tilt = sorted(
+        [{"ticker": e.ticker, "name": e.name, "weight": round(e.wem_score / total_wem * 100, 1)} for e in entries],
+        key=lambda x: -x["weight"],
+    )
 
     return PortfolioView(
         companies=entries,
-        naive_esg_tilt=sorted(naive_tilt, key=lambda x: -x["weight"]),
-        integrity_impact_tilt=sorted(integrity_impact_tilt, key=lambda x: -x["weight"]),
+        naive_esg_tilt=naive_tilt,
+        integrity_impact_tilt=integrity_impact_tilt,
+        wem_tilt=wem_tilt,
     )

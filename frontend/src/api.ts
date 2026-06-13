@@ -1,4 +1,6 @@
 import type { CompanyScore, PortfolioView, WeightConfig } from "./types"
+// Re-export so callers can type the refresh response properly
+export type { CompanyScore }
 
 const BASE = "/api"
 
@@ -30,5 +32,11 @@ export async function fetchScoreWithWeights(
 export async function fetchPortfolio(): Promise<PortfolioView> {
   const r = await fetch(`${BASE}/portfolio`)
   if (!r.ok) throw new Error("Failed to fetch portfolio")
+  return r.json()
+}
+
+export async function refreshCompany(ticker: string): Promise<{ ingestion: Record<string, unknown>; scores: CompanyScore }> {
+  const r = await fetch(`${BASE}/refresh/${ticker}`, { method: "POST" })
+  if (!r.ok) throw new Error(`Failed to refresh ${ticker}`)
   return r.json()
 }

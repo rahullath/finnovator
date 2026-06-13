@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 
 
 class WeightConfig(BaseModel):
@@ -58,6 +58,31 @@ class ImpactKPI(BaseModel):
     materiality_weight: float
 
 
+class MaterialFactor(BaseModel):
+    factor: str
+    materiality_score: float
+    rank: int
+    source: str = "Maxwell Data FTSE100 Materiality Survey (March 2025)"
+
+
+class WEMInputs(BaseModel):
+    ticker: str
+    year: int
+    revenue_usd: float
+    emissions_tco2e: float
+    labor_fines_usd_5y: float
+    other_fines_usd_5y: float
+    ceo_pay_ratio: float
+
+
+class WEMBreakdown(BaseModel):
+    wem_score: float
+    d_carbon: float
+    d_labor: float
+    d_theft: float
+    emissions_intensity: float  # tCO2e per $M revenue
+
+
 class IntegrityBreakdown(BaseModel):
     divergence_score: float
     verification_score: float
@@ -91,7 +116,12 @@ class CompanyScore(BaseModel):
     controversies: list[Controversy]
     integrity: IntegrityBreakdown
     impact: ImpactBreakdown
+    wem: WEMBreakdown
+    wem_inputs: WEMInputs
     quadrant: QuadrantInfo
+    esg_score_avg: float
+    placebo_index: float
+    material_factors: list[MaterialFactor] = []
 
 
 class PortfolioEntry(BaseModel):
@@ -100,6 +130,8 @@ class PortfolioEntry(BaseModel):
     sector: str
     integrity_score: float
     impact_score: float
+    wem_score: float
+    placebo_index: float
     quadrant: str
     quadrant_color: str
     esg_score_avg: float
@@ -109,3 +141,4 @@ class PortfolioView(BaseModel):
     companies: list[PortfolioEntry]
     naive_esg_tilt: list[dict]
     integrity_impact_tilt: list[dict]
+    wem_tilt: list[dict]

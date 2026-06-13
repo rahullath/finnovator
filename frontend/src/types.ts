@@ -56,6 +56,31 @@ export interface ImpactBreakdown {
   kpis: ImpactKPI[]
 }
 
+export interface MaterialFactor {
+  factor: string
+  materiality_score: number
+  rank: number
+  source: string
+}
+
+export interface WEMInputs {
+  ticker: string
+  year: number
+  revenue_usd: number
+  emissions_tco2e: number
+  labor_fines_usd_5y: number
+  other_fines_usd_5y: number
+  ceo_pay_ratio: number
+}
+
+export interface WEMBreakdown {
+  wem_score: number
+  d_carbon: number
+  d_labor: number
+  d_theft: number
+  emissions_intensity: number  // tCO2e per $M revenue
+}
+
 export type QuadrantColor = "green" | "blue" | "yellow" | "red"
 
 export interface QuadrantInfo {
@@ -78,7 +103,12 @@ export interface CompanyScore {
   controversies: Controversy[]
   integrity: IntegrityBreakdown
   impact: ImpactBreakdown
+  wem: WEMBreakdown
+  wem_inputs: WEMInputs
   quadrant: QuadrantInfo
+  esg_score_avg: number
+  placebo_index: number
+  material_factors: MaterialFactor[]
 }
 
 export interface PortfolioEntry {
@@ -87,6 +117,8 @@ export interface PortfolioEntry {
   sector: string
   integrity_score: number
   impact_score: number
+  wem_score: number
+  placebo_index: number
   quadrant: string
   quadrant_color: QuadrantColor
   esg_score_avg: number
@@ -96,6 +128,7 @@ export interface PortfolioView {
   companies: PortfolioEntry[]
   naive_esg_tilt: { ticker: string; name: string; weight: number }[]
   integrity_impact_tilt: { ticker: string; name: string; weight: number }[]
+  wem_tilt: { ticker: string; name: string; weight: number }[]
 }
 
 export type Role = "pm" | "sustainability" | "regulator"

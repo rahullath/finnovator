@@ -1,0 +1,23 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp?project_ref=jvrhupdxzxgxfzpcnhjd"
+    }
+  }
+}
+{
+  "mcpServers": {
+    "RapidAPI Hub - ESG (Environmental, Social, Governance) Data": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://mcp.rapidapi.com",
+        "--header",
+        "x-api-host: esg-environmental-social-governance-data.p.rapidapi.com",
+        "--header",
+        "x-api-key: cdd686b6bdmsha687d9f37c1c973p1c1c70jsnc46f30b865fa"
+      ]
+    }
+  }
+}

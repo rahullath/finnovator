@@ -12,6 +12,7 @@ import { ImpactKPIs } from "./components/ImpactKPIs"
 import { QuadrantPlot } from "./components/QuadrantPlot"
 import { PortfolioTilt } from "./components/PortfolioTilt"
 import { ActionPanel } from "./components/ActionPanel"
+import { WEMBreakdown } from "./components/WEMBreakdown"
 
 const ROLE_OPTIONS: { id: Role; label: string }[] = [
   { id: "pm", label: "Portfolio Manager" },
@@ -81,6 +82,18 @@ export default function App() {
     : score.impact.impact_score >= 50 ? "blue"
     : "red"
     : "gray"
+
+  const wemColor = score
+    ? score.wem.wem_score >= 70 ? "green"
+    : score.wem.wem_score >= 50 ? "yellow"
+    : "red"
+    : "gray"
+
+  const placeboLevel = score
+    ? score.placebo_index >= 0.65 ? { label: "Dangerous Placebo", cls: "text-red-400 bg-red-500/10 border-red-500/30" }
+    : score.placebo_index >= 0.4 ? { label: "Placebo Risk: Moderate", cls: "text-yellow-400 bg-yellow-500/10 border-yellow-500/30" }
+    : { label: "Signal Coherent", cls: "text-gray-400 bg-surface border-border" }
+    : null
 
   return (
     <div className="min-h-screen bg-surface">
@@ -168,19 +181,32 @@ export default function App() {
                     placeboRisk={score.quadrant.placebo_risk}
                     large
                   />
+                  {placeboLevel && (
+                    <div className={`mt-2 inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full border ${placeboLevel.cls}`}>
+                      <span className="font-mono">PI {score.placebo_index.toFixed(2)}</span>
+                      <span className="opacity-40">·</span>
+                      <span>{placeboLevel.label}</span>
+                    </div>
+                  )}
                 </div>
-                <div className="flex gap-8 shrink-0">
+                <div className="flex gap-6 shrink-0">
                   <ScoreDial
                     score={score.integrity.integrity_score}
                     label="Integrity Score"
                     color={integrityColor}
-                    size={130}
+                    size={115}
                   />
                   <ScoreDial
                     score={score.impact.impact_score}
                     label="Impact Alignment"
                     color={impactColor}
-                    size={130}
+                    size={115}
+                  />
+                  <ScoreDial
+                    score={score.wem.wem_score}
+                    label="WEM Score"
+                    color={wemColor}
+                    size={115}
                   />
                 </div>
               </div>
@@ -245,6 +271,14 @@ export default function App() {
 
             {tab === "impact" && (
               <div className="space-y-6">
+                <div className="card p-5">
+                  <WEMBreakdown
+                    wem={score.wem}
+                    inputs={score.wem_inputs}
+                    esgAvg={score.esg_score_avg}
+                    integrityScore={score.integrity.integrity_score}
+                  />
+                </div>
                 <div className="card p-5">
                   <ImpactKPIs kpis={score.impact.kpis} sector={score.sector} />
                 </div>

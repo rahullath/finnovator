@@ -82,6 +82,22 @@ For each company (or small portfolio), our tool produces three top‑level outpu
 
 ## 5. Core mechanics & scoring
 
+### 5.0 Three-score framework
+
+The navigator produces **three top-level scores** per company:
+
+1. **Integrity Score (0–100):** reliability of ESG signals (rating divergence + claim verification + controversies).
+2. **Impact Alignment Score (0–100):** sector-material sustainability performance (emissions intensity, safety, wage fairness, etc.).
+3. **WEM Score (0–100):** Worker & Ecological Materiality — a deflationary index that starts at 100 and subtracts penalties for absolute emissions intensity, labour exploitation (CEO pay ratio), and accumulated regulatory fines. Explicitly anti-shareholder-primacy: penalises externalised harm regardless of ESG narrative.
+
+Composite output also includes a **Placebo Index** (0–1): high when ESG looks good but WEM and Integrity are low — operationalising Tariq Fancy's "dangerous placebo" concept.
+
+```
+placebo_index = sigmoid(a * (esg_score_avg - wem_score) + b * (100 - integrity_score))
+```
+
+---
+
 ### 5.1 Integrity Score (signal quality)
 
 **Objective:** Measure how much confidence to place in a company’s existing ESG scores and narrative.
@@ -145,7 +161,32 @@ Narrative: “This company’s ESG score is high, but its impact alignment is lo
 
 ***
 
-### 5.3 Capital‑allocation and decision‑support layer
+### 5.3 WEM Score (Worker & Ecological Materiality)
+
+**Objective:** Bypass corporate self-reporting by measuring externalised harm directly from public enforcement and emissions data.
+
+**Formula:**
+
+```
+WEM = clamp(100 - (D_carbon + D_labor + D_theft), 0, 100)
+```
+
+**Components:**
+
+- **D_carbon (0–40):** emissions intensity `I = emissions_tco2e / revenue_usd`. Percentile-rank across company universe. `D_carbon = 40 * I_percentile`.
+  - Data: Climate TRACE API v4 (facility/sector GHGs, open) mapped by country + sector for v1.
+
+- **D_labor (0–30):** CEO-to-worker pay ratio R. `D_labor = clamp(20 * log(R / 50), 0, 30)`.
+  - Data: SEC DEF 14A / PlainCEOPay / static curated CSV.
+
+- **D_theft (0–40):** 5-year total regulatory fines F (labour + environmental). `D_theft = min(40, 10 * log10(F_millions + 1))`.
+  - Data: Violation Tracker Global (open, with Python scrapers).
+
+**WEM is stored in `wem_inputs` table/CSV** (revenue, emissions, fines, ceo_pay_ratio) so it's fully auditable and not a black box.
+
+---
+
+### 5.5 Capital‑allocation and decision‑support layer
 
 **Goal:** Translate Integrity and Impact scores into **clear recommendations and portfolio signals**. 
 
@@ -167,21 +208,37 @@ This is where you explicitly answer the challenge brief: **identify the most rel
 
 ***
 
-## 6. Data sources (hackathon‑realistic)
+## 6. Data sources
 
-We reuse and extend your prior spec’s data plan, with flexibility to fall back to curated CSVs if APIs are slow.
+All primary sources are **public and bypass corporate PR spin**, except claims we explicitly extract and score.
 
 | Data | Source | Usage |
 |---|---|---|
-| ESG ratings (multiple) | Financial Modeling Prep API | Base ESG scores + divergence |
-| ESG ratings (alt / mock) | Open Sustainability Index or static sample | Second opinion for divergence |
-| Filings / sustainability reports | SEC EDGAR + curated PDFs | Claim extraction & verification |
-| Labour & social stats | ILOSTAT + sample metrics | Basic S component where relevant |
-| News & controversies | GDELT + manual incident tagging | Controversy & greenwashing risk |
-| Company fundamentals | yfinance / static CSV | Context & simple cost‑of‑capital views |
-| Impact KPIs | Manually curated for a few firms | Emissions/safety/capex trends for demo 
+| ESG ratings (primary) | Financial Modeling Prep API (`fmp.py`) | Base E/S/G/total scores + divergence |
+| ESG ratings (second opinion) | Static curated CSV / OSI sample | Divergence calculation |
+| Filings / sustainability reports | SEC EDGAR (`edgar.py`) | Claim extraction via LLM |
+| News & controversies | GDELT (`gdelt.py`) | Controversy + greenwashing incidents |
+| Company fundamentals | FMP fundamentals endpoint | Revenue for WEM carbon intensity |
+| Impact KPIs | Curated CSV per sector | Emissions/safety/capex trends |
+| **Emissions (ecology)** | **Climate TRACE API v4** (`climate_trace.py`) | GHG emissions → D_carbon penalty |
+| **Labour/regulatory fines** | **Violation Tracker Global** (`violation_tracker.py`) | 5yr fines → D_theft penalty |
+| **CEO pay ratio** | **PlainCEOPay / SEC DEF 14A** (`ceo_pay.py`) | Pay ratio → D_labor penalty |
+| WEM inputs | `wem_inputs.csv` (curated static fallback) | Guarantees demo works if APIs flake |
 
-Pre‑event: generate or download a small, clean sample dataset to guarantee a smooth demo even if APIs flake.  
+The `wem_inputs.csv` pre-populates all 8 demo companies with realistic 2023/2024 values drawn from public filings so the full WEM score runs offline.
+
+**Ingestion architecture (v1):**
+
+```
+POST /api/refresh/{ticker}
+  → FMPIngestor       → companies, esg_ratings, revenue
+  → ClimateTraceIngestor → emissions_tco2e (sector/country proxy for v1)
+  → ViolationTrackerIngestor → labor_fines_5y, other_fines_5y
+  → CEOPayIngestor    → ceo_pay_ratio
+  → scoring engine    → recompute all scores
+```
+
+All ingestors fall back gracefully to the curated CSV data if the API is unavailable.
 
 ***
 
@@ -196,15 +253,23 @@ Integrity & Impact → Frontend shows dashboard + Action Panel
 
 ### Backend (Python)
 
-- **Data ingestion layer**  
-  - Wrappers for FMP ESG API, EDGAR/GDELT, and CSV loaders.
-- **Scoring engine**  
-  - `DivergenceCalculator` (ESG rating spread).  
-  - `ClaimExtractor` (LLM or rule‑based) to pull numeric ESG claims from filings.
-  - `VerificationMatcher` to check claims against external metrics (simplified logic).  
-  - `ControversyCounter` to aggregate incidents by recency and severity.
-  - `ImpactScorer` to compute sector‑specific KPIs and aggregate Impact Alignment.  
-  - `DecisionEngine` to classify companies into the four quadrants and produce action text.  
+- **Data ingestion layer** (`backend/ingestion/`)
+  - `fmp.py` — FMP ESG API (ratings, fundamentals, revenue)
+  - `edgar.py` — EDGAR 10-K fetcher
+  - `gdelt.py` — GDELT controversies
+  - `claude_extractor.py` — LLM claim extraction
+  - `climate_trace.py` — Climate TRACE emissions (API v4, sector/country for v1)
+  - `violation_tracker.py` — Violation Tracker Global fines scraper
+  - `ceo_pay.py` — CEO pay ratio importer (PlainCEOPay / SEC DEF 14A)
+
+- **Scoring engine** (`backend/scoring/`)
+  - `divergence.py` — ESG rating spread → agreement score
+  - `verification.py` — claim verified/contradicted/unverifiable ratios
+  - `controversy.py` — recency-weighted incident severity
+  - `impact.py` — sector-material KPIs vs peer median
+  - `wem.py` — WEM score: D_carbon + D_labor + D_theft from `wem_inputs`
+  - `engine.py` — orchestrates all modules, computes placebo_index, quadrant
+  - `models.py` — Pydantic models: `CompanyScore`, `WEMInputs`, `WEMBreakdown`, `PortfolioView`
 
 ### Frontend
 
@@ -217,21 +282,33 @@ Choose what fits team skills; options:
 
 Key screens:
 
-1. **Company Overview**  
-   - Integrity Score and Impact Alignment Score as two big dials.  
-   - Quadrant classification (“High Integrity / Low Impact”).  
+1. **Company Overview**
+   - Three dials: Integrity Score, Impact Score, WEM Score.
+   - Placebo Index badge (high = “dangerous placebo” risk).
+   - Quadrant classification (“High Integrity / Low Impact”).
 
-2. **Signal Breakdown**  
-   - Rating Divergence chart (bar/scatter).  
-   - Claim verification table (✓ / ? / ✗) with short notes.  
-   - Controversy timeline.  
+2. **Signal Breakdown** (Signals tab)
+   - Rating Divergence chart (bar/scatter).
+   - Claim verification table (✓ / ? / ✗) with short notes.
+   - Controversy timeline.
 
-3. **Impact & Capital View**  
-   - Impact KPIs vs sector median (small bar charts).  
-   - Simple “Current ESG‑tilt allocation vs Integrity×Impact tilt” comparison for a 5‑stock sample portfolio.  
+3. **Impact & WEM View** (Impact tab)
+   - Impact KPIs vs sector median (small bar charts).
+   - WEM breakdown: D_carbon / D_labor / D_theft sub-scores with raw inputs.
+   - ESG score vs WEM vs Integrity numeric comparison.
 
-4. **Action Panel**  
-   - Bulleted recommendations for investors and executives.  
+4. **Portfolio View**
+   - Three tilts: naive ESG / Integrity×Impact / WEM-weighted.
+   - Sector and greenwashing-risk quadrant breakdown.
+
+5. **Action Panel**
+   - Bulleted recommendations per role (PM / Sustainability Officer / Regulator).
+   - Role toggle changes framing: PM sees tilt/risk language, SO sees engagement asks, Regulator sees fines/mismatch data.
+
+**New API endpoints:**
+- `GET /api/score/{ticker}` — now includes `wem`, `wem_inputs`, `placebo_index`
+- `GET /api/portfolio` — includes `wem_score`, `placebo_index` per entry, third tilt
+- `POST /api/refresh/{ticker}` — orchestrates all ingestors and recomputes scores
 
 ### Storage
 
@@ -244,25 +321,31 @@ Key screens:
 
 ### Day 1 — Afternoon / Evening
 
-- Finalise **sector and 5–10 demo companies** (e.g., energy or large consumer names).  
-- Build **static CSVs** for ESG ratings, controversies, and 3–4 impact KPIs per company.  
-- Implement Integrity Score and Impact Alignment calculations in Python.  
-- Set up minimal frontend skeleton (Streamlit or React).  
+- [x] Demo companies (8 firms: BP, SHEL, ORSTED, XOM, TTE, ULVR, NESN, AMZN) with static CSVs.
+- [x] Integrity Score + Impact Alignment in Python + FastAPI backend.
+- [x] React frontend with dials, divergence chart, claim table, controversy timeline, quadrant plot, portfolio tilt.
+- [ ] **Add `wem_inputs.csv`** with realistic 2023/24 values for all 8 companies.
+- [ ] **Implement `wem.py`** scoring module (D_carbon / D_labor / D_theft).
+- [ ] **Update `models.py`** — add `WEMInputs`, `WEMBreakdown`, `placebo_index` to `CompanyScore`/`PortfolioView`.
+- [ ] **Update `engine.py`** to load wem_inputs and call wem.py; compute placebo_index.
+- [ ] **Extend API** — `GET /api/score/{ticker}` returns wem + placebo; `POST /api/refresh/{ticker}` stub.
+- [ ] **Stub ingestion modules** — climate_trace.py, violation_tracker.py, ceo_pay.py (callable, fall back to CSV).
 
 ### Day 2 — Morning
 
-- Wire scoring engine to frontend; build core visualisations:  
-  - Integrity dial, divergence chart, claim verification table.  
-  - Impact vs ESG quadrant plot.  
-- Implement simple portfolio view: two bar charts for “ESG tilt” vs “Integrity×Impact tilt.”  
+- [ ] **Frontend WEM dial** — third score dial on company overview.
+- [ ] **WEM breakdown panel** — D_carbon / D_labor / D_theft bars with raw input values shown.
+- [ ] **Placebo Index badge** on company card.
+- [ ] **Third portfolio tilt** — WEM-weighted allocation column.
+- [ ] **Role toggle** — PM / Sustainability / Regulator framing in Action Panel.
 
 ### Day 2 — Afternoon
 
-- Polish **Action Panel copy** so it reads like something an asset manager would actually use.  
-- Prepare **demo script**:  
-  - Company A (classic “greenwashed leader”): high ESG, low Integrity & Impact.  
-  - Company B (under‑recognised): average ESG, high Impact and decent Integrity.  
-- Rehearse 3‑minute live walkthrough and 2‑minute Q&A.
+- Polish **demo script**:
+  - XOM/BP: high ESG narrative, low WEM (big carbon + fines) → “dangerous placebo”
+  - ORSTED: average ESG, high WEM + Impact → “under-recognised performer”
+  - AMZN: high ESG score, terrible CEO pay ratio + labour fines → WEM exposes it
+- Rehearse 3-minute walkthrough; emphasise the three numbers ESG providers don't give you.
 
 ***
 

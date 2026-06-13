@@ -8,6 +8,11 @@ from pydantic import BaseModel
 
 from scoring.engine import get_company_score, get_portfolio_view, get_all_tickers
 from scoring.models import WeightConfig, CompanyScore, PortfolioView
+from ingestion.fmp import FMPIngestor
+from ingestion.climate_trace import ClimateTraceIngestor
+from ingestion.violation_tracker import ViolationTrackerIngestor
+from ingestion.ceo_pay import CEOPayIngestor
+from ingestion.finnhub import FinnhubIngestor
 
 app = FastAPI(title="ESG Integrity & Impact Navigator", version="1.0.0")
 
@@ -56,6 +61,32 @@ async def score_company_custom_weights(ticker: str, body: WeightRequest) -> Comp
 @app.get("/api/portfolio", response_model=PortfolioView)
 async def portfolio_view() -> PortfolioView:
     return get_portfolio_view()
+
+
+@app.post("/api/refresh/{ticker}")
+async def refresh_company(ticker: str) -> dict:
+    """
+    Orchestrates all ingestors for a ticker, then recomputes scores.
+    Each ingestor falls back to CSV data if its API is unavailable.
+    """
+    t = ticker.upper()
+    results = {}
+    for name, ingestor in [
+        ("fmp", FMPIngestor()),
+        ("climate_trace", ClimateTraceIngestor()),
+        ("finnhub", FinnhubIngestor()),
+        ("violation_tracker", ViolationTrackerIngestor()),
+        ("ceo_pay", CEOPayIngestor()),
+    ]:
+        try:
+            results[name] = ingestor.fetch(t)
+        except Exception as e:
+            results[name] = {"status": "error", "detail": str(e)}
+
+    score = get_company_score(t)
+    if not score:
+        raise HTTPException(status_code=404, detail=f"Company '{ticker}' not found after refresh")
+    return {"ticker": t, "ingestion": results, "scores": score.model_dump()}
 
 
 @app.get("/api/health")

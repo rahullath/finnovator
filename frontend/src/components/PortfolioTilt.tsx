@@ -46,18 +46,24 @@ export function PortfolioTilt({ portfolio }: Props) {
         </span>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-3 gap-6">
         <TiltChart
           data={portfolio.naive_esg_tilt}
           title="Naive ESG Tilt"
           color="#3b82f6"
-          subtitle="Weighted by average ESG score across providers"
+          subtitle="Weighted by avg ESG score across providers"
         />
         <TiltChart
           data={portfolio.integrity_impact_tilt}
           title="Integrity × Impact Tilt"
           color="#22c55e"
-          subtitle="Weighted by Integrity Score × Impact Score / 100"
+          subtitle="Weighted by Integrity × Impact / 100"
+        />
+        <TiltChart
+          data={portfolio.wem_tilt}
+          title="WEM Tilt"
+          color="#a855f7"
+          subtitle="Weighted by WEM score — penalises externalised harm"
         />
       </div>
     </div>
