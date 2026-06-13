@@ -1,0 +1,41 @@
+ticker,sector,kpi_name,kpi_label,kpi_value,kpi_unit,kpi_score,sector_median,sector_median_score,trend,materiality_weight,year
+BP,energy,emissions_intensity,Scope 1+2 Intensity,185,tCO2e/$m revenue,28,120,50,flat,0.35,2023
+BP,energy,low_carbon_capex_pct,Low-Carbon Capex Share,26,%,35,35,50,improving,0.30,2023
+BP,energy,renewable_energy_pct,Renewable Energy Share,8,%,20,15,50,improving,0.20,2023
+BP,energy,major_incidents,Major Environmental Incidents,3,count,42,2,50,worsening,0.10,2023
+BP,energy,methane_reduction,Methane Intensity Reduction,47,%,72,40,50,improving,0.05,2023
+SHEL,energy,emissions_intensity,Scope 1+2 Intensity,175,tCO2e/$m revenue,32,120,50,flat,0.35,2023
+SHEL,energy,low_carbon_capex_pct,Low-Carbon Capex Share,23,%,30,35,50,flat,0.30,2023
+SHEL,energy,renewable_energy_pct,Renewable Energy Share,10,%,24,15,50,improving,0.20,2023
+SHEL,energy,major_incidents,Major Environmental Incidents,2,count,65,2,50,flat,0.10,2023
+SHEL,energy,methane_reduction,Methane Intensity Reduction,38,%,58,40,50,improving,0.05,2023
+ORSTED,energy,emissions_intensity,Scope 1+2 Intensity,22,tCO2e/$m revenue,95,120,50,improving,0.35,2023
+ORSTED,energy,low_carbon_capex_pct,Low-Carbon Capex Share,89,%,98,35,50,improving,0.30,2023
+ORSTED,energy,renewable_energy_pct,Renewable Energy Share,87,%,97,15,50,improving,0.20,2023
+ORSTED,energy,major_incidents,Major Environmental Incidents,0,count,100,2,50,improving,0.10,2023
+ORSTED,energy,methane_reduction,Methane Intensity Reduction,82,%,88,40,50,improving,0.05,2023
+XOM,energy,emissions_intensity,Scope 1+2 Intensity,210,tCO2e/$m revenue,18,120,50,worsening,0.35,2023
+XOM,energy,low_carbon_capex_pct,Low-Carbon Capex Share,5,%,8,35,50,flat,0.30,2023
+XOM,energy,renewable_energy_pct,Renewable Energy Share,2,%,4,15,50,flat,0.20,2023
+XOM,energy,major_incidents,Major Environmental Incidents,4,count,38,2,50,worsening,0.10,2023
+XOM,energy,methane_reduction,Methane Intensity Reduction,12,%,18,40,50,flat,0.05,2023
+TTE,energy,emissions_intensity,Scope 1+2 Intensity,155,tCO2e/$m revenue,42,120,50,improving,0.35,2023
+TTE,energy,low_carbon_capex_pct,Low-Carbon Capex Share,32,%,44,35,50,improving,0.30,2023
+TTE,energy,renewable_energy_pct,Renewable Energy Share,18,%,35,15,50,improving,0.20,2023
+TTE,energy,major_incidents,Major Environmental Incidents,2,count,65,2,50,flat,0.10,2023
+TTE,energy,methane_reduction,Methane Intensity Reduction,50,%,78,40,50,improving,0.05,2023
+ULVR,consumer,emissions_intensity,Scope 1+2 Intensity,45,tCO2e/$m revenue,72,60,50,improving,0.30,2023
+ULVR,consumer,supply_chain_score,Supply Chain Sustainability Score,55,/100,62,55,50,flat,0.25,2023
+ULVR,consumer,plastic_reduction,Virgin Plastic Reduction,18,%,48,20,50,improving,0.20,2023
+ULVR,consumer,labor_standards,Labour Standards Score,68,/100,70,60,50,flat,0.15,2023
+ULVR,consumer,water_intensity,Water Use Intensity,82,/100,75,65,50,improving,0.10,2023
+NESN,consumer,emissions_intensity,Scope 1+2 Intensity,68,tCO2e/$m revenue,55,60,50,worsening,0.30,2023
+NESN,consumer,supply_chain_score,Supply Chain Sustainability Score,32,/100,30,55,50,worsening,0.25,2023
+NESN,consumer,plastic_reduction,Virgin Plastic Reduction,-12,%,15,20,50,worsening,0.20,2023
+NESN,consumer,labor_standards,Labour Standards Score,42,/100,35,60,50,worsening,0.15,2023
+NESN,consumer,water_intensity,Water Use Intensity,58,/100,52,65,50,worsening,0.10,2023
+AMZN,technology,emissions_intensity,Scope 1+2 Intensity,88,tCO2e/$m revenue,62,70,50,flat,0.25,2023
+AMZN,technology,supply_chain_score,Supply Chain Sustainability Score,48,/100,45,55,50,flat,0.20,2023
+AMZN,technology,renewable_energy_pct,Renewable Energy Share,42,%,55,50,50,improving,0.30,2023
+AMZN,technology,labor_standards,Labour Standards Score,38,/100,30,55,50,flat,0.15,2023
+AMZN,technology,scope3_reduction,Scope 3 Emissions Reduction,-5,%,25,30,50,worsening,0.10,2023
