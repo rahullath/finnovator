@@ -1,0 +1,527 @@
+[
+  {
+    "ticker": "III",
+    "name": "3i Group Plc",
+    "industry": "Financial services",
+    "sector": "financials",
+    "has_full_score": false
+  },
+  {
+    "ticker": "ADM",
+    "name": "Admiral Group",
+    "industry": "Insurance",
+    "sector": "financials",
+    "has_full_score": false
+  },
+  {
+    "ticker": "AAF",
+    "name": "Airtel Africa plc",
+    "industry": "Telecommunications services",
+    "sector": "technology",
+    "has_full_score": false
+  },
+  {
+    "ticker": "AAL",
+    "name": "Anglo American Plc",
+    "industry": "Mining",
+    "sector": "energy",
+    "has_full_score": false
+  },
+  {
+    "ticker": "ANTO",
+    "name": "Antofagasta plc",
+    "industry": "Mining",
+    "sector": "energy",
+    "has_full_score": false
+  },
+  {
+    "ticker": "ABF",
+    "name": "Associated British Foods plc",
+    "industry": "Food & tobacco",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "AUTO",
+    "name": "Auto Trader Group plc",
+    "industry": "Media",
+    "sector": "media",
+    "has_full_score": false
+  },
+  {
+    "ticker": "AV",
+    "name": "Aviva Plc",
+    "industry": "Life insurance",
+    "sector": "financials",
+    "has_full_score": false
+  },
+  {
+    "ticker": "BA.",
+    "name": "BAE Systems plc",
+    "industry": "Aerospace & defence",
+    "sector": "defence",
+    "has_full_score": false
+  },
+  {
+    "ticker": "BP",
+    "name": "BP Plc",
+    "industry": "Oil & gas producers",
+    "sector": "energy",
+    "has_full_score": true
+  },
+  {
+    "ticker": "BT.A",
+    "name": "BT Group plc",
+    "industry": "Telecommunications services",
+    "sector": "technology",
+    "has_full_score": false
+  },
+  {
+    "ticker": "BAB",
+    "name": "Babcock International Group",
+    "industry": "Aerospace & defence",
+    "sector": "defence",
+    "has_full_score": false
+  },
+  {
+    "ticker": "BARC",
+    "name": "Barclays plc",
+    "industry": "Banks",
+    "sector": "financials",
+    "has_full_score": false
+  },
+  {
+    "ticker": "BTRW",
+    "name": "Barratt Redrow Plc",
+    "industry": "Household goods & home construction",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "BEZ",
+    "name": "Beazley plc",
+    "industry": "Insurance",
+    "sector": "financials",
+    "has_full_score": false
+  },
+  {
+    "ticker": "BKG",
+    "name": "Berkeley Group Holdings plc",
+    "industry": "Household goods & home construction",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "BATS",
+    "name": "British American Tobacco plc",
+    "industry": "Tobacco",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "BNZL",
+    "name": "Bunzl plc",
+    "industry": "Support services",
+    "sector": "industrial",
+    "has_full_score": false
+  },
+  {
+    "ticker": "BRBY",
+    "name": "Burberry Group plc",
+    "industry": "Personal goods",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "CNA",
+    "name": "Centrica plc",
+    "industry": "Multiline utilities",
+    "sector": "other",
+    "has_full_score": false
+  },
+  {
+    "ticker": "CCH",
+    "name": "Coca-Cola HBC AG",
+    "industry": "Beverages",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "CPG",
+    "name": "Compass Group plc",
+    "industry": "Support services",
+    "sector": "industrial",
+    "has_full_score": false
+  },
+  {
+    "ticker": "DCC",
+    "name": "DCC plc",
+    "industry": "Support services",
+    "sector": "industrial",
+    "has_full_score": false
+  },
+  {
+    "ticker": "DGE",
+    "name": "Diageo plc",
+    "industry": "Beverages",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "EDV",
+    "name": "Endeavour Mining plc",
+    "industry": "Mining",
+    "sector": "energy",
+    "has_full_score": false
+  },
+  {
+    "ticker": "ENT",
+    "name": "Entain plc",
+    "industry": "Travel & leisure",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "EXPN",
+    "name": "Experian Plc",
+    "industry": "Support services",
+    "sector": "industrial",
+    "has_full_score": false
+  },
+  {
+    "ticker": "FRES",
+    "name": "Fresnillo",
+    "industry": "Mining",
+    "sector": "energy",
+    "has_full_score": false
+  },
+  {
+    "ticker": "GSK",
+    "name": "GSK plc",
+    "industry": "Pharmaceuticals & biotechnology",
+    "sector": "healthcare",
+    "has_full_score": false
+  },
+  {
+    "ticker": "GLEN",
+    "name": "Glencore plc",
+    "industry": "Mining",
+    "sector": "energy",
+    "has_full_score": false
+  },
+  {
+    "ticker": "HSBA",
+    "name": "HSBC Holdings plc",
+    "industry": "Banks",
+    "sector": "financials",
+    "has_full_score": false
+  },
+  {
+    "ticker": "HLN",
+    "name": "Haleon plc",
+    "industry": "Pharmaceuticals & biotechnology",
+    "sector": "healthcare",
+    "has_full_score": false
+  },
+  {
+    "ticker": "HLMA",
+    "name": "Halma plc",
+    "industry": "Electronic equipment & parts",
+    "sector": "industrial",
+    "has_full_score": false
+  },
+  {
+    "ticker": "HWDN",
+    "name": "Howden Joinery Group Plc",
+    "industry": "Homebuilding & construction supplies",
+    "sector": "industrial",
+    "has_full_score": false
+  },
+  {
+    "ticker": "IMB",
+    "name": "Imperial Brands Group",
+    "industry": "Tobacco",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "INF",
+    "name": "Informa plc",
+    "industry": "Media",
+    "sector": "media",
+    "has_full_score": false
+  },
+  {
+    "ticker": "IHG",
+    "name": "InterContinental Hotels Group plc",
+    "industry": "Travel & leisure",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "IAG",
+    "name": "International Consolidated Airlines Group SA",
+    "industry": "Travel & leisure",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "ITRK",
+    "name": "Intertek Group plc",
+    "industry": "Support services",
+    "sector": "industrial",
+    "has_full_score": false
+  },
+  {
+    "ticker": "JD",
+    "name": "JD Sports Fashion plc",
+    "industry": "General retailers",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "KGF",
+    "name": "Kingfisher",
+    "industry": "Retailers",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "LGEN",
+    "name": "Legal & General Group plc",
+    "industry": "Life insurance",
+    "sector": "financials",
+    "has_full_score": false
+  },
+  {
+    "ticker": "LLOY",
+    "name": "Lloyds Banking Group plc",
+    "industry": "Banks",
+    "sector": "financials",
+    "has_full_score": false
+  },
+  {
+    "ticker": "MNG",
+    "name": "M&G plc",
+    "industry": "Financial services",
+    "sector": "financials",
+    "has_full_score": false
+  },
+  {
+    "ticker": "MKS",
+    "name": "Marks & Spencer Group plc",
+    "industry": "Food & drug retailing",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "MRO",
+    "name": "Melrose Industries plc",
+    "industry": "Aerospace & defence",
+    "sector": "defence",
+    "has_full_score": false
+  },
+  {
+    "ticker": "MNDI",
+    "name": "Mondi plc",
+    "industry": "Containers & packaging",
+    "sector": "industrial",
+    "has_full_score": false
+  },
+  {
+    "ticker": "NWG",
+    "name": "NatWest Group plc",
+    "industry": "Banks",
+    "sector": "financials",
+    "has_full_score": false
+  },
+  {
+    "ticker": "NG",
+    "name": "National Grid",
+    "industry": "Multiline utilities",
+    "sector": "other",
+    "has_full_score": false
+  },
+  {
+    "ticker": "NXT",
+    "name": "Next plc",
+    "industry": "General retailers",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "PSON",
+    "name": "Pearson plc",
+    "industry": "Media",
+    "sector": "media",
+    "has_full_score": false
+  },
+  {
+    "ticker": "PSN",
+    "name": "Persimmon plc",
+    "industry": "Household goods & home construction",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "PHNX",
+    "name": "Phoenix Group Holdings Plc",
+    "industry": "Life insurance",
+    "sector": "financials",
+    "has_full_score": false
+  },
+  {
+    "ticker": "PRU",
+    "name": "Prudential plc",
+    "industry": "Life insurance",
+    "sector": "financials",
+    "has_full_score": false
+  },
+  {
+    "ticker": "REL",
+    "name": "RELX plc",
+    "industry": "Media",
+    "sector": "media",
+    "has_full_score": false
+  },
+  {
+    "ticker": "RKT",
+    "name": "Reckitt Benckiser Group Plc",
+    "industry": "Household goods & home construction",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "RTO",
+    "name": "Rentokil Initial Plc",
+    "industry": "Support services",
+    "sector": "industrial",
+    "has_full_score": false
+  },
+  {
+    "ticker": "RMV",
+    "name": "Rightmove plc",
+    "industry": "Media",
+    "sector": "media",
+    "has_full_score": false
+  },
+  {
+    "ticker": "RR",
+    "name": "Rolls Royce Holdings Plc",
+    "industry": "Aerospace & defence",
+    "sector": "defence",
+    "has_full_score": false
+  },
+  {
+    "ticker": "SSE",
+    "name": "SSE plc",
+    "industry": "Electrical utilities & independent power producers",
+    "sector": "other",
+    "has_full_score": false
+  },
+  {
+    "ticker": "SGE",
+    "name": "Sage Group plc",
+    "industry": "Software & computer services",
+    "sector": "technology",
+    "has_full_score": false
+  },
+  {
+    "ticker": "SBRY",
+    "name": "Sainsbury (J) plc",
+    "industry": "Food & drug retailing",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "SGRO",
+    "name": "Segro Plc",
+    "industry": "Real estate investment trusts",
+    "sector": "financials",
+    "has_full_score": false
+  },
+  {
+    "ticker": "SVT",
+    "name": "Severn Trent Plc",
+    "industry": "Multiline utilities",
+    "sector": "other",
+    "has_full_score": false
+  },
+  {
+    "ticker": "SHEL",
+    "name": "Shell plc",
+    "industry": "Oil & gas producers",
+    "sector": "energy",
+    "has_full_score": true
+  },
+  {
+    "ticker": "SN",
+    "name": "Smith & Nephew plc",
+    "industry": "Health care equipment & supplies",
+    "sector": "healthcare",
+    "has_full_score": false
+  },
+  {
+    "ticker": "STJ",
+    "name": "St James's Place Plc",
+    "industry": "Financial services",
+    "sector": "financials",
+    "has_full_score": false
+  },
+  {
+    "ticker": "STAN",
+    "name": "Standard Chartered plc",
+    "industry": "Banks",
+    "sector": "financials",
+    "has_full_score": false
+  },
+  {
+    "ticker": "TSCO",
+    "name": "Tesco plc",
+    "industry": "Food & drug retailing",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "ULVR",
+    "name": "Unilever plc",
+    "industry": "Personal goods",
+    "sector": "consumer",
+    "has_full_score": true
+  },
+  {
+    "ticker": "UU.",
+    "name": "United Utilities Group Plc",
+    "industry": "Multiline utilities",
+    "sector": "other",
+    "has_full_score": false
+  },
+  {
+    "ticker": "VOD",
+    "name": "Vodafone Group plc",
+    "industry": "Mobile telecommunications",
+    "sector": "technology",
+    "has_full_score": false
+  },
+  {
+    "ticker": "WPP",
+    "name": "WPP plc",
+    "industry": "Media",
+    "sector": "media",
+    "has_full_score": false
+  },
+  {
+    "ticker": "WTB",
+    "name": "Whitbread plc",
+    "industry": "Retail hospitality",
+    "sector": "consumer",
+    "has_full_score": false
+  },
+  {
+    "ticker": "EZJ",
+    "name": "easyJet plc",
+    "industry": "Travel & leisure",
+    "sector": "consumer",
+    "has_full_score": false
+  }
+]

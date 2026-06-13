@@ -35,7 +35,7 @@ export function WeightSliders({ weights, onChange, loading }: Props) {
     <div className="space-y-2">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-200 transition-colors"
+        className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-800 transition-colors"
       >
         <span className="font-mono text-xs bg-card border border-border px-1.5 py-0.5 rounded">
           {open ? "▼" : "▶"}
@@ -46,16 +46,16 @@ export function WeightSliders({ weights, onChange, loading }: Props) {
 
       {open && (
         <div className="card p-4 space-y-4">
-          <div className="flex items-start gap-2 text-xs text-gray-400 bg-surface rounded-lg p-3 border border-border">
+          <div className="flex items-start gap-2 text-xs text-gray-400 bg-gray-50 rounded-lg p-3 border border-border">
             <span className="text-blue-400 mt-0.5 shrink-0">ℹ</span>
             <span>
               Drag sliders to see how methodology choices change the Integrity Score — exactly what the{" "}
-              <span className="text-gray-300 font-medium">MIT Aggregate Confusion project</span> shows about ESG rating arbitrariness.
+              <span className="text-gray-700 font-medium">MIT Aggregate Confusion project</span> shows about ESG rating arbitrariness.
               Weights auto-normalise to 100%.
             </span>
           </div>
 
-          <div className="font-mono text-xs text-gray-500 bg-surface rounded p-3 border border-border">
+          <div className="font-mono text-xs text-gray-500 bg-gray-50 rounded p-3 border border-border">
             Integrity Score = {pct(weights.divergence)} × RatingAgreement
             {" "}+ {pct(weights.verification)} × ClaimVerification
             {" "}+ {pct(weights.controversy)} × (1 − ControversyIntensity)
@@ -65,7 +65,7 @@ export function WeightSliders({ weights, onChange, loading }: Props) {
             {(Object.keys(weights) as (keyof WeightConfig)[]).map((key) => (
               <div key={key} className="space-y-1.5">
                 <div className="flex justify-between text-xs">
-                  <span className="text-gray-300 font-medium capitalize">{key}</span>
+                  <span className="text-gray-700 font-medium capitalize">{key}</span>
                   <span className="font-mono text-blue-400">{pct(weights[key])}</span>
                 </div>
                 <input

@@ -23,7 +23,7 @@ export function ClaimTable({ claims }: Props) {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-gray-200">ESG Claim Verification</h3>
+        <h3 className="text-sm font-semibold text-gray-800">ESG Claim Verification</h3>
         <div className="flex gap-3 text-xs">
           <span className="text-green-400">{counts.verified} verified</span>
           <span className="text-yellow-400">{counts.unverifiable} unverifiable</span>
@@ -51,7 +51,7 @@ export function ClaimTable({ claims }: Props) {
                   {cfg.icon}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-gray-200 leading-snug">{claim.claim_text}</p>
+                  <p className="text-sm text-gray-800 leading-snug">{claim.claim_text}</p>
                   <p className="text-xs text-gray-500 mt-1">{claim.source_filing}</p>
                 </div>
                 <span className={`shrink-0 text-xs px-2 py-0.5 rounded-full border font-medium ${cfg.class}`}>
@@ -59,14 +59,14 @@ export function ClaimTable({ claims }: Props) {
                 </span>
               </div>
               {isExpanded && (
-                <div className="border-t border-border bg-surface px-4 py-3 space-y-2">
+                <div className="border-t border-border bg-gray-50 px-4 py-3 space-y-2">
                   <div>
                     <span className="text-xs text-gray-500 uppercase tracking-wide">Stated value: </span>
-                    <span className="text-xs text-gray-300 font-mono">{claim.stated_value}</span>
+                    <span className="text-xs text-gray-700 font-mono">{claim.stated_value}</span>
                   </div>
                   <div>
                     <span className="text-xs text-gray-500 uppercase tracking-wide">Verification note: </span>
-                    <span className="text-xs text-gray-300">{claim.verification_note}</span>
+                    <span className="text-xs text-gray-700">{claim.verification_note}</span>
                   </div>
                 </div>
               )}

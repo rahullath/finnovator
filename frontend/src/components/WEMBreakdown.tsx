@@ -22,21 +22,21 @@ function PenaltyBar({ label, description, value, cap, color }: PenaltyBarProps) 
     <div className="space-y-1.5">
       <div className="flex items-center justify-between text-xs">
         <div>
-          <span className="font-mono font-semibold text-gray-200">{label}</span>
+          <span className="font-mono font-semibold text-gray-800">{label}</span>
           <span className="text-gray-500 ml-2">{description}</span>
         </div>
         <div className="flex items-center gap-2 font-mono">
           <span className={color}>{value.toFixed(1)}</span>
-          <span className="text-gray-600">/ {cap} pts</span>
+          <span className="text-gray-400">/ {cap} pts</span>
         </div>
       </div>
-      <div className="h-2 bg-surface rounded-full overflow-hidden border border-border">
+      <div className="h-2 bg-gray-50 rounded-full overflow-hidden border border-border">
         <div
           className="h-full rounded-full transition-all"
           style={{ width: `${pct}%`, backgroundColor: color.includes("red") ? "#ef4444" : color.includes("orange") ? "#f97316" : "#eab308" }}
         />
       </div>
-      <p className="text-xs text-gray-600">{remaining.toFixed(1)} pts remaining before cap</p>
+      <p className="text-xs text-gray-400">{remaining.toFixed(1)} pts remaining before cap</p>
     </div>
   )
 }
@@ -58,13 +58,13 @@ export function WEMBreakdown({ wem, inputs, esgAvg, integrityScore }: Props) {
     <div className="space-y-6">
       <div className="flex items-start justify-between">
         <div>
-          <h3 className="text-sm font-semibold text-gray-200">Worker & Ecological Materiality (WEM)</h3>
+          <h3 className="text-sm font-semibold text-gray-800">Worker & Ecological Materiality (WEM)</h3>
           <p className="text-xs text-gray-500 mt-0.5">
             Deflationary index. Starts at 100, subtracts penalties for externalised harm — regardless of ESG narrative.
           </p>
         </div>
         <div className="text-right shrink-0">
-          <div className="font-mono text-2xl font-bold text-white">{Math.round(wem.wem_score)}</div>
+          <div className="font-mono text-2xl font-bold text-gray-900">{Math.round(wem.wem_score)}</div>
           <div className="text-xs text-gray-500 font-mono">100 − ({wem.d_carbon.toFixed(1)} + {wem.d_labor.toFixed(1)} + {wem.d_theft.toFixed(1)})</div>
         </div>
       </div>
@@ -109,7 +109,7 @@ export function WEMBreakdown({ wem, inputs, esgAvg, integrityScore }: Props) {
           ].map(({ label, value }) => (
             <div key={label} className="flex items-center justify-between text-xs py-1 border-b border-border/50">
               <span className="text-gray-500">{label}</span>
-              <span className="font-mono text-gray-300">{value}</span>
+              <span className="font-mono text-gray-700">{value}</span>
             </div>
           ))}
         </div>
@@ -124,10 +124,10 @@ export function WEMBreakdown({ wem, inputs, esgAvg, integrityScore }: Props) {
             { label: "WEM", value: Math.round(wem.wem_score), color: wem.wem_score >= 70 ? "text-green-400" : wem.wem_score >= 50 ? "text-yellow-400" : "text-red-400", note: "externalised harm" },
             { label: "Integrity", value: Math.round(integrityScore), color: integrityScore >= 70 ? "text-green-400" : integrityScore >= 50 ? "text-blue-400" : "text-red-400", note: "signal quality" },
           ].map(({ label, value, color, note }) => (
-            <div key={label} className="bg-surface border border-border rounded-lg p-3 text-center">
+            <div key={label} className="bg-gray-50 border border-border rounded-lg p-3 text-center">
               <div className={`font-bold text-xl font-mono ${color}`}>{value}</div>
-              <div className="text-xs font-medium text-gray-300 mt-0.5">{label}</div>
-              <div className="text-xs text-gray-600">{note}</div>
+              <div className="text-xs font-medium text-gray-700 mt-0.5">{label}</div>
+              <div className="text-xs text-gray-400">{note}</div>
             </div>
           ))}
         </div>

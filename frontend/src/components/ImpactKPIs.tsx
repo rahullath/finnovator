@@ -20,13 +20,13 @@ function KPIBar({ kpi }: { kpi: ImpactKPI }) {
       <div className="flex items-center justify-between text-xs">
         <div className="flex items-center gap-1.5">
           <span className={`font-medium ${t.class}`}>{t.icon}</span>
-          <span className="text-gray-300 font-medium">{kpi.kpi_label}</span>
+          <span className="text-gray-700 font-medium">{kpi.kpi_label}</span>
         </div>
         <span className="text-gray-500 font-mono">
           {kpi.kpi_value} {kpi.kpi_unit}
         </span>
       </div>
-      <div className="relative h-2 bg-surface rounded-full border border-border overflow-hidden">
+      <div className="relative h-2 bg-gray-50 rounded-full border border-border overflow-hidden">
         <div
           className="absolute left-0 top-0 h-full rounded-full transition-all duration-500"
           style={{ width: `${kpi.kpi_score}%`, background: barColor }}
@@ -37,7 +37,7 @@ function KPIBar({ kpi }: { kpi: ImpactKPI }) {
           style={{ left: `${kpi.sector_median_score}%` }}
         />
       </div>
-      <div className="flex justify-between text-xs text-gray-600">
+      <div className="flex justify-between text-xs text-gray-400">
         <span>0</span>
         <span className="text-gray-500">▲ sector median</span>
         <span>100</span>
@@ -50,7 +50,7 @@ export function ImpactKPIs({ kpis, sector }: Props) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-gray-200">Sector Impact KPIs</h3>
+        <h3 className="text-sm font-semibold text-gray-800">Sector Impact KPIs</h3>
         <span className="text-xs text-gray-500 capitalize">{sector} · materiality-weighted</span>
       </div>
       <div className="space-y-4">

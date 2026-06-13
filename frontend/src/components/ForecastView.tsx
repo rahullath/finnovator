@@ -24,21 +24,21 @@ const CROWD_TABS: { id: CrowdTab; label: string; horizon: string }[] = [
 ]
 
 const DIRECTION_CONFIG = {
-  leading: { icon: "↑", cls: "text-green-400", bg: "bg-green-500/10 border-green-500/30" },
-  stable: { icon: "→", cls: "text-gray-400", bg: "bg-surface border-border" },
-  lagging: { icon: "↓", cls: "text-red-400", bg: "bg-red-500/10 border-red-500/30" },
+  leading: { icon: "↑", cls: "text-forest-800 bg-forest-100 border-forest-200" },
+  stable:  { icon: "→", cls: "text-gray-600 bg-gray-100 border-gray-200" },
+  lagging: { icon: "↓", cls: "text-red-700 bg-red-50 border-red-200" },
 }
 
 const INSTABILITY_CONFIG = {
-  severe: { cls: "text-red-400 bg-red-500/10 border-red-500/30", label: "Severe instability" },
-  moderate: { cls: "text-yellow-400 bg-yellow-500/10 border-yellow-500/30", label: "Moderate instability" },
-  low: { cls: "text-green-400 bg-green-500/10 border-green-500/30", label: "Low instability" },
+  severe:   { cls: "text-red-700 bg-red-50 border-red-200",     label: "Severe instability" },
+  moderate: { cls: "text-amber-700 bg-amber-50 border-amber-200", label: "Moderate instability" },
+  low:      { cls: "text-forest-800 bg-forest-50 border-forest-200", label: "Low instability" },
 }
 
 function DirectionBadge({ dir }: { dir: "leading" | "stable" | "lagging" }) {
   const cfg = DIRECTION_CONFIG[dir]
   return (
-    <span className={`inline-flex items-center gap-0.5 px-2 py-0.5 rounded text-xs font-medium border ${cfg.bg} ${cfg.cls}`}>
+    <span className={`inline-flex items-center gap-0.5 px-2 py-0.5 rounded text-xs font-medium border ${cfg.cls}`}>
       <span>{cfg.icon}</span>
       <span className="capitalize">{dir}</span>
     </span>
@@ -47,16 +47,16 @@ function DirectionBadge({ dir }: { dir: "leading" | "stable" | "lagging" }) {
 
 function DriverRow({ d, rank }: { d: DriverForecast; rank: number }) {
   const matPct = Math.round(d.materiality_score * 100)
-  const confidenceColor = d.confidence === "high" ? "text-green-400" : d.confidence === "medium" ? "text-yellow-400" : "text-gray-500"
+  const confidenceColor = d.confidence === "high" ? "text-forest-700" : d.confidence === "medium" ? "text-amber-600" : "text-gray-400"
   return (
-    <tr className="border-t border-border hover:bg-card/30 transition-colors">
+    <tr className="border-t border-border hover:bg-gray-50 transition-colors">
       <td className="py-2.5 pr-4">
         <div className="flex items-start gap-2">
           <span className="shrink-0 w-5 h-5 rounded-full bg-purple-500/15 text-purple-400 text-xs flex items-center justify-center font-bold mt-0.5">
             {rank}
           </span>
           <div>
-            <p className="text-sm text-gray-200 font-medium leading-tight">{d.factor}</p>
+            <p className="text-sm text-gray-800 font-medium leading-tight">{d.factor}</p>
             <p className="text-xs text-gray-500 mt-0.5">{d.note}</p>
           </div>
         </div>
@@ -89,19 +89,19 @@ function RankTimeline({ fc }: { fc: ForecastResult }) {
 
   function rankColor(rank: number, total: number) {
     const pos = rank / total
-    return pos <= 0.33 ? "text-green-400 border-green-500/40 bg-green-500/10" :
-      pos <= 0.66 ? "text-yellow-400 border-yellow-500/40 bg-yellow-500/10" :
-        "text-red-400 border-red-500/40 bg-red-500/10"
+    return pos <= 0.33 ? "text-forest-800 border-forest-200 bg-forest-100" :
+      pos <= 0.66 ? "text-amber-700 border-amber-200 bg-amber-50" :
+        "text-red-700 border-red-200 bg-red-50"
   }
 
   function ftseColor(pct: number) {
-    return pct >= 65 ? "text-green-400" : pct >= 35 ? "text-yellow-400" : "text-red-400"
+    return pct >= 65 ? "text-forest-700" : pct >= 35 ? "text-amber-600" : "text-red-600"
   }
 
   return (
     <div className="space-y-3">
       <p className="text-xs text-gray-500">
-        Sector peer group: <span className="text-gray-300 capitalize">{fc.peer_sector}</span> ({fc.peer_count} companies) ·
+        Sector peer group: <span className="text-gray-700 capitalize">{fc.peer_sector}</span> ({fc.peer_count} companies) ·
         FTSE 100 position estimated from WEM score vs 80-company distribution
       </p>
       <div className="flex items-stretch gap-0">
@@ -114,11 +114,11 @@ function RankTimeline({ fc }: { fc: ForecastResult }) {
               </div>
               <p className="text-xs">
                 <span className={`font-mono font-medium ${ftseColor(n.ftse)}`}>{ord(n.ftse)}</span>
-                <span className="text-gray-600"> pct FTSE 100</span>
+                <span className="text-gray-400"> pct FTSE 100</span>
               </p>
             </div>
             {i < rankNodes.length - 1 && (
-              <div className="flex items-center px-2 text-gray-600 text-lg self-center mt-1">→</div>
+              <div className="flex items-center px-2 text-gray-400 text-lg self-center mt-1">→</div>
             )}
           </div>
         ))}
@@ -164,7 +164,7 @@ function ThreeBodyPanel({ fc, score }: { fc: ForecastResult; score: CompanyScore
   return (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-semibold text-gray-200">The 3 Body Problem</h3>
+        <h3 className="text-sm font-semibold text-gray-800">The 3 Body Problem</h3>
         <p className="text-xs text-gray-500 mt-0.5">
           Three forces evaluate this company simultaneously: <span className="text-blue-400">market label</span> (what investors are told),{" "}
           <span className="text-violet-400">signal quality</span> (how the company ranks vs its sector),{" "}
@@ -194,12 +194,12 @@ function ThreeBodyPanel({ fc, score }: { fc: ForecastResult; score: CompanyScore
           </span>
           <span className="text-xs text-gray-500">σ = {tb.instability_score.toFixed(1)} pts spread</span>
         </div>
-        <p className="text-xs text-gray-300 leading-relaxed">{tb.instability_note}</p>
+        <p className="text-xs text-gray-700 leading-relaxed">{tb.instability_note}</p>
       </div>
 
-      <div className="rounded-lg border border-border bg-card/40 px-4 py-3 space-y-1">
+      <div className="rounded-lg border border-border bg-gray-50 px-4 py-3 space-y-1">
         <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Our Resolution</p>
-        <p className="text-xs text-gray-300 leading-relaxed">{tb.resolution}</p>
+        <p className="text-xs text-gray-700 leading-relaxed">{tb.resolution}</p>
       </div>
     </div>
   )
@@ -218,7 +218,7 @@ function WisdomOfCrowd({ fc }: { fc: ForecastResult }) {
   return (
     <div className="space-y-3">
       <div>
-        <h3 className="text-sm font-semibold text-gray-200">Wisdom of the Crowd</h3>
+        <h3 className="text-sm font-semibold text-gray-800">Wisdom of the Crowd</h3>
         <p className="text-xs text-gray-500 mt-0.5">
           Auditors, investors, and corporate managers each see part of the picture.
           Their combined view — averaging independent weighting schemes on the same verifiable data —
@@ -233,8 +233,8 @@ function WisdomOfCrowd({ fc }: { fc: ForecastResult }) {
             onClick={() => setTab(t.id)}
             className={`px-3 py-2 text-xs font-medium border-b-2 transition-colors -mb-px ${
               tab === t.id
-                ? "border-purple-500 text-white"
-                : "border-transparent text-gray-500 hover:text-gray-300"
+                ? "border-forest-700 text-forest-800"
+                : "border-transparent text-gray-500 hover:text-gray-700"
             }`}
           >
             {t.label}
@@ -246,10 +246,10 @@ function WisdomOfCrowd({ fc }: { fc: ForecastResult }) {
         <p className="text-xs text-gray-500 italic">
           {CROWD_TABS.find((t) => t.id === tab)?.horizon}
         </p>
-        <p className="text-sm text-gray-200 leading-relaxed">{content[tab]}</p>
+        <p className="text-sm text-gray-800 leading-relaxed">{content[tab]}</p>
       </div>
 
-      <div className="text-xs text-gray-600 pt-1 border-t border-border">
+      <div className="text-xs text-gray-400 pt-1 border-t border-border">
         Methodology: Jangani, Date & Tucker (SSRN 5618192, 2026) · Maxwell Data FTSE100 Materiality Survey (March 2025) · Berg, Koelbel & Rigobon, "Aggregate Confusion" (Oxford Review of Finance, 2022)
       </div>
     </div>
@@ -259,41 +259,38 @@ function WisdomOfCrowd({ fc }: { fc: ForecastResult }) {
 export function ForecastView({ score, forecast, materialityComparison }: Props) {
   return (
     <div className="space-y-6">
-      {/* 3 Body Problem */}
-      <div className="card p-5">
-        <ThreeBodyPanel fc={forecast} score={score} />
-      </div>
-
-      {/* Rank timeline */}
-      <div className="card p-5 space-y-4">
+      {/* Sustainability Outlook — rank timeline */}
+      <div className="space-y-3">
         <div>
-          <h3 className="text-sm font-semibold text-gray-200">Sustainability Outlook</h3>
+          <h3 className="text-sm font-semibold text-gray-900">Sustainability Outlook</h3>
           <p className="text-xs text-gray-500 mt-0.5">
             ESG momentum — improvement in material KPI trends — is a leading indicator of relative position change.
-            Regime window: 26 weeks (3 months investor horizon) and 52 weeks (12 months corporate horizon) per Jangani et al. (SSRN 5618192).
+            Regime window: 26 weeks (3 months) and 52 weeks (12 months) per Jangani et al. (SSRN 5618192).
           </p>
         </div>
         <RankTimeline fc={forecast} />
       </div>
 
       {/* 8 material driver forecasts */}
-      <div className="card p-5 space-y-4">
+      <div className="space-y-3">
         <div>
-          <h3 className="text-sm font-semibold text-gray-200">Material Driver Forecast</h3>
+          <h3 className="text-sm font-semibold text-gray-900">Material Driver Forecast</h3>
           <p className="text-xs text-gray-500 mt-0.5">
             {forecast.driver_forecasts.length} sector-specific material drivers ranked by financial materiality score.
-            Classifications: <span className="text-green-400">Leading ↑</span> · <span className="text-gray-400">Stable →</span> · <span className="text-red-400">Lagging ↓</span>
+            <span className="text-forest-700 font-medium"> Leading ↑</span> ·
+            <span className="text-gray-500 font-medium"> Stable →</span> ·
+            <span className="text-red-600 font-medium"> Lagging ↓</span>
           </p>
         </div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto bg-white rounded-xl border border-border">
           <table className="w-full text-left">
             <thead>
-              <tr className="text-xs text-gray-500 border-b border-border">
-                <th className="pb-2 pr-4 font-medium">Driver</th>
-                <th className="pb-2 pr-3 font-medium">Materiality</th>
-                <th className="pb-2 pr-3 font-medium text-center">3 months</th>
-                <th className="pb-2 pr-3 font-medium text-center">12 months</th>
-                <th className="pb-2 font-medium text-center">Confidence</th>
+              <tr className="text-xs text-gray-500 border-b border-border bg-gray-50 rounded-t-xl">
+                <th className="pb-2.5 pt-3 px-4 font-medium">Driver</th>
+                <th className="pb-2.5 pt-3 pr-3 font-medium">Materiality</th>
+                <th className="pb-2.5 pt-3 pr-3 font-medium text-center">3 months</th>
+                <th className="pb-2.5 pt-3 pr-3 font-medium text-center">12 months</th>
+                <th className="pb-2.5 pt-3 pr-4 font-medium text-center">Confidence</th>
               </tr>
             </thead>
             <tbody>
@@ -303,19 +300,19 @@ export function ForecastView({ score, forecast, materialityComparison }: Props) 
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-gray-600">
+        <p className="text-xs text-gray-400">
           Source: Maxwell Data FTSE100 Financial Materiality Survey (March 2025) · SSRN 5618192 methodology
         </p>
       </div>
 
       {/* Wisdom of the crowd */}
-      <div className="card p-5">
+      <div className="space-y-3">
         <WisdomOfCrowd fc={forecast} />
       </div>
 
-      {/* Driver materiality comparison — three-body analysis per driver */}
+      {/* Driver materiality comparison */}
       {materialityComparison && (
-        <div className="card p-5">
+        <div className="space-y-3">
           <MaterialityComparisonView comparison={materialityComparison} />
         </div>
       )}

@@ -160,7 +160,58 @@ export interface MaterialityComparison {
 }
 
 export type Role = "pm" | "sustainability" | "regulator"
-export type TabId = "signal" | "impact" | "action" | "outlook"
+export type TabId = "signal" | "impact" | "action" | "outlook" | "materiality"
+
+// ── FTSE 100 profile types ────────────────────────────────────────────────────
+
+export interface FTSESearchResult {
+  ticker: string
+  name: string
+  industry: string
+  sector: string
+  has_full_score: boolean
+}
+
+export interface DriverProfile {
+  driver: string
+  category: string
+  materiality_score: number
+  peer_median: number
+  ftse100_median: number
+  deviation_from_peer: number
+  deviation_from_ftse: number
+  direction_3m: "leading" | "stable" | "lagging"
+  direction_12m: "leading" | "stable" | "lagging"
+  confidence: "high" | "medium" | "low"
+  layman_explanation: string
+}
+
+export interface FTSEProfile {
+  ticker: string
+  name: string
+  industry: string
+  sector: string
+  has_full_score: boolean
+  peer_count: number
+  peer_names: string[]
+  top_8_drivers: DriverProfile[]
+  all_26_drivers: DriverProfile[]
+  three_body_instability: number
+}
+
+// ── Price data ────────────────────────────────────────────────────────────────
+
+export interface PriceData {
+  ticker: string
+  price: number
+  currency: string
+  change_1d: number
+  change_1d_pct: number
+  change_1m_pct: number
+  sparkline_6m: number[]
+  as_of: string
+  source?: string
+}
 
 export interface DriverForecast {
   factor: string

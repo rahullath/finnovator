@@ -25,7 +25,7 @@ export function ControversyTimeline({ controversies }: Props) {
 
   return (
     <div className="space-y-3">
-      <h3 className="text-sm font-semibold text-gray-200">Controversy Timeline</h3>
+      <h3 className="text-sm font-semibold text-gray-800">Controversy Timeline</h3>
       <div className="relative space-y-0">
         {sorted.map((c, i) => {
           const cfg = SEVERITY_CONFIG[c.severity]
@@ -39,7 +39,7 @@ export function ControversyTimeline({ controversies }: Props) {
               </div>
               <div className="flex-1 min-w-0 pb-0">
                 <div className="flex items-start justify-between gap-2">
-                  <p className="text-sm text-gray-200 leading-snug">{c.headline}</p>
+                  <p className="text-sm text-gray-800 leading-snug">{c.headline}</p>
                   <span className={`shrink-0 text-xs font-medium ${cfg.text}`}>{cfg.label}</span>
                 </div>
                 <div className="flex gap-2 mt-1 text-xs text-gray-500">

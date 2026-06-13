@@ -14,7 +14,7 @@ function TiltChart({ data, title, color, subtitle }: {
   return (
     <div className="space-y-2">
       <div>
-        <h4 className="text-sm font-semibold text-gray-200">{title}</h4>
+        <h4 className="text-sm font-semibold text-gray-800">{title}</h4>
         <p className="text-xs text-gray-500">{subtitle}</p>
       </div>
       <ResponsiveContainer width="100%" height={160}>
@@ -37,11 +37,11 @@ function TiltChart({ data, title, color, subtitle }: {
 export function PortfolioTilt({ portfolio }: Props) {
   return (
     <div className="space-y-4">
-      <div className="flex items-start gap-2 text-xs text-gray-400 bg-surface rounded-lg p-3 border border-border">
+      <div className="flex items-start gap-2 text-xs text-gray-400 bg-gray-50 rounded-lg p-3 border border-border">
         <span className="text-blue-400 mt-0.5 shrink-0">ℹ</span>
         <span>
-          If you tilt by <span className="text-white">naive ESG score</span>, greenwashed firms get cheap capital.
-          If you tilt by <span className="text-white">Integrity × Impact</span>, capital flows to real performers.
+          If you tilt by <span className="text-gray-900">naive ESG score</span>, greenwashed firms get cheap capital.
+          If you tilt by <span className="text-gray-900">Integrity × Impact</span>, capital flows to real performers.
           The reallocation difference is the cost of broken ESG signals.
         </span>
       </div>

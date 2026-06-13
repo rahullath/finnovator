@@ -17,7 +17,7 @@ function Section({ title, items, accent }: { title: string; items: string[]; acc
       <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wide">{title}</h4>
       <ul className="space-y-1.5">
         {items.map((item, i) => (
-          <li key={i} className="flex items-start gap-2 text-sm text-gray-300">
+          <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
             <span className={`shrink-0 mt-0.5 ${accent ?? "text-gray-500"}`}>—</span>
             <span>{item}</span>
           </li>
@@ -56,7 +56,7 @@ function PMView({ score }: { score: CompanyScore }) {
               <li key={i} className="flex items-start gap-2">
                 <span className="shrink-0 w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs flex items-center justify-center font-bold">{i + 1}</span>
                 <div>
-                  <span className="text-sm text-gray-200">{f.factor}</span>
+                  <span className="text-sm text-gray-800">{f.factor}</span>
                   <span className="ml-2 text-xs text-gray-500">materiality {(f.materiality_score * 100).toFixed(0)}%</span>
                 </div>
               </li>
@@ -108,7 +108,7 @@ function SustainabilityView({ score }: { score: CompanyScore }) {
             {topFactors.map((f, i) => (
               <li key={i} className="flex items-center gap-2 text-sm">
                 <div className="h-1.5 rounded-full bg-green-500/30" style={{ width: `${f.materiality_score * 60}px` }} />
-                <span className="text-gray-300">{f.factor}</span>
+                <span className="text-gray-700">{f.factor}</span>
                 <span className="text-gray-500 text-xs">{(f.materiality_score * 100).toFixed(0)}%</span>
               </li>
             ))}
@@ -172,7 +172,7 @@ export function ActionPanel({ score, role }: Props) {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
-        <h3 className="text-sm font-semibold text-gray-200">Action Panel</h3>
+        <h3 className="text-sm font-semibold text-gray-800">Action Panel</h3>
         <span className="text-xs text-gray-500">— {ROLE_LABELS[role]} view</span>
       </div>
 

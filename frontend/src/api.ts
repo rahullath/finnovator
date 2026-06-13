@@ -1,4 +1,4 @@
-import type { CompanyScore, PortfolioView, WeightConfig, ForecastResult, MaterialityComparison } from "./types"
+import type { CompanyScore, PortfolioView, WeightConfig, ForecastResult, MaterialityComparison, FTSESearchResult, FTSEProfile, PriceData } from "./types"
 export type { CompanyScore }
 
 // In dev: Vite proxy forwards /api/* → localhost:8000 (FastAPI)
@@ -79,11 +79,43 @@ export async function fetchMaterialityComparison(ticker: string): Promise<Materi
 
 export async function refreshCompany(ticker: string): Promise<{ ingestion: Record<string, unknown>; scores: CompanyScore }> {
   if (PROD) {
-    // Refresh not available in static deployment — return cached score
     const scores = await fetchScore(ticker)
     return { ingestion: { status: "static_deployment" }, scores }
   }
   const r = await fetch(`/api/refresh/${ticker}`, { method: "POST" })
   if (!r.ok) throw new Error(`Failed to refresh ${ticker}`)
+  return r.json()
+}
+
+export async function fetchFTSE100Index(): Promise<FTSESearchResult[]> {
+  if (PROD) {
+    const r = await fetch("/data/ftse100-index.json")
+    if (!r.ok) return []
+    return r.json()
+  }
+  const r = await fetch("/api/ftse100-index")
+  if (!r.ok) return []
+  return r.json()
+}
+
+export async function fetchFTSEProfile(ticker: string): Promise<FTSEProfile | null> {
+  if (PROD) {
+    const r = await fetch(`/data/profiles/${ticker}.json`)
+    if (!r.ok) return null
+    return r.json()
+  }
+  const r = await fetch(`/api/profile/${ticker}`)
+  if (!r.ok) return null
+  return r.json()
+}
+
+export async function fetchPrice(ticker: string): Promise<PriceData | null> {
+  if (PROD) {
+    const r = await fetch(`/data/prices/${ticker}.json`)
+    if (!r.ok) return null
+    return r.json()
+  }
+  const r = await fetch(`/api/price/${ticker}`)
+  if (!r.ok) return null
   return r.json()
 }

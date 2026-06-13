@@ -31,10 +31,10 @@ const CustomTooltip = ({ active, payload }: any) => {
   const d = payload[0].payload as PortfolioEntry
   return (
     <div className="bg-card border border-border rounded-lg px-3 py-2 text-xs space-y-0.5 shadow-xl">
-      <p className="font-semibold text-white">{d.name}</p>
-      <p className="text-gray-400">Integrity: <span className="text-white font-mono">{d.integrity_score}</span></p>
-      <p className="text-gray-400">Impact: <span className="text-white font-mono">{d.impact_score}</span></p>
-      <p className="text-gray-400">Avg ESG: <span className="text-white font-mono">{d.esg_score_avg}</span></p>
+      <p className="font-semibold text-gray-900">{d.name}</p>
+      <p className="text-gray-400">Integrity: <span className="text-gray-900 font-mono">{d.integrity_score}</span></p>
+      <p className="text-gray-400">Impact: <span className="text-gray-900 font-mono">{d.impact_score}</span></p>
+      <p className="text-gray-400">Avg ESG: <span className="text-gray-900 font-mono">{d.esg_score_avg}</span></p>
     </div>
   )
 }
@@ -49,7 +49,7 @@ export function QuadrantPlot({ companies, selectedTicker }: Props) {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-gray-200">Integrity × Impact Quadrant</h3>
+        <h3 className="text-sm font-semibold text-gray-800">Integrity × Impact Quadrant</h3>
         <span className="text-xs text-gray-500">All {companies.length} companies in dataset</span>
       </div>
 
@@ -105,7 +105,7 @@ export function QuadrantPlot({ companies, selectedTicker }: Props) {
         ].map((q) => (
           <div key={q.color} className="flex items-center gap-2 text-gray-500">
             <span className="w-2 h-2 rounded-full shrink-0" style={{ background: COLOR_MAP[q.color as QuadrantColor] }} />
-            <span><span className="text-gray-300">{q.label}</span> — {q.desc}</span>
+            <span><span className="text-gray-700">{q.label}</span> — {q.desc}</span>
           </div>
         ))}
       </div>

@@ -34,15 +34,15 @@ function Bar({ score, color, max = 1.0 }: { score: number | null; color: string;
   if (score === null) {
     return (
       <div className="flex items-center gap-1.5 h-5">
-        <div className="flex-1 h-1.5 bg-surface rounded-full border border-border" />
-        <span className="text-xs text-gray-600 font-mono w-8 text-right">N/A</span>
+        <div className="flex-1 h-1.5 bg-gray-50 rounded-full border border-border" />
+        <span className="text-xs text-gray-400 font-mono w-8 text-right">N/A</span>
       </div>
     )
   }
   const pct = Math.min(100, (score / max) * 100)
   return (
     <div className="flex items-center gap-1.5 h-5">
-      <div className="flex-1 h-1.5 bg-surface rounded-full border border-border overflow-hidden">
+      <div className="flex-1 h-1.5 bg-gray-50 rounded-full border border-border overflow-hidden">
         <div
           className={`h-full rounded-full transition-all ${color}`}
           style={{ width: `${pct}%` }}
@@ -58,7 +58,7 @@ function Bar({ score, color, max = 1.0 }: { score: number | null; color: string;
 function DeltaBadge({ delta, label }: { delta: number; label: string }) {
   const pts = Math.round(delta * 100)
   if (pts === 0) return (
-    <span className="text-xs text-gray-600 font-mono">±0 {label}</span>
+    <span className="text-xs text-gray-400 font-mono">±0 {label}</span>
   )
   return (
     <span className={`text-xs font-mono font-medium ${pts > 0 ? "text-emerald-400" : "text-red-400"}`}>
@@ -74,20 +74,20 @@ function DriverRow({ d, rank }: { d: DriverComparison; rank: number }) {
 
   return (
     <div
-      className="border-t border-border py-3 cursor-pointer hover:bg-card/30 transition-colors px-1 -mx-1 rounded"
+      className="border-t border-border py-3 cursor-pointer hover:bg-gray-50 transition-colors px-1 -mx-1 rounded"
       onClick={() => setExpanded(!expanded)}
     >
       <div className="grid grid-cols-[auto_1fr_auto] gap-3 items-start">
         {/* Left: rank + topic + name */}
         <div className="flex items-start gap-2 min-w-0">
-          <span className="shrink-0 w-5 h-5 rounded-full bg-surface border border-border text-xs text-gray-500 flex items-center justify-center font-mono mt-0.5">
+          <span className="shrink-0 w-5 h-5 rounded-full bg-gray-50 border border-border text-xs text-gray-500 flex items-center justify-center font-mono mt-0.5">
             {rank}
           </span>
           <span className={`shrink-0 w-5 h-5 rounded border text-xs font-bold flex items-center justify-center mt-0.5 ${topicCfg.bg} ${topicCfg.color}`}>
             {topicCfg.abbr}
           </span>
           <div className="min-w-0">
-            <p className="text-sm text-gray-200 font-medium leading-tight truncate">{d.driver}</p>
+            <p className="text-sm text-gray-800 font-medium leading-tight truncate">{d.driver}</p>
             {badge && (
               <span className={`inline-flex mt-0.5 items-center text-[10px] font-medium px-1.5 py-0.5 rounded border ${badge.cls}`}>
                 {badge.label}
@@ -99,15 +99,15 @@ function DriverRow({ d, rank }: { d: DriverComparison; rank: number }) {
         {/* Middle: three bars */}
         <div className="space-y-1 min-w-0">
           <div className="flex items-center gap-1.5">
-            <span className="text-[10px] text-gray-600 w-11 shrink-0">Company</span>
+            <span className="text-[10px] text-gray-400 w-11 shrink-0">Company</span>
             <Bar score={d.company_score} color="bg-white/70" />
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="text-[10px] text-gray-600 w-11 shrink-0">Peers</span>
+            <span className="text-[10px] text-gray-400 w-11 shrink-0">Peers</span>
             <Bar score={d.peer_median} color="bg-blue-500/60" />
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="text-[10px] text-gray-600 w-11 shrink-0">FTSE 100</span>
+            <span className="text-[10px] text-gray-400 w-11 shrink-0">FTSE 100</span>
             <Bar score={d.ftse100_median} color="bg-gray-500/50" />
           </div>
         </div>
@@ -117,7 +117,7 @@ function DriverRow({ d, rank }: { d: DriverComparison; rank: number }) {
           <DeltaBadge delta={d.divergence_from_peer} label="vs peers" />
           <div />
           <DeltaBadge delta={d.divergence_from_ftse} label="vs FTSE" />
-          <p className="text-[10px] text-gray-600">σ={d.spread.toFixed(3)}</p>
+          <p className="text-[10px] text-gray-400">σ={d.spread.toFixed(3)}</p>
         </div>
       </div>
 
@@ -125,7 +125,7 @@ function DriverRow({ d, rank }: { d: DriverComparison; rank: number }) {
       {expanded && (
         <div className="mt-2 ml-8 pl-3 border-l border-border">
           <p className="text-xs text-gray-400 leading-relaxed">{d.why}</p>
-          <div className="flex gap-3 mt-1.5 text-[10px] text-gray-600">
+          <div className="flex gap-3 mt-1.5 text-[10px] text-gray-400">
             {d.peer_n > 0 && <span>{d.peer_n} FTSE peer{d.peer_n > 1 ? "s" : ""} with this driver</span>}
             {d.ftse100_n > 0 && <span>{d.ftse100_n} FTSE100 co. with this driver</span>}
           </div>
@@ -141,7 +141,7 @@ function DriversMatrix({ all26 }: { all26: DriverComparison[] }) {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="w-full text-xs text-gray-500 hover:text-gray-300 border border-border rounded-lg py-2 transition-colors"
+        className="w-full text-xs text-gray-500 hover:text-gray-700 border border-border rounded-lg py-2 transition-colors"
       >
         Show all 26 SASB drivers ↓
       </button>
@@ -170,7 +170,7 @@ function DriversMatrix({ all26 }: { all26: DriverComparison[] }) {
                 return (
                   <div key={d.driver} className="grid grid-cols-[1fr_auto_auto_auto_auto] gap-2 text-xs items-center py-1 border-t border-border/50">
                     <span className="text-gray-400 truncate">{d.driver}</span>
-                    <span className="font-mono text-white w-8 text-right">{co}</span>
+                    <span className="font-mono text-gray-900 w-8 text-right">{co}</span>
                     <span className="font-mono text-blue-400 w-8 text-right">{pm}</span>
                     <span className="font-mono text-gray-500 w-8 text-right">{fm}</span>
                     {badge
@@ -186,7 +186,7 @@ function DriversMatrix({ all26 }: { all26: DriverComparison[] }) {
       })}
       <button
         onClick={() => setOpen(false)}
-        className="text-xs text-gray-600 hover:text-gray-400 transition-colors"
+        className="text-xs text-gray-400 hover:text-gray-400 transition-colors"
       >
         Collapse ↑
       </button>
@@ -203,9 +203,9 @@ export function MaterialityComparisonView({ comparison }: Props) {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
         <div>
-          <h3 className="text-sm font-semibold text-gray-200">Driver Materiality — Three-Body Comparison</h3>
+          <h3 className="text-sm font-semibold text-gray-800">Driver Materiality — Three-Body Comparison</h3>
           <p className="text-xs text-gray-500 mt-1 leading-relaxed">
-            How <span className="text-white">{comparison.company_name}</span>'s 8 highest-weighted SASB drivers compare against the{" "}
+            How <span className="text-gray-900">{comparison.company_name}</span>'s 8 highest-weighted SASB drivers compare against the{" "}
             <span className="text-blue-400">{comparison.ftse_industry}</span> peer group ({comparison.peer_count} FTSE100 co.)
             and the <span className="text-gray-400">full FTSE100 benchmark</span> (79 co.).
             Click any row to see why it diverges.
@@ -232,7 +232,7 @@ export function MaterialityComparisonView({ comparison }: Props) {
           <span className="w-3 h-1.5 rounded-full bg-gray-500/50 inline-block" />
           FTSE100 avg
         </span>
-        <span className="ml-2 text-gray-600">Bars show financial materiality weight (0–100%)</span>
+        <span className="ml-2 text-gray-400">Bars show financial materiality weight (0–100%)</span>
       </div>
 
       {/* 8 driver rows */}
@@ -279,7 +279,7 @@ export function MaterialityComparisonView({ comparison }: Props) {
       )}
 
       {/* Instability explanation */}
-      <div className="rounded-lg border border-border bg-card/30 px-4 py-3 space-y-1.5">
+      <div className="rounded-lg border border-border bg-gray-50 px-4 py-3 space-y-1.5">
         <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Why materiality differs within a sector</p>
         <p className="text-xs text-gray-400 leading-relaxed">
           Even companies in the same sector can have radically different driver weights — this is the core of the three-body problem
@@ -288,7 +288,7 @@ export function MaterialityComparisonView({ comparison }: Props) {
           When a company's driver profile diverges from its peer group, it signals either a unique risk exposure or a
           disclosure gap — both are actionable investment signals.
         </p>
-        <p className="text-xs text-gray-600 pt-1 border-t border-border">
+        <p className="text-xs text-gray-400 pt-1 border-t border-border">
           Source: Maxwell Data FTSE100 Financial Materiality Survey (March 2025) ·
           SASB Standards Taxonomy · Berg et al. "Aggregate Confusion" (2022)
         </p>
@@ -298,8 +298,8 @@ export function MaterialityComparisonView({ comparison }: Props) {
       <div>
         <div className="flex items-center gap-2 mb-2">
           <p className="text-xs text-gray-500">All 26 SASB Drivers</p>
-          <div className="flex gap-3 text-[10px] text-gray-600">
-            <span className="text-white">Company</span>
+          <div className="flex gap-3 text-[10px] text-gray-400">
+            <span className="text-gray-900">Company</span>
             <span className="text-blue-400">Peers</span>
             <span className="text-gray-500">FTSE100</span>
           </div>
