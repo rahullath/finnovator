@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: #ffffff; font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; color: #171717; }
+  ::-webkit-scrollbar { height: 9px; width: 9px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #dcdcdc; border-radius: 8px; }
+  input { font-family: inherit; outline: none; }
+  input::placeholder { color: #b2b2b2; }
+</style>
+</helmet>
+
+<div style="min-height:100vh; background:#ffffff; color:#171717;">
+
+  <!-- ============ HEADER + SEARCH ============ -->
+  <header style="position:sticky; top:0; z-index:60; background:rgba(255,255,255,0.92); backdrop-filter:blur(10px); border-bottom:1px solid #ededed;">
+    <div style="max-width:1180px; margin:0 auto; padding:13px 28px; display:flex; align-items:center; justify-content:space-between; gap:28px;">
+      <div style="display:flex; align-items:center; gap:11px; flex-shrink:0;">
+        <div style="width:26px; height:26px; border-radius:6px; background:#171717; display:flex; align-items:center; justify-content:center;">
+          <span style="width:9px; height:9px; border-radius:50%; background:#3ecf8e;"></span>
+        </div>
+        <div style="font-size:15px; font-weight:600; letter-spacing:-0.02em;">Materiality<span style="color:#9a9a9a; font-weight:500;">/Navigator</span></div>
+      </div>
+      <div style="position:relative; flex:1; max-width:440px;">
+        <div style="display:flex; align-items:center; gap:9px; background:#fafafa; border:1px solid {{ search.borderColor }}; border-radius:8px; padding:0 12px;">
+          <span style="color:#9a9a9a; font-size:14px; font-family:'JetBrains Mono',monospace;">⌕</span>
+          <input value="{{ search.query }}" onInput="{{ search.onInput }}" onFocus="{{ search.onFocus }}" placeholder="Search company or ticker — BP, Ørsted, Nestlé…" style="flex:1; border:none; background:transparent; padding:9px 0; font-size:13.5px; color:#171717;">
+          <span style="font-size:11px; color:#b2b2b2; font-family:'JetBrains Mono',monospace;">{{ search.countLabel }}</span>
+        </div>
+        <sc-if value="{{ search.showResults }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; top:46px; left:0; right:0; background:#ffffff; border:1px solid #e4e4e4; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.08); overflow:hidden; z-index:70;">
+            <sc-for list="{{ search.results }}" as="r" hint-placeholder-count="4">
+              <button onClick="{{ r.onClick }}" style="{{ r.style }}">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; width:62px; text-align:left;">{{ r.ticker }}</span>
+                <span style="flex:1; text-align:left; font-size:13px; color:#212121;">{{ r.name }}</span>
+                <span style="font-size:11px; color:#9a9a9a;">{{ r.sasb }}</span>
+              </button>
+            </sc-for>
+            <sc-if value="{{ search.noResults }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:14px 16px; font-size:13px; color:#9a9a9a;">No company in the coverage universe matches that.</div>
+            </sc-if>
+          </div>
+        </sc-if>
+      </div>
+      <div style="display:flex; align-items:center; gap:0; flex-shrink:0; background:#fafafa; border:1px solid #ededed; border-radius:8px; padding:3px;">
+        <sc-for list="{{ viewTabs }}" as="v" hint-placeholder-count="2">
+          <button onClick="{{ v.onClick }}" style="{{ v.style }}">{{ v.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width:1180px; margin:0 auto; padding:26px 28px 90px;">
+
+    <!-- universe chips -->
+    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:30px;">
+      <span style="font-size:11px; text-transform:uppercase; letter-spacing:0.12em; color:#b2b2b2; font-weight:600; margin-right:4px;">Coverage</span>
+      <sc-for list="{{ chips }}" as="c" hint-placeholder-count="8">
+        <button onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.ticker }}</button>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ isDashboard }}" hint-placeholder-val="{{ true }}">
+    <!-- ============ COMPANY HEADER ============ -->
+    <section style="display:flex; align-items:flex-start; justify-content:space-between; gap:32px; flex-wrap:wrap; margin-bottom:32px;">
+      <div style="min-width:0; flex:1;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:11px; flex-wrap:wrap;">
+          <h1 style="margin:0; font-size:34px; font-weight:600; letter-spacing:-0.03em; line-height:1;">{{ co.name }}</h1>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#707070; background:#fafafa; border:1px solid #ededed; padding:3px 8px; border-radius:5px;">{{ co.ticker }}</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-bottom:14px;">
+          <span style="font-size:12px; color:#707070;">{{ co.coarse }}</span>
+          <span style="color:#d4d4d4;">·</span>
+          <span style="font-size:12px; font-weight:500; color:#171717; background:#f4f4f4; padding:2px 9px; border-radius:9999px;">SASB: {{ co.sasb }}</span>
+          <span style="color:#d4d4d4;">·</span>
+          <span style="font-size:12px; color:#707070;">{{ co.country }} · {{ co.mkt }}</span>
+        </div>
+        <p style="margin:0; font-size:14px; color:#707070; line-height:1.55; max-width:560px;">{{ co.desc }}</p>
+      </div>
+      <!-- fingerprint -->
+      <div style="background:#fafafa; border:1px solid #ededed; border-radius:12px; padding:18px 20px; min-width:280px;">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:#9a9a9a; font-weight:600; margin-bottom:12px;">Materiality fingerprint</div>
+        <div style="display:flex; align-items:baseline; gap:6px; margin-bottom:14px;">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:30px; font-weight:600; letter-spacing:-0.02em;">{{ co.driverCount }}</span>
+          <span style="font-size:13px; color:#707070;">of 26 drivers scored material</span>
+        </div>
+        <div style="display:flex; gap:6px; margin-bottom:12px;">
+          <sc-for list="{{ co.pillarBars }}" as="p" hint-placeholder-count="3">
+            <div style="flex:{{ p.flex }}; min-width:34px;">
+              <div style="height:6px; background:{{ p.color }}; border-radius:3px; margin-bottom:5px;"></div>
+              <div style="font-size:10.5px; color:#707070;"><span style="font-weight:600; color:#171717;">{{ p.letter }}</span> {{ p.count }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="font-size:11.5px; color:#707070; line-height:1.5; padding-top:11px; border-top:1px solid #ededed;">Led by <span style="color:#171717; font-weight:500;">{{ co.topFactor }}</span> ({{ co.topPct }}%) · E/S/G balance {{ co.balance }}</div>
+      </div>
+    </section>
+
+    <!-- ============ TOP-8 vs PEER GROUP ============ -->
+    <section style="margin-bottom:14px;">
+      <div style="display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:6px;">
+        <h2 style="margin:0; font-size:19px; font-weight:600; letter-spacing:-0.02em;">Top 8 material factors vs sector peers</h2>
+        <div style="display:flex; align-items:center; gap:16px; font-size:11.5px; color:#707070;">
+          <span style="display:flex; align-items:center; gap:6px;"><span style="width:18px; height:8px; background:#171717; border-radius:2px; display:inline-block;"></span>{{ co.ticker }}</span>
+          <span style="display:flex; align-items:center; gap:6px;"><span style="width:2px; height:13px; background:#9a9a9a; display:inline-block;"></span>peer avg ({{ peers.label }})</span>
+        </div>
+      </div>
+      <p style="margin:0 0 20px; font-size:13px; color:#707070; max-width:680px; line-height:1.5;">Financial-materiality score per driver (0–1), from the Maxwell Data FTSE 100 survey. The marker is the average across same-sector peers that also score the driver — where it's absent, the factor is <span style="color:#8a6d2f; font-weight:500;">peer-unique</span> to {{ co.ticker }}.</p>
+
+      <div style="border:1px solid #ededed; border-radius:12px; overflow:hidden;">
+        <sc-for list="{{ top8 }}" as="f" hint-placeholder-count="8">
+          <div style="display:grid; grid-template-columns:30px 200px 1fr 92px; gap:14px; align-items:center; padding:13px 18px; border-top:{{ f.border }};">
+            <span style="{{ f.pillarStyle }}">{{ f.pillar }}</span>
+            <div style="min-width:0;">
+              <div style="font-size:13px; font-weight:500; color:#171717; line-height:1.2;">{{ f.label }}</div>
+              <div style="font-size:10.5px; color:#9a9a9a; font-family:'JetBrains Mono',monospace; margin-top:2px;">rank {{ f.rank }} · {{ f.coverageLabel }}</div>
+            </div>
+            <div style="position:relative; height:22px; background:#f6f6f6; border-radius:5px;">
+              <div style="{{ f.barStyle }}"></div>
+              <div style="{{ f.markerStyle }}"></div>
+              <span style="{{ f.scoreStyle }}">{{ f.score }}</span>
+            </div>
+            <div style="text-align:right;">
+              <span style="{{ f.devStyle }}">{{ f.devLabel }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- ============ SAME SECTOR, DIFFERENT MATERIALITY ============ -->
+    <section style="margin-top:46px;">
+      <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:6px; flex-wrap:wrap;">
+        <h2 style="margin:0; font-size:19px; font-weight:600; letter-spacing:-0.02em;">Same sector, different materiality</h2>
+        <span style="font-size:12.5px; color:#9a9a9a;">{{ peers.sectorLabel }} · {{ peers.count }} companies</span>
+      </div>
+      <p style="margin:0 0 22px; font-size:13px; color:#707070; max-width:720px; line-height:1.55;">{{ peers.intro }}</p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(206px,1fr)); gap:12px; margin-bottom:22px;">
+        <sc-for list="{{ peers.cards }}" as="p" hint-placeholder-count="5">
+          <div style="{{ p.cardStyle }}">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:3px;">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600;">{{ p.ticker }}</span>
+              <sc-if value="{{ p.isSelf }}" hint-placeholder-val="{{ false }}"><span style="font-size:9.5px; font-weight:600; color:#171717; background:#3ecf8e; padding:2px 7px; border-radius:9999px;">viewing</span></sc-if>
+            </div>
+            <div style="font-size:11px; color:#9a9a9a; margin-bottom:12px;">{{ p.sasb }}</div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <sc-for list="{{ p.top3 }}" as="t" hint-placeholder-count="3">
+                <div>
+                  <div style="display:flex; align-items:baseline; justify-content:space-between; gap:6px; margin-bottom:3px;">
+                    <span style="font-size:11.5px; color:#212121; line-height:1.2;">{{ t.label }}</span>
+                    <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#707070;">{{ t.score }}</span>
+                  </div>
+                  <div style="height:4px; background:#f0f0f0; border-radius:2px; overflow:hidden;"><div style="{{ t.barStyle }}"></div></div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="background:#1c1c1c; border-radius:14px; padding:24px 26px;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+          <span style="width:7px; height:7px; border-radius:50%; background:#3ecf8e;"></span>
+          <span style="font-size:11px; text-transform:uppercase; letter-spacing:0.12em; color:#9a9a9a; font-weight:600;">Why the divergence is real, not noise</span>
+        </div>
+        <p style="margin:0 0 14px; font-size:14.5px; color:#ededed; line-height:1.6; max-width:820px;">{{ peers.explain }}</p>
+        <p style="margin:0; font-size:12.5px; color:#9a9a9a; line-height:1.6; max-width:820px;">{{ peers.academic }}</p>
+      </div>
+    </section>
+
+    <!-- ============ 3-MONTH FORECAST ============ -->
+    <section style="margin-top:46px;">
+      <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:6px; flex-wrap:wrap;">
+        <h2 style="margin:0; font-size:19px; font-weight:600; letter-spacing:-0.02em;">3-month sustainability forecast</h2>
+        <span style="font-size:12.5px; color:#9a9a9a;">deterministic · auditable · no model inference</span>
+      </div>
+      <p style="margin:0 0 22px; font-size:13px; color:#707070; max-width:720px; line-height:1.55;">Projected from KPI momentum weighted by materiality. The "3-body" check tests whether {{ co.ticker }}'s ESG score, its sector rank, and its FTSE 100 position tell the same story — or pull apart.</p>
+
+      <!-- trajectory row -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+        <sc-for list="{{ forecast.trajectories }}" as="t" hint-placeholder-count="2">
+          <div style="border:1px solid #ededed; border-radius:12px; padding:18px 20px;">
+            <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:#9a9a9a; font-weight:600; margin-bottom:14px;">{{ t.label }}</div>
+            <div style="display:flex; align-items:center; gap:14px;">
+              <sc-for list="{{ t.points }}" as="p" hint-placeholder-count="3">
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <div style="text-align:center;">
+                    <div style="font-family:'JetBrains Mono',monospace; font-size:24px; font-weight:600; color:{{ p.color }}; line-height:1;">{{ p.value }}</div>
+                    <div style="font-size:10.5px; color:#9a9a9a; margin-top:5px;">{{ p.when }}</div>
+                  </div>
+                  <sc-if value="{{ p.hasArrow }}" hint-placeholder-val="{{ false }}"><span style="color:#d4d4d4; font-size:16px;">→</span></sc-if>
+                </div>
+              </sc-for>
+              <div style="margin-left:auto; text-align:right;">
+                <span style="{{ t.verdictStyle }}">{{ t.verdict }}</span>
+              </div>
+            </div>
+            <div style="font-size:11.5px; color:#707070; margin-top:13px; line-height:1.45;">{{ t.note }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- 3-body instability -->
+      <div style="border:1px solid #ededed; border-radius:12px; padding:20px 22px; margin-bottom:14px;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:18px; flex-wrap:wrap; margin-bottom:18px;">
+          <div>
+            <div style="font-size:13.5px; font-weight:600;">3-body instability</div>
+            <div style="font-size:11.5px; color:#9a9a9a; margin-top:2px;">spread between the three signals</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:600; color:{{ forecast.tb.color }};">{{ forecast.tb.instability }}</span>
+            <span style="{{ forecast.tb.verdictStyle }}">{{ forecast.tb.verdict }}</span>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:16px;">
+          <sc-for list="{{ forecast.tb.bodies }}" as="b" hint-placeholder-count="3">
+            <div style="background:#fafafa; border:1px solid #ededed; border-radius:9px; padding:13px 15px;">
+              <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#9a9a9a; margin-bottom:8px;">Body {{ b.n }}</div>
+              <div style="font-family:'JetBrains Mono',monospace; font-size:24px; font-weight:600; line-height:1;">{{ b.value }}</div>
+              <div style="font-size:11.5px; color:#707070; margin-top:6px;">{{ b.label }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <p style="margin:0; font-size:12.5px; color:#525252; line-height:1.55;">{{ forecast.tb.note }}</p>
+      </div>
+
+      <!-- driver directions -->
+      <div style="border:1px solid #ededed; border-radius:12px; overflow:hidden; margin-bottom:14px;">
+        <div style="padding:14px 18px; border-bottom:1px solid #ededed; font-size:13px; font-weight:600;">Top-driver trajectory · next 3 months</div>
+        <sc-for list="{{ forecast.drivers }}" as="dr" hint-placeholder-count="6">
+          <div style="display:grid; grid-template-columns:1fr 110px; gap:14px; align-items:center; padding:12px 18px; border-top:{{ dr.border }};">
+            <div style="min-width:0;">
+              <div style="font-size:13px; color:#171717; font-weight:500;">{{ dr.label }}</div>
+              <div style="font-size:11.5px; color:#9a9a9a; margin-top:2px;">{{ dr.note }}</div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:flex-end; gap:7px;">
+              <span style="{{ dr.dirStyle }}">{{ dr.arrow }} {{ dr.dir }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- investor read -->
+      <div style="background:#fafafa; border:1px solid #ededed; border-radius:12px; padding:20px 22px;">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:#9a9a9a; font-weight:600; margin-bottom:10px;">Investor read</div>
+        <p style="margin:0; font-size:14px; color:#212121; line-height:1.6;">{{ forecast.investor }}</p>
+      </div>
+    </section>
+
+    <!-- methodology -->
+    <footer style="margin-top:40px; padding-top:20px; border-top:1px solid #ededed; display:flex; gap:24px; flex-wrap:wrap; justify-content:space-between;">
+      <p style="margin:0; font-size:11.5px; color:#9a9a9a; line-height:1.6; max-width:760px;">Drivers from the Maxwell Data FTSE 100 financial-materiality survey (March 2025), aligned to 26 SASB dimensions. Driver-selection methodology: Jangani, Date &amp; Tucker — <span style="font-style:italic;">A New Approach to Identifying Key Financial Materiality Drivers from Sentiment Data</span> (SSRN 5618192, 2026) — reduces 26 drivers to 6 via mutual-information screening and random-forest refinement, validated over rolling 26-week windows. Forecast is a deterministic port of the project's scoring engine; no values are model-generated.</p>
+      <p style="margin:0; font-size:11px; color:#b2b2b2; font-family:'JetBrains Mono',monospace; white-space:nowrap;">{{ co.ticker }} · live</p>
+    </footer>
+    </sc-if>
+
+    <!-- ============ COMPARISON CARD VIEW ============ -->
+    <sc-if value="{{ isCard }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:960px; margin:6px auto 0;">
+      <div style="border:1px solid #e4e4e4; border-radius:16px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+
+        <!-- header block -->
+        <div style="padding:26px 30px 22px; border-bottom:1px solid #ededed;">
+          <div style="font-size:10.5px; text-transform:uppercase; letter-spacing:0.14em; color:#9a9a9a; font-weight:600; margin-bottom:10px;">Material Driver Profile</div>
+          <h1 style="margin:0 0 7px; font-size:27px; font-weight:600; letter-spacing:-0.025em; line-height:1.05;">{{ card.title }}</h1>
+          <p style="margin:0 0 14px; font-size:13.5px; color:#707070; line-height:1.5;">{{ card.subtitle }}</p>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#8a8a8a; padding-top:13px; border-top:1px solid #f0f0f0;">{{ card.meta }}</div>
+        </div>
+
+        <!-- intro -->
+        <div style="padding:17px 30px; background:#fafafa; border-bottom:1px solid #ededed;">
+          <p style="margin:0; font-size:13px; color:#525252; line-height:1.55; max-width:780px;">{{ card.intro }}</p>
+        </div>
+
+        <!-- ranking table -->
+        <div style="padding:22px 30px 24px;">
+          <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:15px; flex-wrap:wrap;">
+            <h2 style="margin:0; font-size:15px; font-weight:600; letter-spacing:-0.01em;">Top 8 material drivers</h2>
+            <div style="display:flex; align-items:center; gap:15px; font-size:11px; color:#707070;">
+              <span style="display:flex; align-items:center; gap:6px;"><span style="width:14px; height:7px; background:#171717; border-radius:2px; display:inline-block;"></span>this company</span>
+              <span style="display:flex; align-items:center; gap:6px;"><span style="width:2px; height:13px; background:#9a9a9a; display:inline-block;"></span>sector avg</span>
+              <span style="display:flex; align-items:center; gap:6px;"><span style="width:10px; height:10px; border-radius:50%; background:#fff; border:1.5px solid #5f5f5f; display:inline-block;"></span>FTSE 100 avg</span>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:26px 1fr 150px 84px; gap:14px; padding:0 4px 9px; border-bottom:1px solid #ededed; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:#b2b2b2; font-weight:600;">
+            <span>#</span><span>Driver · importance (0–100)</span><span style="text-align:right;">Score · S · F</span><span style="text-align:right;">Trend</span>
+          </div>
+
+          <sc-for list="{{ card.rows }}" as="r" hint-placeholder-count="8">
+            <div style="display:grid; grid-template-columns:26px 1fr 150px 84px; gap:14px; align-items:center; padding:13px 4px; border-top:{{ r.border }};">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9a9a9a; font-weight:600;">{{ r.rank }}</span>
+              <div style="min-width:0;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:7px;">
+                  <span style="{{ r.pillarStyle }}">{{ r.pillar }}</span>
+                  <span title="{{ r.def }}" style="font-size:13px; font-weight:500; color:#171717;">{{ r.label }}</span>
+                </div>
+                <div style="position:relative; height:22px; background:#f6f6f6; border-radius:6px;">
+                  <div style="{{ r.barFill }}"></div>
+                  <div style="{{ r.sMarker }}"></div>
+                  <div style="{{ r.fMarker }}"></div>
+                </div>
+              </div>
+              <div style="text-align:right;">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:16px; font-weight:600; color:#171717;">{{ r.your }}</span>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#9a9a9a; margin-top:2px;">S {{ r.sAvg }} · F {{ r.fAvg }}</div>
+              </div>
+              <div style="display:flex; align-items:center; justify-content:flex-end; gap:6px;">
+                <span style="{{ r.trendStyle }}">{{ r.trendIcon }}</span>
+                <span style="font-size:11px; color:#9a9a9a;">{{ r.trendWord }}</span>
+              </div>
+            </div>
+          </sc-for>
+          <p style="margin:14px 0 0; font-size:11px; color:#9a9a9a; line-height:1.5;">{{ card.trendNote }}</p>
+        </div>
+
+        <!-- why different -->
+        <div style="padding:24px 30px; background:#fafafa; border-top:1px solid #ededed;">
+          <h2 style="margin:0 0 4px; font-size:15px; font-weight:600;">Why this company is different</h2>
+          <p style="margin:0 0 18px; font-size:12px; color:#9a9a9a;">The drivers that deviate most from the sector average — descriptive, model-based.</p>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <sc-for list="{{ card.whyDiff }}" as="w" hint-placeholder-count="3">
+              <div style="background:#fff; border:1px solid #ededed; border-radius:11px; padding:16px 18px;">
+                <div style="display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin-bottom:9px;">
+                  <span style="{{ w.pillarStyle }}">{{ w.pillar }}</span>
+                  <span style="font-size:14px; font-weight:600; color:#171717;">{{ w.label }}</span>
+                  <span style="{{ w.badgeStyle }}">{{ w.badge }}</span>
+                </div>
+                <p style="margin:0 0 8px; font-size:12px; color:#8a8a8a; line-height:1.5; font-style:italic;">{{ w.def }}</p>
+                <p style="margin:0; font-size:13px; color:#3a3a3a; line-height:1.6;">{{ w.explain }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <!-- driver momentum -->
+        <div style="padding:22px 30px; border-top:1px solid #ededed;">
+          <h2 style="margin:0 0 13px; font-size:15px; font-weight:600;">Driver momentum</h2>
+          <div style="display:flex; flex-wrap:wrap; gap:10px;">
+            <sc-for list="{{ card.trendMini }}" as="t" hint-placeholder-count="5">
+              <div style="display:flex; align-items:center; gap:8px; background:#fafafa; border:1px solid #ededed; border-radius:9px; padding:9px 13px;">
+                <span style="{{ t.style }}">{{ t.icon }}</span>
+                <span style="font-size:12.5px; color:#212121;">{{ t.label }}</span>
+                <span style="font-size:11px; color:#9a9a9a;">{{ t.word }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <!-- action hint -->
+        <div style="padding:22px 30px; background:#1c1c1c;">
+          <div style="display:flex; align-items:flex-start; gap:11px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#3ecf8e; margin-top:6px; flex-shrink:0;"></span>
+            <p style="margin:0; font-size:14px; color:#ededed; line-height:1.6; max-width:790px;">{{ card.action }}</p>
+          </div>
+        </div>
+
+        <!-- source -->
+        <div style="padding:14px 30px; border-top:1px solid #2a2a2a; background:#1c1c1c;">
+          <p style="margin:0; font-size:10.5px; color:#8a8a8a; font-family:'JetBrains Mono',monospace; line-height:1.5;">{{ card.source }}</p>
+        </div>
+
+      </div>
+    </div>
+    </sc-if>
+
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:1700}}">
+class Component extends DCLogic {
+  state = { ticker:'BP', query:'', focused:false, view:'dashboard' };
+
+  C = { ink:'#171717', mute:'#707070', faint:'#b2b2b2', emerald:'#3ecf8e',
+        E:'#2f7d8a', S:'#7a5ea8', G:'#8a6d2f',
+        leading:'#2f7d8a', stable:'#9a9a9a', lagging:'#c0492f',
+        above:'#2f5d8a', below:'#9a9a9a', unique:'#8a6d2f' };
+
+  order = ['BP','SHEL','ORSTED','XOM','TTE','ULVR','NESN','AMZN'];
+
+  companies = {
+    BP:{name:'BP plc',coarse:'energy',sasb:'Oil & gas producers',country:'UK',mkt:'$82.4B',desc:'Major integrated oil and gas company; subject of multiple ESG controversies and greenwashing inquiries.'},
+    SHEL:{name:'Shell plc',coarse:'energy',sasb:'Oil & gas producers',country:'UK',mkt:'$193.2B',desc:'Integrated energy company with a stated net-zero 2050 ambition; a Dutch court ordered a 45% emissions cut.'},
+    ORSTED:{name:'Ørsted A/S',coarse:'energy',sasb:'Renewable energy',country:'Denmark',mkt:'$14.1B',desc:"Former fossil-fuel company transformed into the world's largest offshore wind developer."},
+    XOM:{name:'ExxonMobil Corp',coarse:'energy',sasb:'Oil & gas producers',country:'US',mkt:'$418.7B',desc:'Largest US oil and gas company; historically resistant to ESG frameworks; sued California over disclosure rules.'},
+    TTE:{name:'TotalEnergies SE',coarse:'energy',sasb:'Oil & gas producers',country:'France',mkt:'$137.8B',desc:'European major with a significant LNG portfolio and growing renewables; sued over the Uganda EACOP pipeline.'},
+    ULVR:{name:'Unilever plc',coarse:'consumer',sasb:'Personal goods',country:'UK',mkt:'$98.3B',desc:'Consumer-goods company with a long-standing sustainability programme; RE100 member since 2020.'},
+    NESN:{name:'Nestlé S.A.',coarse:'consumer',sasb:'Food & beverages',country:'Switzerland',mkt:'$221.4B',desc:"World's largest food company; subject of greenwashing enforcement actions in multiple jurisdictions."},
+    AMZN:{name:'Amazon.com Inc',coarse:'technology',sasb:'E-commerce & technology',country:'US',mkt:'$1.82T',desc:'E-commerce and cloud company; Climate Pledge signatory with a contested accounting methodology.'}
+  };
+
+  // factor -> [shortLabel, pillar]
+  fm = {
+    'GHG Emissions':['GHG Emissions','E'], 'Physical Impacts of Climate Change':['Physical Climate Risk','E'],
+    'Ecological Impacts':['Ecological Impacts','E'], 'Energy Management':['Energy Management','E'],
+    'Air Quality':['Air Quality','E'], 'Water & Hazardous Materials':['Water & Hazardous Mat.','E'],
+    'Waste & Wastewater Management':['Waste & Wastewater','E'], 'Materials Sourcing & Efficiency':['Materials Sourcing','E'],
+    'Human Rights & Community Relations':['Human Rights & Community','S'], 'Labor Practices':['Labor Practices','S'],
+    'Product Quality & Safety':['Product Quality & Safety','S'], 'Customer Welfare':['Customer Welfare','S'],
+    'Customer Privacy':['Customer Privacy','S'], 'Data Security':['Data Security','S'],
+    'Employee Engagement':['Employee Engagement','S'], 'Access & Affordability':['Access & Affordability','S'],
+    'Business Ethics':['Business Ethics','G'], 'Management of the Legal & Regulatory Environment':['Legal & Regulatory Mgmt','G'],
+    'Systemic Risk Management':['Systemic Risk Mgmt','G'], 'Business Model Resilience':['Business Model Resilience','G'],
+    'Competitive Behavior':['Competitive Behavior','G'], 'Critical Incidence Risk Management':['Critical Incident Risk','G'],
+    'Supply Chain Management':['Supply Chain Mgmt','G'], 'Product Design & Lifecycle Management':['Product Design & Lifecycle','G']
+  };
+
+  // plain-English, one-sentence driver definitions (risk/pricing framing, no value judgements)
+  defs = {
+    'GHG Emissions':'How the company measures, manages, and reduces its direct and indirect greenhouse-gas emissions.',
+    'Physical Impacts of Climate Change':"The company's exposure to physical climate hazards — storms, flooding, heat — that can disrupt assets and operations.",
+    'Ecological Impacts':'How operations affect ecosystems, biodiversity, and protected habitats, and the liabilities that follow.',
+    'Energy Management':'How the company sources, prices, and reduces the energy its operations consume.',
+    'Air Quality':'Non-GHG air emissions from operations and the regulatory and health exposure they carry.',
+    'Water & Hazardous Materials':'Management of water withdrawal, discharge, and hazardous-material handling.',
+    'Waste & Wastewater Management':'How the company handles solid waste, effluent, and the disposal liabilities attached.',
+    'Materials Sourcing & Efficiency':'Security and efficiency of critical input materials and the risk of supply disruption.',
+    'Human Rights & Community Relations':'How operations affect local communities and the human-rights exposure across the footprint.',
+    'Labor Practices':'Working conditions, pay, and labor-relations risk across the workforce.',
+    'Product Quality & Safety':'The safety and reliability of products and the liabilities of failure or recall.',
+    'Customer Welfare':'Risks tied to the health, safety, and responsible use of what the company sells.',
+    'Customer Privacy':'How the company collects, uses, and protects customer data.',
+    'Data Security':'Resilience against breaches and intrusions, and the cost of data loss.',
+    'Employee Engagement':"The company's ability to attract, retain, and motivate its workforce.",
+    'Access & Affordability':'Whether essential products and services reach customers at workable prices.',
+    'Business Ethics':'Exposure to bribery, corruption, fraud, and anti-competitive conduct.',
+    'Management of the Legal & Regulatory Environment':'How the company anticipates and manages regulation, litigation, and policy shifts.',
+    'Systemic Risk Management':'The company\u2019s role in, and resilience to, system-wide financial or operational shocks.',
+    'Business Model Resilience':'How durable the business model is against structural and transition pressure.',
+    'Competitive Behavior':'Antitrust, market-power, and fair-competition exposure.',
+    'Critical Incidence Risk Management':'Preparedness for low-probability, high-severity operational events.',
+    'Supply Chain Management':'Labor, environmental, and continuity risk carried across suppliers.',
+    'Product Design & Lifecycle Management':'How product design drives use-phase and end-of-life costs and liabilities.'
+  };
+
+  materiality = {
+    BP:[['GHG Emissions',0.581],['Human Rights & Community Relations',0.558],['Product Quality & Safety',0.59],['Business Ethics',0.515],['Management of the Legal & Regulatory Environment',0.428],['Physical Impacts of Climate Change',0.759],['Supply Chain Management',0.518],['Systemic Risk Management',0.6]],
+    SHEL:[['Ecological Impacts',0.645],['Energy Management',0.587],['GHG Emissions',0.582],['Labor Practices',0.511],['Product Quality & Safety',0.543],['Product Design & Lifecycle Management',0.582],['Supply Chain Management',0.544],['Systemic Risk Management',0.556]],
+    XOM:[['Ecological Impacts',0.645],['Energy Management',0.587],['GHG Emissions',0.5815],['Human Rights & Community Relations',0.558],['Labor Practices',0.511],['Product Quality & Safety',0.5665],['Business Ethics',0.515],['Management of the Legal & Regulatory Environment',0.428],['Product Design & Lifecycle Management',0.582],['Physical Impacts of Climate Change',0.759],['Supply Chain Management',0.531],['Systemic Risk Management',0.578]],
+    TTE:[['Ecological Impacts',0.6257],['Energy Management',0.5694],['GHG Emissions',0.5641],['Human Rights & Community Relations',0.5413],['Labor Practices',0.4957],['Product Quality & Safety',0.5495],['Business Ethics',0.4995],['Management of the Legal & Regulatory Environment',0.4152],['Product Design & Lifecycle Management',0.5645],['Physical Impacts of Climate Change',0.7362],['Supply Chain Management',0.5151],['Systemic Risk Management',0.5607]],
+    ORSTED:[['Air Quality',0.4907],['Ecological Impacts',0.657],['Energy Management',0.6095],['GHG Emissions',0.591],['Waste & Wastewater Management',0.542],['Customer Privacy',0.5597],['Human Rights & Community Relations',0.499],['Product Quality & Safety',0.5093],['Business Ethics',0.5368],['Business Model Resilience',0.7225],['Competitive Behavior',0.714],['Critical Incidence Risk Management',0.528],['Management of the Legal & Regulatory Environment',0.501],['Materials Sourcing & Efficiency',0.577],['Product Design & Lifecycle Management',0.721],['Physical Impacts of Climate Change',0.6145],['Supply Chain Management',0.559],['Systemic Risk Management',0.4757]],
+    ULVR:[['GHG Emissions',0.522],['Water & Hazardous Materials',0.535],['Customer Welfare',0.447],['Human Rights & Community Relations',0.566],['Business Model Resilience',0.678],['Critical Incidence Risk Management',0.51],['Management of the Legal & Regulatory Environment',0.556],['Physical Impacts of Climate Change',0.741]],
+    NESN:[['Air Quality',0.4167],['Ecological Impacts',0.474],['Energy Management',0.4645],['GHG Emissions',0.496],['Water & Hazardous Materials',0.64],['Waste & Wastewater Management',0.4933],['Access & Affordability',0.608],['Customer Privacy',0.537],['Customer Welfare',0.495],['Data Security',0.505],['Employee Engagement',0.505],['Human Rights & Community Relations',0.4597],['Labor Practices',0.593],['Product Quality & Safety',0.514],['Business Ethics',0.529],['Business Model Resilience',0.788],['Competitive Behavior',0.718],['Critical Incidence Risk Management',0.389],['Management of the Legal & Regulatory Environment',0.517],['Product Design & Lifecycle Management',0.6187],['Physical Impacts of Climate Change',0.534],['Supply Chain Management',0.696],['Systemic Risk Management',0.6475]],
+    AMZN:[['Air Quality',0.505],['Ecological Impacts',0.513],['Energy Management',0.4495],['Water & Hazardous Materials',0.584],['Waste & Wastewater Management',0.43],['Access & Affordability',0.4845],['Customer Welfare',0.5415],['Human Rights & Community Relations',0.547],['Labor Practices',0.508],['Product Quality & Safety',0.582],['Business Ethics',0.669],['Business Model Resilience',0.767],['Critical Incidence Risk Management',0.618],['Materials Sourcing & Efficiency',0.659],['Supply Chain Management',0.652],['Systemic Risk Management',0.4265]]
+  };
+
+  // [kpi_name, value, unit, score, sector_median, trend, weight]
+  kpis = {
+    BP:[['emissions_intensity',185,'tCO₂e/$m',28,120,'flat',0.35],['low_carbon_capex_pct',26,'%',35,35,'improving',0.30],['renewable_energy_pct',8,'%',20,15,'improving',0.20],['major_incidents',3,'',42,2,'worsening',0.10],['methane_reduction',47,'%',72,40,'improving',0.05]],
+    SHEL:[['emissions_intensity',175,'tCO₂e/$m',32,120,'flat',0.35],['low_carbon_capex_pct',23,'%',30,35,'flat',0.30],['renewable_energy_pct',10,'%',24,15,'improving',0.20],['major_incidents',2,'',65,2,'flat',0.10],['methane_reduction',38,'%',58,40,'improving',0.05]],
+    ORSTED:[['emissions_intensity',22,'tCO₂e/$m',95,120,'improving',0.35],['low_carbon_capex_pct',89,'%',98,35,'improving',0.30],['renewable_energy_pct',87,'%',97,15,'improving',0.20],['major_incidents',0,'',100,2,'improving',0.10],['methane_reduction',82,'%',88,40,'improving',0.05]],
+    XOM:[['emissions_intensity',210,'tCO₂e/$m',18,120,'worsening',0.35],['low_carbon_capex_pct',5,'%',8,35,'flat',0.30],['renewable_energy_pct',2,'%',4,15,'flat',0.20],['major_incidents',4,'',38,2,'worsening',0.10],['methane_reduction',12,'%',18,40,'flat',0.05]],
+    TTE:[['emissions_intensity',155,'tCO₂e/$m',42,120,'improving',0.35],['low_carbon_capex_pct',32,'%',44,35,'improving',0.30],['renewable_energy_pct',18,'%',35,15,'improving',0.20],['major_incidents',2,'',65,2,'flat',0.10],['methane_reduction',50,'%',78,40,'improving',0.05]],
+    ULVR:[['emissions_intensity',45,'tCO₂e/$m',72,60,'improving',0.30],['supply_chain_score',55,'/100',62,55,'flat',0.25],['plastic_reduction',18,'%',48,20,'improving',0.20],['labor_standards',68,'/100',70,60,'flat',0.15],['water_intensity',82,'/100',75,65,'improving',0.10]],
+    NESN:[['emissions_intensity',68,'tCO₂e/$m',55,60,'worsening',0.30],['supply_chain_score',32,'/100',30,55,'worsening',0.25],['plastic_reduction',-12,'%',15,20,'worsening',0.20],['labor_standards',42,'/100',35,60,'worsening',0.15],['water_intensity',58,'/100',52,65,'worsening',0.10]],
+    AMZN:[['emissions_intensity',88,'tCO₂e/$m',62,70,'flat',0.25],['supply_chain_score',48,'/100',45,55,'flat',0.20],['renewable_energy_pct',42,'%',55,50,'improving',0.30],['labor_standards',38,'/100',30,55,'flat',0.15],['scope3_reduction',-5,'%',25,30,'worsening',0.10]]
+  };
+
+  ratings = { BP:[58.3,38.0], SHEL:[51.7,42.0], ORSTED:[81.0,77.3], XOM:[36.3,34.3], TTE:[61.3,55.7], ULVR:[70.0,63.7], NESN:[63.0,44.0], AMZN:[50.0,37.7] };
+  claimC = { BP:[1,1,3], SHEL:[0,1,1], ORSTED:[3,0,1], XOM:[0,0,2], TTE:[1,0,1], ULVR:[1,0,1], NESN:[0,3,1], AMZN:[0,1,1] };
+  controvC = { BP:[3,2,0], SHEL:[1,1,0], ORSTED:[0,0,1], XOM:[0,1,0], TTE:[1,1,0], ULVR:[0,1,1], NESN:[4,1,0], AMZN:[1,1,0] };
+  wemInputs = {
+    BP:{rev:211e9,emis:39e6,labor:52e6,other:310e6,ratio:107}, SHEL:{rev:301e9,emis:68e6,labor:28e6,other:175e6,ratio:88},
+    ORSTED:{rev:10.2e9,emis:480000,labor:900000,other:1.5e6,ratio:44}, XOM:{rev:398e9,emis:112e6,labor:48e6,other:425e6,ratio:209},
+    TTE:{rev:218e9,emis:49e6,labor:18e6,other:95e6,ratio:81}, ULVR:{rev:60.1e9,emis:1.95e6,labor:12e6,other:22e6,ratio:196},
+    NESN:{rev:94.4e9,emis:4.8e6,labor:22e6,other:55e6,ratio:153}, AMZN:{rev:575e9,emis:24.3e6,labor:234e6,other:89e6,ratio:512}
+  };
+
+  FACTOR_KPI = {
+    'GHG Emissions':['emissions_intensity','methane_reduction'], 'Ecological Impacts':['major_incidents'],
+    'Energy Management':['low_carbon_capex_pct','renewable_energy_pct'], 'Labor Practices':['labor_standards'],
+    'Human Rights & Community Relations':['labor_standards'], 'Supply Chain Management':['supply_chain_score'],
+    'Product Quality & Safety':['major_incidents'], 'Physical Impacts of Climate Change':['emissions_intensity'],
+    'Business Model Resilience':['low_carbon_capex_pct'], 'Water & Hazardous Materials':['water_intensity'],
+    'Employee Engagement':['labor_standards'], 'Critical Incidence Risk Management':['major_incidents'],
+    'Product Design & Lifecycle Management':['low_carbon_capex_pct'], 'Air Quality':['emissions_intensity']
+  };
+
+  clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+  round(v){ return Math.round(v); }
+  erf(x){ const s=x>=0?1:-1; x=Math.abs(x); const t=1/(1+0.3275911*x);
+    const y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x); return s*y; }
+  stdev(a){ const m=a.reduce((p,c)=>p+c,0)/a.length; const v=a.reduce((p,c)=>p+(c-m)*(c-m),0)/(a.length-1); return Math.sqrt(v); }
+
+  compute(tk){
+    const r=this.ratings[tk]; const esgAvg=(r[0]+r[1])/2; const divergence=Math.abs(r[0]-r[1]);
+    const [v,c,u]=this.claimC[tk]; const n=v+c+u;
+    const [hi,me,lo]=this.controvC[tk];
+    const divScore=this.clamp(100-divergence*3.5,0,100);
+    const verScore=n?this.clamp(50+(v-c-u*0.3)/n*50,0,100):50;
+    const conScore=this.clamp(100-hi*18-me*7-lo*3,0,100);
+    const integrity=0.35*divScore+0.40*verScore+0.25*conScore;
+    const kp=this.kpis[tk]; const impact=kp.reduce((a,k)=>a+k[3]*k[6],0);
+    const wi=this.wemInputs[tk]; const intensity=wi.emis/(wi.rev/1e6); const finesM=(wi.labor+wi.other)/1e6;
+    const d_carbon=this.clamp(intensity/5,0,40), d_labor=this.clamp((wi.ratio-50)*0.1,0,30), d_theft=this.clamp(Math.log10(finesM+1)*13,0,40);
+    const wem=this.clamp(100-(d_carbon+d_labor+d_theft),0,100);
+    const raw=0.6*(esgAvg-wem)+0.4*(100-integrity); const placebo=1/(1+Math.exp(-raw/20));
+    const iTier=integrity>=50?'high':'low', mTier=impact>=50?'high':'low';
+    const qlabels={'high-high':'Preferred Sustainability Leader','high-low':'Engagement Priority','low-high':'Under-recognised Performer','low-low':'Greenwashing Risk / Laggard'};
+    const quadrant=qlabels[iTier+'-'+mTier];
+    const momentum=kp.reduce((a,k)=>a+(k[5]==='improving'?k[6]:k[5]==='worsening'?-k[6]:0),0);
+    const highSev=hi;
+    return { tk, esgAvg, divergence, integrity, impact, wem, placebo, quadrant, momentum, highSev, kp };
+  }
+
+  topN(tk,n){ return [...this.materiality[tk]].sort((a,b)=>b[1]-a[1]).slice(0,n); }
+  matMap(tk){ const m={}; this.materiality[tk].forEach(([f,s])=>m[f]=s); return m; }
+  peerTickers(tk){ const co=this.companies[tk].coarse; const ps=this.order.filter(t=>this.companies[t].coarse===co); return ps.length>1?ps:[...this.order]; }
+
+  ftsePct(wem){ const z=(wem-50)/20; return this.clamp(Math.round(50*(1+this.erf(z/Math.SQRT2))),2,98); }
+  projectRank(rankNow,count,mom,highC){
+    let r12=rankNow; if(mom>=0.30) r12=Math.max(1,rankNow-1); else if(mom<=-0.30) r12=Math.min(count,rankNow+1);
+    let r3=rankNow; if(highC||Math.abs(mom)<0.30) r3=rankNow; else if(mom>=0.50) r3=Math.max(1,rankNow-1); else if(mom<=-0.50) r3=Math.min(count,rankNow+1);
+    return [r3,r12];
+  }
+  kpiDir(factor,kp){ const names=this.FACTOR_KPI[factor]||[]; const mt=kp.filter(k=>names.includes(k[0]));
+    if(!mt.length) return ['stable','low'];
+    const ni=mt.filter(k=>k[5]==='improving').length, nw=mt.filter(k=>k[5]==='worsening').length;
+    if(ni>nw){ const avg=mt.reduce((a,k)=>a+k[3],0)/mt.length; return avg>=65?['leading','high']:['stable','medium']; }
+    if(nw>ni) return ['lagging','high']; return ['stable','medium']; }
+  factorNote(factor,kp,mat){ const names=this.FACTOR_KPI[factor]||[]; const mt=kp.filter(k=>names.includes(k[0]));
+    if(mt.length){ const k=mt[0]; const rel=k[1]>k[4]?'above':'below'; const w={improving:'leading',worsening:'lagging',flat:'stable'}[k[5]];
+      return `${w} — ${k[1]}${k[2]} vs sector median ${k[4]}${k[2]} (${rel})`; }
+    if(mat>=0.65) return `high materiality (${this.round(mat*100)}%) — tracked via controversy signal, no direct KPI`;
+    return `materiality ${this.round(mat*100)}% — no direct metric in dataset`; }
+
+  selectTicker(tk){ this.setState({ ticker:tk, query:'', focused:false }); }
+  onInput(e){ this.setState({ query:e.target.value, focused:true }); }
+
+  renderVals(){
+    const S=this.state, C=this.C;
+    const tk=S.ticker; const co=this.companies[tk]; const cur=this.compute(tk);
+
+    // search
+    const q=(S.query||'').trim().toLowerCase();
+    const matches=this.order.filter(t=>{ const m=this.companies[t]; return t.toLowerCase().includes(q)||m.name.toLowerCase().includes(q)||m.sasb.toLowerCase().includes(q)||m.coarse.includes(q); });
+    const showResults=S.focused&&q.length>0;
+    const resStyle=(last)=>`display:flex; align-items:center; gap:12px; width:100%; text-align:left; padding:11px 15px; border:none; border-top:${last?'1px solid #f0f0f0':'none'}; background:#fff; cursor:pointer; transition:background .12s;`;
+    const search={ query:S.query, onInput:(e)=>this.onInput(e), onFocus:()=>this.setState({focused:true}),
+      borderColor:S.focused?'#c7c7c7':'#ededed', countLabel:`${this.order.length} cos`,
+      showResults, noResults:matches.length===0,
+      results:matches.map((t,i)=>({ ticker:t, name:this.companies[t].name, sasb:this.companies[t].sasb, onClick:()=>this.selectTicker(t), style:resStyle(i>0) })) };
+
+    // chips
+    const chips=this.order.map(t=>{ const a=t===tk;
+      return { ticker:t, onClick:()=>this.selectTicker(t),
+        style:`font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; padding:6px 12px; border-radius:7px; cursor:pointer; transition:all .12s; background:${a?'#171717':'#fafafa'}; color:${a?'#fff':'#707070'}; border:1px solid ${a?'#171717':'#ededed'};` }; });
+
+    // top-8 + peer avgs
+    const peers=this.peerTickers(tk);
+    const peerMaps={}; peers.forEach(p=>peerMaps[p]=this.matMap(p));
+    const t8=this.topN(tk,8).map(([f,s],i)=>({f,s,rank:i+1}));
+    const pillarColor={E:C.E,S:C.S,G:C.G};
+    let eC=0,sC=0,gC=0;
+    const top8=t8.map((row,i)=>{
+      const meta=this.fm[row.f]||[row.f,'G']; const pil=meta[1];
+      if(pil==='E')eC++; else if(pil==='S')sC++; else gC++;
+      const others=peers.filter(p=>p!==tk&&peerMaps[p][row.f]!=null).map(p=>peerMaps[p][row.f]);
+      const cov=others.length; const peerAvg=cov?others.reduce((a,b)=>a+b,0)/cov:null;
+      const dev=peerAvg!=null?(row.s-peerAvg):null;
+      const unique=cov===0;
+      const devPts=dev!=null?(dev*100):0;
+      const devColor=unique?C.unique:(devPts>=3?C.above:devPts<=-3?C.below:'#b2b2b2');
+      const devLabel=unique?'peer-unique':(devPts>=0?'+':'')+devPts.toFixed(1);
+      return { rank:row.rank, label:meta[0], pillar:pil, score:row.s.toFixed(3), border:i===0?'none':'1px solid #f4f4f4',
+        coverageLabel:unique?'no peer scores this':`${cov}/${peers.length-1} peers score it`,
+        pillarStyle:`display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:5px; font-size:10px; font-weight:600; color:#fff; background:${pillarColor[pil]};`,
+        barStyle:`position:absolute; left:0; top:0; bottom:0; width:${row.s*100}%; background:#171717; border-radius:5px;`,
+        markerStyle:peerAvg!=null?`position:absolute; left:${peerAvg*100}%; top:-3px; bottom:-3px; width:2px; background:#9a9a9a;`:'display:none;',
+        scoreStyle:`position:absolute; right:8px; top:50%; transform:translateY(-50%); font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; color:${row.s*100>40?'#fff':'#171717'};`,
+        devStyle:`font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; color:${devColor};`, devLabel };
+    });
+
+    const pillarBars=[['E',eC,C.E],['S',sC,C.S],['G',gC,C.G]].map(([l,n,col])=>({letter:l,count:n,color:col,flex:Math.max(n,0.4)}));
+    const topF=t8[0]; const topMeta=this.fm[topF.f]||[topF.f];
+    const coOut={ name:co.name, ticker:tk, coarse:co.coarse.charAt(0).toUpperCase()+co.coarse.slice(1), sasb:co.sasb, country:co.country, mkt:co.mkt, desc:co.desc,
+      driverCount:this.materiality[tk].length, topFactor:topMeta[0], topPct:this.round(topF.s*100), balance:`${eC}/${sC}/${gC}`, pillarBars };
+
+    // peer cards
+    const peerCards=peers.map(p=>{ const self=p===tk; const t3=this.topN(p,3).map(([f,s])=>({label:(this.fm[f]||[f])[0],score:s.toFixed(2),barStyle:`height:100%; width:${s*100}%; background:${self?'#171717':'#c7c7c7'}; border-radius:2px;`}));
+      return { ticker:p, sasb:this.companies[p].sasb, isSelf:self, top3:t3,
+        cardStyle:`border:1px solid ${self?'#171717':'#ededed'}; border-radius:11px; padding:15px 16px; background:${self?'#fafafa':'#fff'};` }; });
+
+    // peer divergence narrative
+    const selfTop=topMeta[0];
+    let mostDiff=null, maxGap=-1;
+    peers.filter(p=>p!==tk).forEach(p=>{ const pt=this.topN(p,1)[0]; const overlap=this.topN(p,3).map(x=>x[0]); const selfTop3=this.topN(tk,3).map(x=>x[0]);
+      const shared=selfTop3.filter(f=>overlap.includes(f)).length; if((3-shared)>maxGap){maxGap=3-shared; mostDiff=p;} });
+    const mdName=mostDiff?this.companies[mostDiff].name:''; const mdTop=mostDiff?(this.fm[this.topN(mostDiff,1)[0][0]]||[''])[0]:'';
+    const mdSasb=mostDiff?this.companies[mostDiff].sasb:'';
+    const sameSasbPeers=peers.filter(p=>p!==tk&&this.companies[p].sasb===co.sasb).length;
+    const explain=`All ${peers.length} companies share the coarse "${co.coarse}" label, but financial materiality is set by business model, not classification. ${co.name} is led by ${selfTop} (${this.round(topF.s*100)}%), while ${mdName} — a ${mdSasb} business inside the same sector — is led by ${mdTop}. They overlap on ${3-maxGap} of their top-3 drivers. A shared sector code hides ${maxGap} materially different priorities.`;
+    const academic=`Jangani, Date & Tucker (SSRN 5618192, 2026) show driver rankings are temporally unstable: reducing the 26 SASB drivers to the 6 that actually move returns across rolling 26-week windows reshuffles the set as regimes change (COVID → COP26 → energy crisis). Materiality is a moving, firm-specific target — which is exactly why a single sector average understates the spread you see above.`;
+    const isFallback=this.order.filter(t=>this.companies[t].coarse===co.coarse).length<=1;
+    const peersOut={ label:`${peers.length-1} peers`, sectorLabel:isFallback?'Coverage universe':co.coarse.charAt(0).toUpperCase()+co.coarse.slice(1), count:peers.length,
+      intro:isFallback
+        ? `${co.name} is the only ${co.coarse} constituent in coverage, so it is benchmarked against the full universe. Each company's top-3 financially material drivers are shown — note how little they overlap across business models.`
+        : `A sector code is a starting point, not an answer. Below, each peer's top-3 financially material drivers — note how little they overlap even when the label is identical.`,
+      cards:peerCards, explain, academic };
+
+    // ---------- FORECAST ----------
+    const portfolio=this.order.map(t=>({tk:t, sector:this.companies[t].coarse, wem:this.compute(t).wem}));
+    const sectorPeers=portfolio.filter(e=>e.sector===co.coarse);
+    const universe=sectorPeers.length>1?sectorPeers:[...portfolio];
+    const sortedPeers=[...universe].sort((a,b)=>b.wem-a.wem);
+    const peerCount=sortedPeers.length;
+    const rankNow=sortedPeers.findIndex(e=>e.tk===tk)+1;
+    const ftseNow=this.ftsePct(cur.wem);
+    const highC=cur.highSev>=3;
+    const [rank3,rank12]=this.projectRank(rankNow,peerCount,cur.momentum,highC);
+    const ftse3=this.clamp(ftseNow+Math.round(cur.momentum*3),2,98);
+    const ftse12=this.clamp(ftseNow+Math.round(cur.momentum*7),2,98);
+
+    const ord=(n)=>{ if(n%100>=11&&n%100<=13) return n+'th'; return n+(['th','st','nd','rd','th'][Math.min(n%10,4)]); };
+    const vstyle=(kind)=>{ const m={up:[C.leading,'rgba(47,125,138,0.12)'],down:[C.lagging,'rgba(192,73,47,0.12)'],flat:['#707070','#f4f4f4']};
+      const [col,bg]=m[kind]; return `font-size:10.5px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:${col}; background:${bg}; padding:3px 9px; border-radius:6px;`; };
+    const rankKind=rank3<rankNow?'up':rank3>rankNow?'down':'flat';
+    const ftseKind=ftse3>ftseNow?'up':ftse3<ftseNow?'down':'flat';
+    const trajectories=[
+      { label:`Sector peer rank · ${co.coarse}`, verdict:rankKind==='up'?'rising':rankKind==='down'?'slipping':'holding', verdictStyle:vstyle(rankKind),
+        points:[{value:'#'+rankNow,when:'now',color:'#171717',hasArrow:true},{value:'#'+rank3,when:'3-month',color:rankKind==='up'?C.leading:rankKind==='down'?C.lagging:'#171717',hasArrow:true},{value:'#'+rank12,when:'12-month',color:'#171717',hasArrow:false}],
+        note:`of ${peerCount} ${sectorPeers.length>1?'sector peers':'companies (sector has one constituent — ranked against full universe)'}.` },
+      { label:'FTSE 100 position (modelled)', verdict:ftseKind==='up'?'climbing':ftseKind==='down'?'falling':'stable', verdictStyle:vstyle(ftseKind),
+        points:[{value:ord(ftseNow),when:'now',color:'#171717',hasArrow:true},{value:ord(ftse3),when:'3-month',color:ftseKind==='up'?C.leading:ftseKind==='down'?C.lagging:'#171717',hasArrow:true},{value:ord(ftse12),when:'12-month',color:'#171717',hasArrow:false}],
+        note:`Percentile estimated from WEM ${this.round(cur.wem)}/100 against a FTSE 100 harm distribution (μ50, σ20).` }
+    ];
+
+    // three body
+    const body1=cur.esgAvg; const body2=100*(1-(rankNow-1)/Math.max(peerCount-1,1)); const body3=ftseNow;
+    const vals=[body1,body2,body3]; const instab=this.stdev(vals); const spread=Math.max(...vals)-Math.min(...vals);
+    const verdict=instab>=25?'severe':instab>=12?'moderate':'low';
+    const labels=['ESG score','sector peer rank','FTSE 100 position'];
+    const hiLab=labels[vals.indexOf(Math.max(...vals))], loLab=labels[vals.indexOf(Math.min(...vals))];
+    const tbNote=verdict==='severe'
+      ? `${hiLab} (${Math.max(...vals).toFixed(0)}/100) flatters ${co.ticker} versus ${loLab} (${Math.min(...vals).toFixed(0)}/100) — a ${spread.toFixed(0)}-point spread. No stable orbit: the ESG score is contaminated by peer-group construction and the FTSE 100's anti-ESG composition.`
+      : verdict==='moderate'
+      ? `Moderate conflict (${spread.toFixed(0)}-pt spread): ${hiLab} reads better than ${loLab} implies. The FTSE 100's overweight in energy and mining inflates relative ESG rankings.`
+      : `Low instability — ESG score, sector position, and FTSE 100 rank tell a broadly consistent story (${spread.toFixed(0)}-pt spread).`;
+    const tbColor=verdict==='severe'?C.lagging:verdict==='moderate'?C.G:C.leading;
+    const tb={ instability:instab.toFixed(1), verdict, verdictStyle:`font-size:10.5px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:${tbColor}; background:${tbColor}1f; padding:3px 9px; border-radius:6px;`, color:tbColor,
+      bodies:[{n:1,value:body1.toFixed(0),label:'company ESG score'},{n:2,value:body2.toFixed(0),label:`sector rank (#${rankNow} of ${peerCount})`},{n:3,value:body3.toFixed(0),label:'FTSE 100 percentile'}], note:tbNote };
+
+    // driver directions
+    const dirStyle=(d)=>{ const m={leading:[C.leading,'rgba(47,125,138,0.12)','↑'],lagging:[C.lagging,'rgba(192,73,47,0.12)','↓'],stable:['#707070','#f4f4f4','→']};
+      const [col,bg,ar]=m[d]; return [`font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; color:${col}; background:${bg}; padding:4px 9px; border-radius:6px; text-transform:capitalize;`,ar]; };
+    const drivers=t8.slice(0,6).map((row,i)=>{ const [dir]=this.kpiDir(row.f,cur.kp); const note=this.factorNote(row.f,cur.kp,row.s); const [st,ar]=dirStyle(dir);
+      return { label:(this.fm[row.f]||[row.f])[0], note, dir, arrow:ar, dirStyle:st, border:i===0?'none':'1px solid #f4f4f4' }; });
+
+    // investor read
+    const r3verb=rank3<rankNow?'rise':rank3>rankNow?'fall':'hold steady';
+    const wemLabel=cur.wem<40?'material ESG risk — underweight or apply a risk premium':cur.wem<65?'moderate harm exposure — hold and engage on material drivers':'credible sustainability — candidate for ESG-mandate overweight';
+    const placeboAdd=cur.placebo>=0.55?` Placebo Index ${cur.placebo.toFixed(2)} — the ESG narrative overstates real performance.`:'';
+    const investor=`${co.name} is projected to ${r3verb} in its ${co.coarse} peer ranking (#${rankNow}→#${rank3} of ${peerCount}) over 3 months, with FTSE 100 position moving ${ord(ftseNow)}→${ord(ftse3)} percentile. WEM ${this.round(cur.wem)}/100 — ${wemLabel}. Highest-leverage driver: ${topMeta[0]} at ${this.round(topF.s*100)}% materiality.${placeboAdd}`;
+
+    const forecast={ trajectories, tb, drivers, investor };
+
+    // ---------- COMPARISON CARD (quant-neutral, one company per card) ----------
+    const sym={ up:['▲','rising',C.leading], flat:['►','stable','#9a9a9a'], down:['▼','falling',C.lagging] };
+    const ftseAvgFor=(f)=>{ const xs=this.order.map(t=>this.matMap(t)[f]).filter(v=>v!=null); return xs.length?xs.reduce((a,b)=>a+b,0)/xs.length:null; };
+    const sectorAvgFor=(f)=>{ const xs=peers.filter(p=>p!==tk).map(p=>peerMaps[p][f]).filter(v=>v!=null); return xs.length?xs.reduce((a,b)=>a+b,0)/xs.length:null; };
+    const cardRows=t8.map((row,i)=>{
+      const meta=this.fm[row.f]||[row.f,'G']; const pil=meta[1];
+      const your=row.s*100; const sAvg=sectorAvgFor(row.f); const fAvg=ftseAvgFor(row.f);
+      const sPct=sAvg!=null?sAvg*100:null; const fPct=fAvg!=null?fAvg*100:null;
+      const diff=sPct!=null?(your-sPct):null;
+      const [dir]=this.kpiDir(row.f,cur.kp); const kind=dir==='leading'?'up':dir==='lagging'?'down':'flat';
+      const [tIcon,tWord,tCol]=sym[kind];
+      return { full:row.f, label:meta[0], pillar:pil, def:this.defs[row.f]||'', rank:row.rank,
+        your:Math.round(your), sAvg:sPct!=null?Math.round(sPct):'—', fAvg:fPct!=null?Math.round(fPct):'—', diff,
+        border:i===0?'none':'1px solid #f4f4f4',
+        pillarStyle:`display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:5px; font-size:9.5px; font-weight:600; color:#fff; background:${pillarColor[pil]};`,
+        barFill:`position:absolute; left:0; top:0; bottom:0; width:${your}%; background:#171717; border-radius:6px;`,
+        sMarker:sPct!=null?`position:absolute; left:${sPct}%; top:-2px; bottom:-2px; width:2px; background:#9a9a9a;`:'display:none;',
+        fMarker:fPct!=null?`position:absolute; left:${fPct}%; top:50%; transform:translate(-50%,-50%); width:9px; height:9px; border-radius:50%; background:#fff; border:1.5px solid #5f5f5f;`:'display:none;',
+        trendIcon:tIcon, trendWord:tWord, trendStyle:`font-size:12px; color:${tCol}; font-weight:600;` };
+    });
+    const whyDiff=cardRows.filter(r=>r.diff!=null).sort((a,b)=>Math.abs(b.diff)-Math.abs(a.diff)).slice(0,3).map(r=>{
+      const more=r.diff>=0; const mag=Math.abs(Math.round(r.diff));
+      const expl=more
+        ? `For ${co.name}, news about ${r.label} has coincided with larger price moves than for sector peers. The model reads ${r.label}-related events — fines, investigations, project delays — as a key risk channel for this stock, so headlines here have historically repriced it faster than the sector.`
+        : `In this sector ${r.label} routinely moves prices, but for ${co.name} that link has been weaker in the sample. Markets appear to treat its exposure or controls as relatively stable, repricing mainly on a major event rather than on routine news.`;
+      return { label:r.label, def:r.def, pillar:r.pillar,
+        pillarStyle:`display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:5px; font-size:9.5px; font-weight:600; color:#fff; background:${pillarColor[r.pillar]};`,
+        badge:`${more?'MORE':'LESS'} market-sensitive than peers (${more?'+':'−'}${mag})`,
+        badgeStyle:`font-family:'JetBrains Mono',monospace; font-size:10.5px; font-weight:600; letter-spacing:0.02em; color:${more?C.above:C.unique}; background:${more?'rgba(47,93,138,0.10)':'rgba(138,109,47,0.10)'}; padding:4px 9px; border-radius:6px;`,
+        explain:expl };
+    });
+    const trendMini=cardRows.slice(0,5).map(r=>({ label:r.label, icon:r.trendIcon, word:r.trendWord, style:r.trendStyle }));
+    const sectorLabel2=co.coarse.charAt(0).toUpperCase()+co.coarse.slice(1);
+    const card={
+      title:`${co.name} — Material Driver Profile`,
+      subtitle:'Top 8 financially material drivers from a SASB-based news-sentiment model.',
+      meta:`Universe: FTSE 100      ·      Sector: ${sectorLabel2}      ·      Data: daily news tagged to 26 SASB drivers`,
+      intro:`This card shows the eight sustainability-related drivers that have historically explained ${co.name}'s share-price moves the most, using daily news mapped to SASB financial-materiality topics.`,
+      rows:cardRows, whyDiff, trendMini,
+      trendNote:"Trend reflects momentum in each driver's underlying KPIs over the latest reporting cycle — a proxy for shifting model importance, not a driver-importance time series.",
+      action:'Use these drivers to focus fundamental work where markets have historically reacted most strongly to news on this stock — especially where its pattern diverges from sector and FTSE 100 averages.',
+      source:'Importance scores from the Maxwell Data FTSE 100 news-sentiment model, tagged to 26 SASB financial-materiality topics. Descriptive and model-based; not an ESG rating or label.'
+    };
+
+    // view toggle
+    const tabDef=[['dashboard','Dashboard'],['card','Comparison card']];
+    const viewTabs=tabDef.map(([id,label])=>{ const a=S.view===id;
+      return { label, onClick:()=>this.setState({view:id}),
+        style:`font-family:'Inter',sans-serif; font-size:12px; font-weight:${a?'600':'500'}; padding:6px 13px; border-radius:6px; cursor:pointer; border:none; white-space:nowrap; transition:all .12s; background:${a?'#fff':'transparent'}; color:${a?'#171717':'#9a9a9a'}; box-shadow:${a?'0 1px 2px rgba(0,0,0,0.06)':'none'};` }; });
+
+    return { search, chips, co:coOut, top8, peers:peersOut, forecast, card, viewTabs, isDashboard:S.view==='dashboard', isCard:S.view==='card' };
+  }
+}
+</script>
+</body>
+</html>

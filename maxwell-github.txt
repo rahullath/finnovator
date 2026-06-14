@@ -1,0 +1,221 @@
+I'll investigate using read-only tools instead. Let me explore the repository structure and key files.Now let me get the key source files:Now I have a comprehensive understanding of the system. Let me provide you with a detailed overview.
+
+## Comprehensive Overview: ESG Materiality Sentiment Analysis
+
+This is a sophisticated **two-framework research system** for identifying which ESG (Environmental, Social, Governance) factors financially matter most to companies. Here's how it works end-to-end:
+
+---
+
+## **Data & Sources**
+
+**Input Data:**
+- **ESG Sentiment Features** (PBS drivers): 26-27 sentiment metrics derived from sustainability news/reports, each representing a different ESG theme
+  - Environmental drivers (1-6): Air quality, emissions, energy, water, waste, etc.
+  - Social drivers (7-18): Labor, health & safety, customer relations, privacy, etc.
+  - Governance drivers (19-27): Business ethics, compliance, supply chain, etc.
+- **Financial Data**: Weekly stock prices and returns
+- **Source**: PostgreSQL database with entity-level data (wealth of historical sentiment scores + price data)
+
+---
+
+## **The Analysis Pipeline**
+
+### **PHASE 1: TARGET CREATION (Skewness-Aware MAD)**
+
+The system creates robust targets for financial performance classification:
+
+```
+Weekly Returns → Median Absolute Deviation (MAD) → Dynamic Thresholds → Class Labels
+```
+
+**3-Class Targets** (for feature selection):
+- Class 0: ESG Lagging (bottom performers)
+- Class 1: ESG Stable (middle performers)  
+- Class 2: ESG Leading (top performers)
+
+**Binary Targets** (for performance validation):
+- 0: Baseline performance
+- 1: Value creation (superior returns)
+
+**Why MAD instead of Standard Deviation?**
+- Resistant to outliers and extreme market conditions
+- Works well with skewed return distributions
+- Adapts dynamically based on market regime (bull/bear)
+- Handles edge cases: automatically falls back to percentiles if MAD fails
+
+---
+
+### **PHASE 2: FRAMEWORK 1 - FEATURE SELECTION (27 → 12 → 6)**
+
+A two-stage process to identify the **6 most material ESG drivers** from the 26 candidates.
+
+#### **Stage 1: Statistical Screening (27 → 12)**
+
+Uses 3 complementary importance metrics to rank all drivers:
+
+1. **Mutual Information (MI)**: Captures non-linear relationships between features and financial performance
+2. **Binary AUC**: Measures how well each feature can classify "value creation" vs baseline
+3. **Spearman Correlation**: Validates relationship strength
+
+**Formula for composite score:**
+```
+Composite Score = 0.5 × MI(normalized) + 0.3 × AUC(normalized) + 0.2 × Other metrics
+```
+
+**Intelligent Selection Strategy:**
+- Ranks all 27 drivers by composite score
+- **Balances by ESG pillar** to ensure representation:
+  - Environmental: 3 drivers
+  - Social: 5 drivers
+  - Governance: 4 drivers
+- Uses time-series cross-validation to prevent look-ahead bias
+
+#### **Stage 2: Random Forest Refinement (12 → 6)**
+
+Takes the 12 pre-selected drivers and refines with a trained Random Forest model:
+- Feature-to-sample ratio improves (274 samples / 12 features = 23:1)
+- RF identifies non-linear interactions and feature importance
+- Returns 6 final "core material" drivers
+
+**Quality Checks:**
+- Importance values show good distribution (std > 0.03)
+- All drivers contribute meaningfully
+- Final 6 drivers show diverse importance levels
+
+---
+
+### **PHASE 3: FRAMEWORK 2 - TEMPORAL VALIDATION (26-Week Windows)**
+
+Validates that selected drivers remain relevant across **different market conditions** using sliding windows:
+
+```
+Complete Dataset → 26-Week Windows → Analyze Each Window → Track Consistency
+                     ↑ Step 13 weeks (quarterly updates)
+```
+
+**Per-Window Analysis:**
+1. Creates 3-class targets from that window's returns
+2. Calculates 4 importance metrics for each of the 6 drivers:
+   - MI Score: Non-linear relationships
+   - Correlation: Linear strength
+   - Binary AUC: Classification power
+   - 3-Class F1: Multi-class performance
+3. Creates combined materiality score: `30% MI + 5% Corr + 25% AUC + 40% F1`
+4. Ranks drivers and identifies dominant ESG pillar
+
+**Key Finding:** Each window shows which ESG pillar (E/S/G) was most financially material in that quarter
+
+---
+
+### **PHASE 4: REGIME DETECTION (Dual-Level)**
+
+#### **Level 1: Pillar-Level Regimes**
+
+Detects when **market focus shifts between E, S, and G pillars**:
+
+Example:
+```
+Window 1-3: Environmental Dominant (Climate/emissions focus)
+Window 4-7: Social Dominant (Labor/welfare concerns)
+Window 8+: Governance Dominant (Compliance/ethics matters)
+```
+
+Stability metrics:
+- How many regime changes occurred
+- Average regime duration
+- Current regime
+- Regime stability (1.0 = no changes, 0.0 = frequent shifts)
+
+#### **Level 2: Individual Driver Regimes**
+
+Tracks each of the 6 drivers' evolution:
+
+**Regime Types:**
+- **Improving**: Rank consistently getting better (lower rank = better)
+- **Declining**: Rank consistently getting worse
+- **Stable**: Consistent performance
+
+**Key Metrics per Driver:**
+- Average rank over all windows
+- Rank volatility (std deviation)
+- Current regime status
+- Trend slope (improving/declining trajectory)
+
+---
+
+### **PHASE 5: STABILITY & EMERGING DRIVER ANALYSIS**
+
+Synthesizes all metrics into comprehensive driver profiles:
+
+```
+Per-driver stability score = 0.4 × Rank Stability + 0.4 × Score Stability + 0.2 × Regime Stability
+```
+
+**Identifies:**
+- **Most Stable Drivers**: Consistently important across all time periods
+- **Emerging Drivers**: Rank improving + scores improving (gaining importance)
+- **Declining Drivers**: Rank worsening + scores declining (losing importance)
+
+---
+
+## **Data & Configuration**
+
+**Key Hyperparameters** (in `DEFAULT_CONFIG`):
+
+```python
+# Target Creation
+- min_class_size: 15 (avoid tiny classes)
+- base_multiplier: 0.75 (MAD multiplier for thresholds)
+- Dynamic adjustment based on skewness
+
+# Framework 1
+- Stage 1 selects: 12 drivers from 27
+- Stage 2 selects: 6 drivers from 12
+- MI weight: 50%, Binary AUC: 30%, RF: 20%
+
+# Framework 2
+- Window size: 26 weeks (~6 months)
+- Step size: 13 weeks (quarterly)
+- Min regime length: 3 windows
+```
+
+---
+
+## **Outputs**
+
+**JSON Results** contain:
+- 6 final selected drivers with ranks and importance scores
+- 12 stage-1 drivers (for comparison)
+- Window-by-window materiality scores
+- Pillar regimes and their dates
+- Individual driver regime tracking
+- Driver stability metrics
+- Summary insights (top drivers, emerging drivers, etc.)
+
+**CSV Exports**:
+1. **Framework 1 results**: Selected drivers with MI/AUC/RF scores
+2. **Temporal analysis**: Window-by-window driver rankings
+3. **Regime analysis**: Pillar regime periods
+4. **Driver stability**: Per-driver metrics and trends
+
+---
+
+## **The SASB Connection**
+
+The 26 drivers are mapped to SASB (Sustainability Accounting Standards Board) materiality framework:
+- Standard ESG taxonomy recognized by institutional investors
+- Enables comparison across industries
+- Links sentiment analysis to standardized disclosure topics
+
+---
+
+## **Why This Approach Works**
+
+1. **Robust to outliers**: MAD-based targets handle extreme market conditions
+2. **Multi-method validation**: Uses MI, AUC, correlation, F1 together
+3. **Temporal grounding**: Validates drivers across different market regimes
+4. **Balances comprehensiveness with parsimony**: Reduces from 26 to 6 drivers while keeping top performers
+5. **Industry-standard taxonomy**: SASB mapping ensures institutional relevance
+6. **Actionable insights**: Identifies emerging and declining drivers for portfolio decisions
+
+This system essentially answers: **"Which ESG factors actually drive financial returns for this company, and how is this changing over time?"**

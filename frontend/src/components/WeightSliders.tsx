@@ -8,9 +8,9 @@ interface Props {
 }
 
 const DESCRIPTIONS = {
-  divergence: "Rating agreement across ESG providers — divergence means noisy signal (Berg et al.)",
-  verification: "Share of specific ESG claims that are independently verified vs contradicted",
-  controversy: "Clean news and enforcement record — recent high-severity incidents penalised",
+  divergence: "How much different rating agencies agree with each other. Big disagreements mean the score is harder to trust.",
+  verification: "How many of the company's specific public claims were backed up by independent data versus contradicted or unverifiable.",
+  controversy: "Whether the company has had serious environmental, social, or governance incidents recently. More incidents means a lower score.",
 }
 
 export function WeightSliders({ weights, onChange, loading }: Props) {
@@ -49,9 +49,8 @@ export function WeightSliders({ weights, onChange, loading }: Props) {
           <div className="flex items-start gap-2 text-xs text-gray-400 bg-gray-50 rounded-lg p-3 border border-border">
             <span className="text-blue-400 mt-0.5 shrink-0">ℹ</span>
             <span>
-              Drag sliders to see how methodology choices change the Integrity Score — exactly what the{" "}
-              <span className="text-gray-700 font-medium">MIT Aggregate Confusion project</span> shows about ESG rating arbitrariness.
-              Weights auto-normalise to 100%.
+              Adjust the sliders to change how much each factor contributes to the overall signal-quality score. This shows how sensitive the result is to methodology choices — something independent researchers have found to be significant across the ESG industry.
+              Weights always add up to 100%.
             </span>
           </div>
 

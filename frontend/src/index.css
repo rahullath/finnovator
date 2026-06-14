@@ -4,68 +4,104 @@
 
 @layer base {
   body {
-    @apply bg-surface text-gray-900 font-sans antialiased;
+    @apply bg-white text-ink font-sans antialiased;
+    -webkit-font-smoothing: antialiased;
   }
-  * {
-    @apply border-border;
-  }
-  h1, h2, h3, h4 {
-    @apply text-gray-900 font-semibold;
-  }
+  * { box-sizing: border-box; }
+  ::-webkit-scrollbar { height: 8px; width: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #dcdcdc; border-radius: 8px; }
+  input { font-family: inherit; }
+  input::placeholder { color: #b2b2b2; }
 }
 
 @layer components {
+  /* Cards */
   .card {
-    @apply bg-card rounded-2xl border border-border shadow-card;
+    @apply bg-white rounded-xl border border-border shadow-card;
   }
   .card-hover {
     @apply card transition-shadow hover:shadow-card-hover;
   }
-  /* Status badge variants */
-  .badge-green {
-    @apply bg-forest-100 text-forest-800 border border-forest-200;
+  .card-dark {
+    @apply rounded-xl;
+    background: #1c1c1c;
   }
-  .badge-blue {
-    @apply bg-blue-50 text-blue-800 border border-blue-200;
-  }
-  .badge-yellow {
-    @apply bg-amber-50 text-amber-800 border border-amber-200;
-  }
-  .badge-red {
-    @apply bg-red-50 text-red-800 border border-red-200;
-  }
-  /* Tab button */
+
+  /* Tab bar */
   .tab-btn {
-    @apply px-4 py-2.5 text-sm font-medium border-b-2 transition-colors -mb-px;
+    @apply px-4 py-2.5 text-sm font-medium border-b-2 transition-colors -mb-px whitespace-nowrap;
   }
   .tab-btn-active {
-    @apply border-forest-700 text-forest-800;
+    @apply border-ink text-ink;
   }
   .tab-btn-inactive {
-    @apply border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300;
+    @apply border-transparent text-faint hover:text-muted hover:border-whisper;
   }
-  /* Pill button */
-  .pill-btn {
-    @apply px-3 py-1.5 rounded-full text-xs font-medium border transition-all;
+
+  /* View toggle (like Navigator's dashboard/card toggle) */
+  .view-tab-active {
+    @apply bg-white text-ink shadow-card border border-border;
   }
-  .pill-btn-active {
-    @apply bg-forest-800 text-white border-forest-800;
+  .view-tab-inactive {
+    @apply text-faint hover:text-muted;
   }
-  .pill-btn-inactive {
-    @apply bg-white text-gray-600 border-border hover:border-gray-400 hover:text-gray-800;
+
+  /* Pill chips */
+  .chip {
+    @apply font-mono text-xs font-semibold px-3 py-1.5 rounded-lg cursor-pointer transition-all;
   }
+  .chip-active {
+    @apply bg-ink text-white border border-ink;
+  }
+  .chip-inactive {
+    @apply bg-secondary text-muted border border-border hover:border-faint hover:text-ink;
+  }
+
   /* Input */
   .input-field {
-    @apply w-full bg-white border border-border rounded-xl px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-forest-600/20 focus:border-forest-600;
+    @apply w-full bg-secondary border border-border rounded-lg px-4 py-2 text-sm text-ink placeholder-whisper focus:outline-none focus:border-faint;
   }
+
   /* Direction badges */
   .dir-leading {
-    @apply inline-flex items-center gap-0.5 px-2 py-0.5 rounded text-xs font-medium bg-forest-100 text-forest-800 border border-forest-200;
+    @apply inline-flex items-center gap-0.5 px-2 py-0.5 rounded text-xs font-semibold;
+    color: #2f7d8a;
+    background: rgba(47,125,138,0.10);
   }
   .dir-stable {
-    @apply inline-flex items-center gap-0.5 px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200;
+    @apply inline-flex items-center gap-0.5 px-2 py-0.5 rounded text-xs font-semibold;
+    color: #707070;
+    background: #f4f4f4;
   }
   .dir-lagging {
-    @apply inline-flex items-center gap-0.5 px-2 py-0.5 rounded text-xs font-medium bg-red-50 text-red-700 border border-red-200;
+    @apply inline-flex items-center gap-0.5 px-2 py-0.5 rounded text-xs font-semibold;
+    color: #c0492f;
+    background: rgba(192,73,47,0.10);
+  }
+
+  /* Pillar badges */
+  .pillar-E {
+    @apply inline-flex items-center justify-center w-5 h-5 rounded text-xs font-bold text-white;
+    background: #2f7d8a;
+  }
+  .pillar-S {
+    @apply inline-flex items-center justify-center w-5 h-5 rounded text-xs font-bold text-white;
+    background: #7a5ea8;
+  }
+  .pillar-G {
+    @apply inline-flex items-center justify-center w-5 h-5 rounded text-xs font-bold text-white;
+    background: #8a6d2f;
+  }
+
+  /* Status / quadrant badges */
+  .badge-green  { @apply bg-forest-100 text-forest-800 border border-forest-200; }
+  .badge-blue   { @apply bg-blue-50 text-blue-800 border border-blue-200; }
+  .badge-yellow { @apply bg-amber-50 text-amber-800 border border-amber-200; }
+  .badge-red    { @apply bg-red-50 text-red-700 border border-red-200; }
+
+  /* Section labels (all-caps micro) */
+  .label-upper {
+    @apply text-xs font-semibold uppercase tracking-widest text-whisper;
   }
 }
